@@ -1,7 +1,7 @@
 TimeSeriesAnalysis
 ==================
 
-Analiza szeregów czasowych – sieci neuronowe / algorytmy genetyczne
+Analiza szeregów czasowych – algorytmy genetyczne
 
 Lista obecnych:
 Łukasz Potępa
