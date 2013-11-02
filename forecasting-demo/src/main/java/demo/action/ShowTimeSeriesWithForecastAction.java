@@ -2,7 +2,7 @@ package demo.action;
 
 import demo.chart.FitnessChart;
 import forecasting.AbstractForecast;
-import forecasting.AppConfig;
+import forecasting.config.RouletteWheelConfig;
 import demo.gui.MainWindow;
 import forecasting.model.SlidingTimeWindow;
 import org.jfree.data.time.TimeSeries;
@@ -27,13 +27,14 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
         TimeSeries timeSeriesList = window.getTimeSeries();
 
-        SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{1, 2});
+        SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{2});
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        //Jesli potrzeba innej selekcji bierzemy inny config, z pakietu forecasting.config
+        ApplicationContext context = new AnnotationConfigApplicationContext(RouletteWheelConfig.class);
         AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");
 
         try {
-            forecast.initializeForecast((TimeSeries) timeSeriesList.clone(),
+            forecast.initializeGeneticAlgorithm((TimeSeries) timeSeriesList.clone(),
                     100,
                     slidingTimeWindow,
                     1000,
@@ -42,6 +43,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
                     0.4,
                     0.4,
                     0.2);
+            forecast.initializeForecast(3);
         } catch (CloneNotSupportedException e1) {
             e1.printStackTrace();
         }
@@ -51,10 +53,16 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
         RefineryUtilities.centerFrameOnScreen(chart);
         chart.setVisible(true);
 
+        //ChartObserver obserwuje algo i uaktualnia wykres
         forecast.addObserver(new GAChartObserver(chart));
 
+        //proponuje dodac drugiego observera ktory zapisze jakie geny wyszly na koncu
+
+        //w ten sposob sie odpala algorytm genetyczny, czyli wyszukiwanie nowego rozwiazania
         forecast.execute();
 
+        //jesli chcemy zrobic predykcje na podstawie starego rozwiazania, to metoda doForecast, wtedy nie musimy
+        //robic zadnego initialize, i nie odpala sie przez execute i nie uzywa sie observerow, zwykle wywolanie
 
     }
 }

@@ -34,29 +34,38 @@ public class TimeSeriesForecast extends AbstractForecast{
     private int populationSize;
     private SlidingTimeWindow slidingTimeWindow;
     private int numOfIterations;
+    private int numOfDataPoints;
+
+    private boolean doForecast = false;
+    private Chromosome globalBest;
 
     private List<GAObserver> obs = new ArrayList<>();
 
-    public void initializeForecast(TimeSeries timeSeries,
-                                   int populationSize,
-                                   SlidingTimeWindow slidingTimeWindow,
-                                   int numOfIterations,
-                                   double crossoverProbability,
-                                   double mutationProbability,
-                                   double percentOfKeptFromSelection ,
-                                   double percentOfKeptFromCrossover,
-                                   double percentOfKeptFromMutation){
+    public void initializeForecast(int numOfDataPoints){
+        this.numOfDataPoints = numOfDataPoints;
+        this.doForecast = true;
+    }
 
-        this.timeSeries = timeSeries;
+    public void initializeGeneticAlgorithm(TimeSeries timeSeries,
+                                           int populationSize,
+                                           SlidingTimeWindow slidingTimeWindow,
+                                           int numOfIterations,
+                                           double crossoverProbability,
+                                           double mutationProbability,
+                                           double percentOfKeptFromSelection ,
+                                           double percentOfKeptFromCrossover,
+                                           double percentOfKeptFromMutation){
+
         this.populationSize = populationSize;
         this.slidingTimeWindow = slidingTimeWindow;
         this.numOfIterations = numOfIterations;
         this.percentOfKeptFromSelection = percentOfKeptFromSelection;
         this.percentOfKeptFromCrossover = percentOfKeptFromCrossover;
         this.percentOfKeptFromMutation = percentOfKeptFromMutation;
-
         crossover.setProbability(crossoverProbability);
         mutation.setProbability(mutationProbability);
+        this.timeSeries = timeSeries;
+
     }
 
     private Chromosome[] initializePopulation(int populationSize, SlidingTimeWindow stw){
@@ -99,9 +108,9 @@ public class TimeSeriesForecast extends AbstractForecast{
     }
 
     @Override
-    protected TimeSeries doInBackground() throws Exception {
+    protected Chromosome doInBackground() throws Exception {
 
-        Chromosome globalBest = null;
+        globalBest = null;
         double globalBestForecast = 0;
 
         Chromosome[] population = initializePopulation(populationSize, slidingTimeWindow);
@@ -157,12 +166,27 @@ public class TimeSeriesForecast extends AbstractForecast{
             }
 
             for(GAObserver observer : obs){
-                observer.update(Arrays.asList(best.getFitness(), forecast, (double) i));
+                observer.update(best.getFitness(), best.getGenes(), i);
             }
         }
 
-        timeSeries.add(timeSeries.getNextTimePeriod(), globalBestForecast);
+        return globalBest;
+    }
 
+    @Override
+    public TimeSeries doForecast(TimeSeries timeSeries, int numOfDataPoints, double[] genes){
+
+        Chromosome chromosome = new Chromosome(genes);
+
+        for(int i = 0; i < numOfDataPoints; i++){
+
+            double forecast = forecastCalculator.calculateForecast(timeSeries,
+                    slidingTimeWindow,
+                    chromosome,
+                    timeSeries.getItemCount());
+
+            timeSeries.add(timeSeries.getNextTimePeriod(), forecast);
+        }
         return timeSeries;
     }
 
@@ -172,8 +196,14 @@ public class TimeSeriesForecast extends AbstractForecast{
 
     @Override
     protected void done() {
+
+        if(doForecast){
+            doForecast(timeSeries, numOfDataPoints, globalBest.getGenes());
+        }
+
         for(GAObserver observer : obs){
             observer.done(timeSeries);
+            observer.done(globalBest.getGenes());
         }
     }
 }

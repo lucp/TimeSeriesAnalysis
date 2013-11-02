@@ -1,14 +1,15 @@
-package forecasting;
+package forecasting.config;
 
+import forecasting.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AppConfig {
+public class StochasticUniversalSamplingConfig {
 
     @Bean
     public AbstractGeneticAlgorithmOperation selection() {
-        return new RouletteWheelSelection();
+        return new StochasticUniversalSamplingSelection();
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package forecasting;
 
+import forecasting.config.RouletteWheelConfig;
 import mock.MockTimeSeries;
 import forecasting.model.Chromosome;
 import forecasting.model.SlidingTimeWindow;
@@ -18,7 +19,7 @@ public class LinearCombinationForecastCalculatorTest {
 
         SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{1, 2, 3});
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(RouletteWheelConfig.class);
         AbstractForecastCalculator calculator =
                 (AbstractForecastCalculator) context.getBean("forecastCalculator");
 

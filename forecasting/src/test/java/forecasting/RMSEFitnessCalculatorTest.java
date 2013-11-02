@@ -1,5 +1,6 @@
 package forecasting;
 
+import forecasting.config.RouletteWheelConfig;
 import mock.MockTimeSeries;
 import forecasting.model.Chromosome;
 import forecasting.model.SlidingTimeWindow;
@@ -18,7 +19,7 @@ public class RMSEFitnessCalculatorTest {
 
         SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{1, 2, 3});
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(RouletteWheelConfig.class);
         AbstractFitnessCalculator calculator =
                 (AbstractFitnessCalculator) context.getBean("fitnessCalculator");
 

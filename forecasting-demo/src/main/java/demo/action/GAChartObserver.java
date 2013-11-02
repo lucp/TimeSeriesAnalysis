@@ -3,16 +3,13 @@ package demo.action;
 import demo.chart.FitnessChart;
 import demo.chart.TimeSeriesChart;
 import forecasting.GAObserver;
-import forecasting.model.Chromosome;
+
 import org.jfree.data.time.TimeSeries;
 import org.jfree.ui.RefineryUtilities;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.concurrent.ExecutionException;
 
 public class GAChartObserver implements GAObserver {
 
@@ -23,32 +20,23 @@ public class GAChartObserver implements GAObserver {
     }
 
     @Override
-    public void update(Object arg) {
-        if(arg instanceof List){
+    public void update(double fitness, double[] best, int i) {
 
-            List<Double> list = (List<Double>) arg;
+        chart.setVisible(true);
 
-            double fitness = list.get(0);
-            double forecast = list.get(1);
-            int i = list.get(2).intValue();
+        try{
+            chart.addValue(fitness,"Max", i);
+        }catch(IllegalArgumentException ex){
+            System.err.println("Some minor chart problem: "+ex.getMessage());
+        }
 
-            chart.setVisible(true);
+        try{
+            chart.ripejnt();
+            chart.pack();
+            chart.validate();
 
-            try{
-                chart.addValue(fitness,"Max", i);
-            }catch(IllegalArgumentException ex){
-                System.err.println("Some minor chart problem: "+ex.getMessage());
-            }
-
-            try{
-                chart.ripejnt();
-                chart.pack();
-                chart.validate();
-
-            }catch(IllegalArgumentException ex){
-                System.err.println("Some minor chart problem: "+ex.getMessage());
-            }
-
+        }catch(IllegalArgumentException ex){
+            System.err.println("Some minor chart problem: "+ex.getMessage());
         }
     }
 
@@ -66,5 +54,9 @@ public class GAChartObserver implements GAObserver {
         RefineryUtilities.centerFrameOnScreen(frame);
         frame.setVisible(true);
 
+    }
+
+    @Override
+    public void done(double[] best) {
     }
 }
