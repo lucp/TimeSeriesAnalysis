@@ -12,5 +12,6 @@
     <modules>
         <module>forecasting</module>
         <module>forecasting-demo</module>
+        <module>data_acquisition</module>
     </modules>
 </project>
