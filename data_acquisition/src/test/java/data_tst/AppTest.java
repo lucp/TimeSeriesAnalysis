@@ -1,4 +1,4 @@
-package org.data_acquisition;
+package data_tst;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
