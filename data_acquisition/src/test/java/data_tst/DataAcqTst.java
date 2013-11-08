@@ -7,14 +7,15 @@ import java.util.Date;
 import org.jfree.data.time.TimeSeries;
 import org.junit.Assert;
 import org.junit.Test;
-import data.DataAcquisitor;
+import data.CSVDataAcquisitor;
+import data.SimpleDataAcquisitor;
 
 public class DataAcqTst {
 
 	@Test
 	public void readingCSVTst(){
 		try{
-			DataAcquisitor dataAcq=new DataAcquisitor("gielda1.csv", ',', '\"',1,12);
+			CSVDataAcquisitor dataAcq=new CSVDataAcquisitor("res\\gielda1.csv", ',', '\"',1,12);
 			TimeSeries ts=dataAcq.readData_TimeSeries();
 			System.out.print(ts.getItemCount());
 			Assert.assertEquals(ts.getItemCount(),212);
@@ -39,5 +40,12 @@ public class DataAcqTst {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date d1 = formatter.parse("2013-01-23");
 		Assert.assertEquals(d1.toString(),"2013-01-23");
+	}
+	
+	@Test
+	public void simpleDataAcqTst() throws Exception{
+		SimpleDataAcquisitor sda=new SimpleDataAcquisitor("res\\simple1.txt");
+		TimeSeries ts=sda.readData_TimeSeries();
+		Assert.assertEquals(ts.getItemCount(),9);
 	}
 }

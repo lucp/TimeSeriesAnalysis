@@ -8,9 +8,9 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.LinkedList;
 
-public class DataAcquisitor 
+public class CSVDataAcquisitor 
 {
 	CSVReader csvreader;
 	String filePath;
@@ -18,7 +18,7 @@ public class DataAcquisitor
 	int timeTab;
 	int valueTab;
     
-	public DataAcquisitor(String file) throws IOException{
+	public CSVDataAcquisitor(String file) throws IOException{
 		this.csvreader=new CSVReader(new FileReader(file),',','\"');
 		this.filePath=file;
 		this.dateFormat="yyyy-MM-dd";
@@ -26,7 +26,7 @@ public class DataAcquisitor
 		this.valueTab=1;
 	}
 	
-	public DataAcquisitor(String file,char separator, char quotechar) throws IOException{
+	public CSVDataAcquisitor(String file,char separator, char quotechar) throws IOException{
 		this.csvreader=new CSVReader(new FileReader(file), separator, quotechar);
 		this.filePath=file;
 		this.dateFormat="yyyy-MM-dd";
@@ -34,7 +34,7 @@ public class DataAcquisitor
 		this.valueTab=1;
 	}
 	
-	public DataAcquisitor(String file,char separator, char quotechar,int tTab,int vTab) throws IOException{
+	public CSVDataAcquisitor(String file,char separator, char quotechar,int tTab,int vTab) throws IOException{
 		this.csvreader=new CSVReader(new FileReader(file), separator, quotechar);
 		this.filePath=file;
 		this.dateFormat="yyyy-MM-dd";
@@ -42,7 +42,7 @@ public class DataAcquisitor
 		this.valueTab=vTab;
 	}
 	
-	public DataAcquisitor(String file,char separator, char quotechar,int tTab,int vTab,String dateFormat) throws IOException{
+	public CSVDataAcquisitor(String file,char separator, char quotechar,int tTab,int vTab,String dateFormat) throws IOException{
 		this.csvreader=new CSVReader(new FileReader(file), separator, quotechar);
 		this.filePath=file;
 		this.dateFormat=dateFormat;
@@ -50,7 +50,7 @@ public class DataAcquisitor
 		this.valueTab=vTab;
 	}
 	
-	public DataAcquisitor(String file,int tTab,int vTab) throws IOException{
+	public CSVDataAcquisitor(String file,int tTab,int vTab) throws IOException{
 		this.csvreader=new CSVReader(new FileReader(file));
 		this.filePath=file;
 		this.dateFormat="yyyy-MM-dd";
@@ -71,12 +71,12 @@ public class DataAcquisitor
 	public TimeSeries readData_TimeSeries() throws IOException{
 		TimeSeries timeSeries=new TimeSeries(this.filePath);
 		String[] nextLine;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat(this.dateFormat);
 		while ((nextLine=this.csvreader.readNext())!=null){
 			try{
 				if (nextLine[this.valueTab].contains(",")){
 					nextLine[this.valueTab]=nextLine[this.valueTab].replaceAll(",",".");
 				}
-				SimpleDateFormat dateFormatter = new SimpleDateFormat(this.dateFormat);
 				timeSeries.add(new Day(dateFormatter.parse(nextLine[this.timeTab])),Double.valueOf(nextLine[this.valueTab]));
 			}
 			catch (Exception e){
@@ -85,6 +85,35 @@ public class DataAcquisitor
 				}
 			}
 		}
+		if (timeSeries.isEmpty()){
+			throw new IOException();
+		}
 		return timeSeries;
+	}
+	
+	public double[] readData_DoubleValueTable() throws IOException{
+		LinkedList<Double> list=new LinkedList<Double>();
+		String[] nextLine;
+		while ((nextLine=this.csvreader.readNext())!=null){
+			try{
+				if (nextLine[this.valueTab].contains(",")){
+					nextLine[this.valueTab]=nextLine[this.valueTab].replaceAll(",",".");
+				}
+				list.add(Double.parseDouble(nextLine[this.valueTab]));
+			}
+			catch (Exception e){
+				if (!list.isEmpty()){
+					list.clear();
+				}
+			}
+		}
+		if (list.isEmpty()){
+			throw new IOException();
+		}
+		double[] out=new double[list.size()];
+		for (int i=0;i<list.size();i++){
+			out[i]=list.get(i);
+		}
+		return out;
 	}
 }
