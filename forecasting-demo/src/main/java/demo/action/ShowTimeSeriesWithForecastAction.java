@@ -2,8 +2,11 @@ package demo.action;
 
 import demo.chart.FitnessChart;
 import forecasting.AbstractForecast;
-import forecasting.config.RouletteWheelConfig;
+import forecasting.config.ForecastMethod;
+import forecasting.config.GASettings;
+import forecasting.config.ForecastConfig;
 import demo.gui.MainWindow;
+import forecasting.config.SelectionMethod;
 import forecasting.model.SlidingTimeWindow;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.ui.RefineryUtilities;
@@ -29,8 +32,10 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
         SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{2});
 
-        //Jesli potrzeba innej selekcji bierzemy inny config, z pakietu forecasting.config
-        ApplicationContext context = new AnnotationConfigApplicationContext(RouletteWheelConfig.class);
+        //GASettings.getInstance().setSelectionMethod(SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION);
+        GASettings.getInstance().setForecastMethod(ForecastMethod.ARMA_FORECAST);
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(ForecastConfig.class);
         AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");
 
         try {

@@ -5,15 +5,20 @@ import forecasting.model.SlidingTimeWindow;
 import org.jfree.data.time.TimeSeries;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * Klasa implementuje fukcje fitness jako pierwiastek z bledu sredniokwadratowego
+ */
 public class RMSEFitnessCalculator implements AbstractFitnessCalculator{
 
     @Autowired
-    AbstractForecastCalculator forecastCalculator;
+    private AbstractForecastCalculator forecastCalculator;
 
     /**
      * Metoda oblicza wartosc funkcji fitness dla danego chromosomu jako Root Mean Squared
      * Error, czyli pierwiastek z bledu sredniokwadratowego.
      *
+     * @param timeSeries Szereg czasowy
+     * @param window Okno czasowe
      * @param chromosome Chromosom dla ktorego ma zostac obliczona wartosc funkcji fitness
      * @return Wartosc funkcji fitness
      */

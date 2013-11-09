@@ -1,7 +1,7 @@
 package demo;
 
 import forecasting.AbstractForecast;
-import forecasting.config.RouletteWheelConfig;
+import forecasting.config.ForecastConfig;
 import forecasting.model.SlidingTimeWindow;
 
 import org.jfree.data.time.TimeSeries;
@@ -11,14 +11,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import service.action.GAChartObserver;
 import service.chart.FitnessChart;
-import service.chart.TimeSeriesChart;
-import service.chart.TimeSeriesChartFrame;
 
 import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
@@ -35,8 +32,16 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
         SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{2});
 
-        //Jesli potrzeba innej selekcji bierzemy inny config, z pakietu forecasting.config
-        ApplicationContext context = new AnnotationConfigApplicationContext(RouletteWheelConfig.class);
+        // zmienilem zdanie :) zrobilem Singletona z ustawieniami,
+        // jak potrzeba innej metody selekcji/innej metody obliczania forecastu trzeba ustawic ustawienie,
+        // config zostaje jeden, z ifami
+        // czyli na przyklad, chcemy metode selekcji stochastic universal sampling, robimy:
+
+        // GASettings.getInstance().setSelectionMethod(SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION);
+
+        // i smiga
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(ForecastConfig.class);
         AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");
 
         try {

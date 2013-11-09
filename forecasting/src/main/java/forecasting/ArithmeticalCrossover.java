@@ -4,15 +4,29 @@ import forecasting.model.Chromosome;
 
 import java.util.Random;
 
+/**
+ * Klasa implemetuje krzyzowanie arytmetyczne
+ */
 public class ArithmeticalCrossover implements AbstractGeneticAlgorithmOperation {
 
     private double probability = 1.0;
 
+    /**
+     * Ustawienie prawdopodobienstwa z jakim wykonuje sie krzyzowanie.
+     *
+     * @param probability Prawdopodobienstwo
+     */
     @Override
     public void setProbability(double probability) {
         this.probability = probability;
     }
 
+    /**
+     * Wykonuje krzyzowanie
+     *
+     * @param population Populacja
+     * @return Nowa populacja
+     */
     @Override
     public Chromosome[] performGeneticOperation(Chromosome[] population) {
 

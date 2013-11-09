@@ -5,14 +5,16 @@ import forecasting.model.SlidingTimeWindow;
 import org.jfree.data.time.TimeSeries;
 
 /**
- * Klasa implementuje obliczanie predykcji jako kombinacje liniowa
+ * Klasa implemetuje obliczanie predykcji na podstawie ARMA
  */
-public class LinearCombinationForecastCalculator implements AbstractForecastCalculator {
+public class ARMAForecastCalculator implements AbstractForecastCalculator {
 
     /**
-     * Metoda oblicza predykcje w danym punkcie czasu jako kombinacje liniowa
-     * genow chromosomu i poprzednich wartosci pobranych korzystajac z STW.
-     *
+     * Metoda oblicza przyblizona wartosc w danym punkcie czasu jako sumę :
+     * <ul>
+     *  <li>kombinacji liniowej pierwszej połowy genow chromosomu i poprzednich wartosci pobranych korzystajac z STW oraz</li>
+     *  <li>kombinacji liniowej drugiej połowy genów chromosomu i błędów predykcji poprzednich wartości </li>
+     * </ul>
      * @param timeSeries Szereg czasowy dla którego wykonywane jest przybliżenie
      * @param window Okno czasowe predykcji
      * @param chromosome Chromosom dla ktorego ma zostac obliczona predykcja
@@ -23,7 +25,7 @@ public class LinearCombinationForecastCalculator implements AbstractForecastCalc
     public Double calculateForecast(TimeSeries timeSeries,
                                     SlidingTimeWindow window,
                                     Chromosome chromosome,
-                                    int currentIndex){
+                                    int currentIndex) {
 
         double returnValue = chromosome.getGene(0);
 
@@ -34,8 +36,19 @@ public class LinearCombinationForecastCalculator implements AbstractForecastCalc
             if(pastIndex < 0){
                 return null;
             }
+
+            Double pastForecast = new LinearCombinationForecastCalculator().calculateForecast(timeSeries,
+                    window,
+                    chromosome,
+                    pastIndex);
+
             returnValue += chromosome.getGene(i + 1) *
                     timeSeries.getValue(pastIndex).doubleValue();
+
+            if(pastForecast != null){
+                returnValue += chromosome.getGene(i + 1 + window.getLength()) *
+                    (timeSeries.getValue(pastIndex).doubleValue() - pastForecast);
+            }
         }
 
         return returnValue;

@@ -4,15 +4,27 @@ import forecasting.model.Chromosome;
 
 import java.util.Random;
 
+/**
+ * Klasa implementuje algorytm selekcji metoda ruletki
+ */
 public class RouletteWheelSelection implements AbstractGeneticAlgorithmOperation {
 
-    private double probability = 1.0;
-
+    /**
+     * Metoda nie posiada implementacji, gdyz selekcja jest szczegolnym przypadkiem operacji algorytmu genetycznego
+     * dla ktorego nie definiuje sie prawdopodobienstwa
+     *
+     * @param probability Prawdopodobienstwo
+     */
     @Override
     public void setProbability(double probability) {
-        this.probability = probability;
     }
 
+    /**
+     * Wykonuje selekcje metoda ruletki
+     *
+     * @param population Populacja
+     * @return Nowa populacja
+     */
     public Chromosome[] performGeneticOperation(Chromosome[] population) {
 
         double fitnessSum = 0;
