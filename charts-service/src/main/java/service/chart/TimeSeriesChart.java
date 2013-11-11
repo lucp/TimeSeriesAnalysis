@@ -20,7 +20,8 @@ import java.util.List;
 public class TimeSeriesChart extends JPanel {
 
     private static final Color centroidColor = Color.blue;
-    private int centroidColumn;
+    private int firstColumnID;
+    private int lastColumnID;
 
     private XYLineAndShapeRenderer renderer;
 
@@ -32,24 +33,32 @@ public class TimeSeriesChart extends JPanel {
 
         @Override
         public Paint getItemPaint(int row, int col) {
-            if (col == centroidColumn) {
+            if (col >= firstColumnID && col <= lastColumnID) {
                 return centroidColor;
             } else {
                 return super.getItemPaint(row, col);
             }
         }
     }
-
+    
+    public TimeSeriesChart(){
+    }
+    
     public TimeSeriesChart(List<TimeSeries> timeSeriesList){
-        this(timeSeriesList, false);
+    	createChartPanel(timeSeriesList, 0);
     }
 
-    public TimeSeriesChart(List<TimeSeries> timeSeriesList, boolean highlightLast){
-
+    public TimeSeriesChart(List<TimeSeries> timeSeriesList, int numOfDataPoints){
+    	createChartPanel(timeSeriesList, numOfDataPoints);
+    }
+    	
+    public void createChartPanel(List<TimeSeries> timeSeriesList, int numOfDataPoints){
         XYDataset dataset = createDataset(timeSeriesList);
 
-        if(highlightLast){
-            centroidColumn = dataset.getItemCount(0) - 1;
+        if(numOfDataPoints > 0){
+        	firstColumnID = dataset.getItemCount(0) - numOfDataPoints;
+        	lastColumnID = dataset.getItemCount(0) - 1;
+            System.out.print(firstColumnID + " " + lastColumnID);
             renderer = new MyRenderer(true, true);
         }else{
             renderer = new XYLineAndShapeRenderer(true, true);
@@ -78,7 +87,7 @@ public class TimeSeriesChart extends JPanel {
 
         chart.setBackgroundPaint(Color.white);
 
-        XYPlot plot = (XYPlot) chart.getPlot();
+        XYPlot plot = chart.getXYPlot();
         plot.setBackgroundPaint(Color.white);
         plot.setDomainGridlinePaint(Color.lightGray);
         plot.setRangeGridlinePaint(Color.lightGray);
@@ -92,15 +101,12 @@ public class TimeSeriesChart extends JPanel {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
             renderer.setBaseShapesVisible(true);
             renderer.setBaseShapesFilled(true);
-            //renderer.setDrawSeriesLineAsPath(true);
-            //renderer.setSeriesPaint(0, Color.BLACK);
         }
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("MMM-yyyy"));
 
         return chart;
-
     }
 
     private XYDataset createDataset(List<TimeSeries> timeSeriesList) {
@@ -112,6 +118,5 @@ public class TimeSeriesChart extends JPanel {
         }
 
         return dataset;
-
     }
 }

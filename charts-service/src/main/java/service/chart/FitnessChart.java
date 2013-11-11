@@ -1,8 +1,8 @@
 package service.chart;
 
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
@@ -12,43 +12,27 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.ui.RectangleInsets;
 
 import javax.swing.*;
+
 import java.awt.*;
 
-/**
- * Fitness chart class
- * 
- * @author Tomek
- *
- */
-public class FitnessChart extends JFrame {
-
-    private static final long serialVersionUID = 1L;
-
-    {
-        ChartFactory.setChartTheme(new StandardChartTheme("JFree/Shadow", true));
-    }
-    
+public class FitnessChart extends JPanel {
+  
     private DefaultCategoryDataset dataset;
-    private MyChartPanel chartPanel;
+    private ChartPanel chartPanel;
     
-    /**
-     * @param title  Chart window title
-     */
-    public FitnessChart(String title) {
-        super(title);
+    public FitnessChart() {
+        
         dataset = new DefaultCategoryDataset ();
-        chartPanel = (MyChartPanel) createPanel();
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-        add(chartPanel);
+        
+        JFreeChart chart = createChart(dataset);
+        
+        chartPanel = new ChartPanel(chart);
+        chartPanel.setFillZoomRectangle(true);
+        chartPanel.setMouseWheelEnabled(true);
+        
+        this.add(chartPanel);
     }
 
-    /**
-     * Chart creation
-     *
-     * @param categoryDataset  a dataset.
-     *
-     * @return A chart
-     */
     private static JFreeChart createChart(CategoryDataset categoryDataset) {
 
         JFreeChart chart = ChartFactory.createLineChart(
@@ -82,28 +66,8 @@ public class FitnessChart extends JFrame {
         return chart;
     }
 
-    /**
-     * Dataset creation
-     *
-     * @param val Value to be inserted into dataset
-     * @param series  Series label
-     * @param ix  X axis label, in this case iteration number
-     */
     public void addValue(double val, String series, int ix){
     	dataset.addValue(val, series, Integer.toString(ix));
-    }
-    
-    /**
-     * Panel creation
-     *
-     * @return A panel.
-     */
-    public JPanel createPanel() {
-        JFreeChart chart = createChart(dataset);
-        MyChartPanel panel = new MyChartPanel(chart);
-        panel.setFillZoomRectangle(true);
-        panel.setMouseWheelEnabled(true);
-        return panel;
     }
     
     public void ripejnt(){

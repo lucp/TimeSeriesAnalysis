@@ -3,61 +3,51 @@ package service.action;
 import forecasting.GAObserver;
 
 import org.jfree.data.time.TimeSeries;
-import org.jfree.ui.RefineryUtilities;
-
 import service.chart.FitnessChart;
 import service.chart.TimeSeriesChart;
-import service.chart.TimeSeriesChartFrame;
-
-import javax.swing.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GAChartObserver implements GAObserver {
 
-    private FitnessChart chart;
-
-    public GAChartObserver(FitnessChart chart){
-        this.chart = chart;
+    private FitnessChart fitChart;
+    private TimeSeriesChart tmChart;
+    private int numOfDataPoints;
+    
+    public GAChartObserver(FitnessChart fitChart, TimeSeriesChart tmChart, int numOfDataPoints){
+        this.fitChart = fitChart;
+        this.tmChart = tmChart;
+        this.numOfDataPoints = numOfDataPoints;
     }
 
     @Override
     public void update(double fitness, double[] best, int i) {
 
-        chart.setVisible(true);
+    	fitChart.setVisible(true);
 
         try{
-            chart.addValue(fitness,"Max", i);
+        	fitChart.addValue(fitness,"Max", i);
         }catch(IllegalArgumentException ex){
             System.err.println("Some minor chart problem: "+ex.getMessage());
         }
 
         try{
-            chart.ripejnt();
-            chart.pack();
-            chart.validate();
+        	fitChart.ripejnt();
+        	fitChart.validate();
 
         }catch(IllegalArgumentException ex){
             System.err.println("Some minor chart problem: "+ex.getMessage());
         }
     }
-
+    
+    @Override
     public void done(TimeSeries timeSeriesWithForecast){
 
         List<TimeSeries> timeSeriesWithForecastList = new ArrayList<>();
         timeSeriesWithForecastList.add(timeSeriesWithForecast);
-
-        /*JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.add(panel);
-        frame.pack();
-        RefineryUtilities.centerFrameOnScreen(frame);
-        frame.setVisible(true);*/
         
-        JFrame frame = new TimeSeriesChartFrame(timeSeriesWithForecastList, true);
-
+        tmChart.createChartPanel(timeSeriesWithForecastList, this.numOfDataPoints);
+        tmChart.validate();
     }
 
     @Override
