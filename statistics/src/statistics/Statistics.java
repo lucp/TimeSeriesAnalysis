@@ -28,12 +28,12 @@ public class Statistics {
      * @param s2 Tablica n - drugi szereg czasowy
      * @return tablica 2*n-1 elementowa wspolczynnikow korelacji
      */
-    public double[] getCrossCorrelationCoefficients(TimeSeries s1, TimeSeries s2) {
+    public double[] getCorrelationCoefficients(TimeSeries s1, TimeSeries s2) {
 
         double[] d1 = timeSeriesToDoubles(s1);
         double[] d2 = timeSeriesToDoubles(s2);
 
-        PearsonsCorrelation pc = new PearsonsCorrelation();
+        SpearmansCorrelation pc = new SpearmansCorrelation();
         int l;
         double[] cc = new double[2 * d1.length - 1];
 
