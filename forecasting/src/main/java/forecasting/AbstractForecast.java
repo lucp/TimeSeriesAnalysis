@@ -6,6 +6,9 @@ import org.jfree.data.time.TimeSeries;
 
 import javax.swing.*;
 
+/**
+ * Interfejs predykcji szeregu czasowego.
+ */
 public abstract class AbstractForecast extends SwingWorker<Chromosome, Double[]> {
 
     /**
@@ -21,13 +24,13 @@ public abstract class AbstractForecast extends SwingWorker<Chromosome, Double[]>
      *
      * @param timeSeries Szereg czasowy
      * @param populationSize Rozmiar populacji
-     * @param slidingTimeWindow
-     * @param numOfIterations
-     * @param crossoverProbability
-     * @param mutationProbability
-     * @param percentOfKeptFromSelection
-     * @param percentOfKeptFromCrossover
-     * @param percentOfKeptFromMutation
+     * @param slidingTimeWindow Okno czasowe
+     * @param numOfIterations Liczba iteracji
+     * @param crossoverProbability Prawdopodobienstwo krzyzowania
+     * @param mutationProbability Prawdopodobienstwo mutacji
+     * @param percentOfKeptFromSelection Procent osobnikow pozostawianych po selekcji
+     * @param percentOfKeptFromCrossover Procent osobnikow pozostawianych po krzyzowaniu
+     * @param percentOfKeptFromMutation Procent osobnikow pozostawianych po mutacji
      */
     public abstract void initializeGeneticAlgorithm(TimeSeries timeSeries,
                                                     int populationSize,
@@ -39,6 +42,11 @@ public abstract class AbstractForecast extends SwingWorker<Chromosome, Double[]>
                                                     double percentOfKeptFromCrossover,
                                                     double percentOfKeptFromMutation);
 
+    /**
+     * Dodaj obserwatora
+     *
+     * @param o Obserwator
+     */
     public abstract void addObserver(GAObserver o);
 
     /**

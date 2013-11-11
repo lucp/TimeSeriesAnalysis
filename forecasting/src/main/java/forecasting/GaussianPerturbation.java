@@ -4,15 +4,29 @@ import forecasting.model.Chromosome;
 
 import java.util.Random;
 
+/**
+ * Klasa implementuje operacje mutacji jako perturbacje Gaussa
+ */
 public class GaussianPerturbation implements AbstractGeneticAlgorithmOperation {
 
     private double probability = 1.0;
 
+    /**
+     * Ustawienie prawdopodobienstwa z jakim wykonuje sie mutacja.
+     *
+     * @param probability Prawdopodobienstwo
+     */
     @Override
     public void setProbability(double probability) {
         this.probability = probability;
     }
 
+    /**
+     * Wykonuje mutacje jako perturbacje Gaussa
+     *
+     * @param population Populacja
+     * @return Nowa populacja
+     */
     public Chromosome[] performGeneticOperation(Chromosome[] population) {
 
         double roll;

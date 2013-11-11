@@ -16,19 +16,19 @@ public class TimeSeriesForecast extends AbstractForecast{
     private double percentOfKeptFromMutation = 0.2;
 
     @Autowired
-    AbstractGeneticAlgorithmOperation selection;
+    private AbstractGeneticAlgorithmOperation selection;
 
     @Autowired
-    AbstractGeneticAlgorithmOperation crossover;
+    private AbstractGeneticAlgorithmOperation crossover;
 
     @Autowired
-    AbstractGeneticAlgorithmOperation mutation;
+    private AbstractGeneticAlgorithmOperation mutation;
 
     @Autowired
-    AbstractFitnessCalculator fitnessCalculator;
+    private AbstractFitnessCalculator fitnessCalculator;
 
     @Autowired
-    AbstractForecastCalculator forecastCalculator;
+    private AbstractForecastCalculator forecastCalculator;
 
     private TimeSeries timeSeries;
     private int populationSize;
@@ -72,11 +72,17 @@ public class TimeSeriesForecast extends AbstractForecast{
 
         Chromosome[] population = new Chromosome[populationSize];
 
+        int chromosomeSize = stw.getLength() + 1;
+
+        if(forecastCalculator instanceof ARMAForecastCalculator){
+            chromosomeSize += stw.getLength();
+        }
+
         Random random = new Random();
 
         for(int i = 0; i < population.length; i++){
 
-            double[] genes = new double[stw.getLength() + 1];
+            double[] genes = new double[chromosomeSize];
 
             for(int j = 0; j < genes.length; j++){
                 genes[j] = RANGE_MIN + (RANGE_MAX - RANGE_MIN) * random.nextDouble();
@@ -111,7 +117,6 @@ public class TimeSeriesForecast extends AbstractForecast{
     protected Chromosome doInBackground() throws Exception {
 
         globalBest = null;
-        double globalBestForecast = 0;
 
         Chromosome[] population = initializePopulation(populationSize, slidingTimeWindow);
         calculateFitnessForPopulation(population, timeSeries, slidingTimeWindow);
@@ -155,14 +160,8 @@ public class TimeSeriesForecast extends AbstractForecast{
 
             Chromosome best = findBestInPopulation(population);
 
-            double forecast = forecastCalculator.calculateForecast(timeSeries,
-                    slidingTimeWindow,
-                    best,
-                    timeSeries.getItemCount());
-
             if(globalBest == null || globalBest.getFitness() > best.getFitness()){
                 globalBest = best;
-                globalBestForecast = forecast;
             }
 
             for(GAObserver observer : obs){
