@@ -11,6 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import service.action.GAChartObserver;
 import service.chart.FitnessChart;
+import service.chart.TimeSeriesChart;
 
 import javax.swing.*;
 
@@ -54,19 +55,33 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
                     0.4,
                     0.4,
                     0.2);
-            forecast.initializeForecast(3);
+            forecast.initializeForecast(5);
         } catch (CloneNotSupportedException e1) {
             e1.printStackTrace();
         }
-
-        FitnessChart chart = new FitnessChart("Wykres");
         
-        chart.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        RefineryUtilities.centerFrameOnScreen(chart);
-        chart.setVisible(true);
+        TimeSeriesChart tmChart = new TimeSeriesChart();
+        
+        JFrame frame1 = new JFrame("TimeSeriesChart2");
+        frame1.setPreferredSize(new java.awt.Dimension(700,500));
+        frame1.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame1.add(tmChart);
+        frame1.pack();
+        RefineryUtilities.centerFrameOnScreen(frame1);
+        frame1.setVisible(true);
+        
+        
+        FitnessChart fitChart = new FitnessChart();
+               
+        JFrame frame2 = new JFrame("Fitness");
+        frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame2.add(fitChart);
+        frame2.pack();
+        RefineryUtilities.centerFrameOnScreen(frame2);
+        frame2.setVisible(true);
 
         //ChartObserver obserwuje algo i uaktualnia wykres
-        forecast.addObserver(new GAChartObserver(chart));
+        forecast.addObserver(new GAChartObserver(fitChart, tmChart, 5));
 
         //proponuje dodac drugiego observera ktory zapisze jakie geny wyszly na koncu
 

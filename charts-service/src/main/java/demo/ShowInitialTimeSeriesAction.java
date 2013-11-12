@@ -3,7 +3,6 @@ package demo;
 import org.jfree.ui.RefineryUtilities;
 
 import service.chart.TimeSeriesChart;
-import service.chart.TimeSeriesChartFrame;
 
 import javax.swing.*;
 
@@ -21,8 +20,15 @@ public class ShowInitialTimeSeriesAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	
+    	TimeSeriesChart panel = new TimeSeriesChart(Arrays.asList(window.getTimeSeries()));
 
-        JFrame frame = new TimeSeriesChartFrame(Arrays.asList(window.getTimeSeries()));
+        JFrame frame = new JFrame("TimeSeriesChart1");
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.add(panel);
+        frame.pack();
+        RefineryUtilities.centerFrameOnScreen(frame);
+        frame.setVisible(true);
     }
 
 }
