@@ -1,24 +1,22 @@
 // Created by üukasz Szarkowicz
 // 2013
 
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import javax.swing.JButton;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import javax.swing.JTable;
-import javax.swing.JTabbedPane;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JSlider;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class main extends JFrame {
 	private JTextField textField;
@@ -54,15 +52,32 @@ public class main extends JFrame {
 		setJMenuBar(menuBar);
 		
 		JButton Import = new JButton("Import");
+		Import.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Dzia¸a");
+			}
+		});
 		menuBar.add(Import);
 		
 		JButton btnCustomValues = new JButton("Custom values");
+		btnCustomValues.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		menuBar.add(btnCustomValues);
 		
 		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		menuBar.add(btnReset);
 		
 		JButton btnRun = new JButton("Run");
+		btnRun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		menuBar.add(btnRun);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -197,6 +212,7 @@ public class main extends JFrame {
 		
 		JPanel logsPanel = new JPanel();
 		tabbedPane.addTab("Logi", null, logsPanel, null);
+		
 		
 	}
 }
