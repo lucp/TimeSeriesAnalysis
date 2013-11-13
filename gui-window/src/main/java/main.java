@@ -1,11 +1,13 @@
 // Created by üukasz Szarkowicz
 // 2013
 
+import data.CSVDataAcquisitor;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -15,10 +17,16 @@ import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import org.jfree.data.time.TimeSeries;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 public class main extends JFrame {
+	
+	TimeSeries timeSeries;
+	
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -54,7 +62,19 @@ public class main extends JFrame {
 		JButton Import = new JButton("Import");
 		Import.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Dzia¸a");
+				System.out.println("Data import...\n");				
+				JFileChooser importFileChooser=new JFileChooser();
+				int returnVal = importFileChooser.showOpenDialog(main.this);
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		        	try{
+			            File file = importFileChooser.getSelectedFile();
+			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),1,12);
+			            main.this.timeSeries=csvDataAcquisitor.readData_TimeSeries();
+		        	}
+		        	catch(Exception e){
+		        		e.printStackTrace();
+		        	}
+		        } 
 			}
 		});
 		menuBar.add(Import);

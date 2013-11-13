@@ -11,7 +11,8 @@
         <module>forecasting</module>
         <module>forecasting-demo</module>
         <module>data_acquisition</module>
-    <module>charts-service</module>
-    <module>gui-window</module>
+    	<module>charts-service</module>
+    	<module>gui-window</module>
     </modules>
+	
 </project>

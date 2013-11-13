@@ -6,4 +6,13 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>gui-window</artifactId>
+  
+  <dependencies>
+      <dependency>
+        <groupId>TimeSeriesAnalysis</groupId>
+	 	<artifactId>data_acquisition</artifactId>
+  		<version>1.0-SNAPSHOT</version>
+      </dependency>
+  </dependencies>
+   
 </project>
