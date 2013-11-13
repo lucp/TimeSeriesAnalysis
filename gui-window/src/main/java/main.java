@@ -1,7 +1,6 @@
 // Created by üukasz Szarkowicz
 // 2013
 
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -185,12 +184,19 @@ public class main extends JFrame {
 		sliderMutacji.setBounds(611, 121, 190, 29);
 		panel.add(sliderMutacji);
 		
-		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Chart", null, tabbedPane_2, null);
+		// ============ STATYSTYKI =================
+		JPanel statisticsPanel = new JPanel();
+		tabbedPane.addTab("Statystyki", null, statisticsPanel, null);		
+		statisticsPanel.setLayout(null);
 		
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Logi", null, tabbedPane_1, null);
 		
+		JLabel parametr12 = new JLabel("Rozmiar populacji:");
+		parametr12.setBounds(28, 81, 134, 16);
+		statisticsPanel.add(parametr12);
+		
+		
+		JPanel logsPanel = new JPanel();
+		tabbedPane.addTab("Logi", null, logsPanel, null);
 		
 	}
 }
