@@ -2,6 +2,7 @@
 // 2013
 
 import data.CSVDataAcquisitor;
+import data.SwingTableDataAcquisitor;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -35,7 +36,7 @@ public class main extends JFrame {
 	
 	//----------------------------Genetic----------------------------
 	
-	TimeSeries timeSeries;
+	LinkedList<TimeSeries> timeSeries;
 	FitnessChart fitnessChart;
 	TimeSeriesChart timeSeriesChart;
 	GAChartObserver gaChartObserver;
@@ -73,6 +74,13 @@ public class main extends JFrame {
 	 * Create the frame.
 	 */
 	public main() {
+		
+		//--------------------------------MainFieldsInit-------------------------
+		
+		this.timeSeries=new LinkedList<TimeSeries>();
+		
+		//-----------------------------------------------------------------------
+		
 		setTitle("Time Series Analisys");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 870, 550);
@@ -90,7 +98,7 @@ public class main extends JFrame {
 		        	try{
 			            File file = importFileChooser.getSelectedFile();
 			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),1,12);
-			            main.this.timeSeries=csvDataAcquisitor.readData_TimeSeries();
+			            main.this.timeSeries.add(csvDataAcquisitor.readData_TimeSeries());
 		        	}
 		        	catch(Exception e){
 		        		e.printStackTrace();
@@ -271,10 +279,11 @@ public class main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//TODO saving current state
 				try{
-					
+					SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable, "yyyy-mm-dd");
+					timeSeries.add(tableAcq.readData_TimeSeries("nowy"));
 				}
 				catch(Exception exc){
-					
+					exc.printStackTrace();
 				}
 			}
 		});
