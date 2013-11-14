@@ -73,6 +73,7 @@ public class CSVDataAcquisitor
 		String[] nextLine;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(this.dateFormat);
 		while ((nextLine=this.csvreader.readNext())!=null){
+			int added=timeSeries.getItemCount();
 			try{
 				if (nextLine[this.valueTab].contains(",")){
 					nextLine[this.valueTab]=nextLine[this.valueTab].replaceAll(",",".");
@@ -81,7 +82,9 @@ public class CSVDataAcquisitor
 			}
 			catch (Exception e){
 				if (!timeSeries.isEmpty()){
-					timeSeries.clear();
+					if (timeSeries.getItemCount()!=added){
+						timeSeries.clear();
+					}
 				}
 			}
 		}
@@ -95,6 +98,7 @@ public class CSVDataAcquisitor
 		LinkedList<Double> list=new LinkedList<Double>();
 		String[] nextLine;
 		while ((nextLine=this.csvreader.readNext())!=null){
+			int added=list.size();
 			try{
 				if (nextLine[this.valueTab].contains(",")){
 					nextLine[this.valueTab]=nextLine[this.valueTab].replaceAll(",",".");
@@ -103,7 +107,9 @@ public class CSVDataAcquisitor
 			}
 			catch (Exception e){
 				if (!list.isEmpty()){
-					list.clear();
+					if (list.size()!=added){
+						list.clear();
+					}
 				}
 			}
 		}

@@ -37,6 +37,7 @@ public class main extends JFrame {
 	//----------------------------Genetic----------------------------
 	
 	LinkedList<TimeSeries> timeSeries;
+	TimeSeries currentTimeSeries;
 	FitnessChart fitnessChart;
 	TimeSeriesChart timeSeriesChart;
 	GAChartObserver gaChartObserver;
@@ -78,6 +79,7 @@ public class main extends JFrame {
 		//--------------------------------MainFieldsInit-------------------------
 		
 		this.timeSeries=new LinkedList<TimeSeries>();
+		this.currentTimeSeries=null;
 		
 		//-----------------------------------------------------------------------
 		
