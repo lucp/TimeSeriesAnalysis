@@ -13,8 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import org.jfree.data.time.TimeSeries;
@@ -37,9 +39,11 @@ public class main extends JFrame {
 	TimeSeriesChart timeSeriesChart;
 	GAChartObserver gaChartObserver;
 	
-	//-----------------------------Frame-----------------------------
+	//-----------------------------ImportantFrame---------------------------
 
+	JPanel dataTablePanel;
 	
+	//-----------------------------Frme-------------------------------------
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -66,8 +70,9 @@ public class main extends JFrame {
 	 * Create the frame.
 	 */
 	public main() {
+		setTitle("Time Series Analisys");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 870, 450);
+		setBounds(100, 100, 870, 550);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -117,7 +122,7 @@ public class main extends JFrame {
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Parametry", null, panel, null);
+		tabbedPane.addTab("Parameters", null, panel, null);
 		panel.setLayout(null);
 		
 		JLabel parametr1 = new JLabel("Rozmiar populacji:");
@@ -207,17 +212,17 @@ public class main extends JFrame {
 		
 		JLabel lblProcentPoSelekcji = new JLabel("Selekcji");
 		lblProcentPoSelekcji.setLabelFor(lblProcentPoSelekcji);
-		lblProcentPoSelekcji.setBounds(528, 71, 315, 16);
+		lblProcentPoSelekcji.setBounds(540, 71, 315, 16);
 		panel.add(lblProcentPoSelekcji);
 		
-		JLabel lblProcentPoKrzyzowaniu = new JLabel("Krzyýowaniu");
+		JLabel lblProcentPoKrzyzowaniu = new JLabel("Krzy\u017Cowaniu");
 		lblProcentPoKrzyzowaniu.setLabelFor(lblProcentPoKrzyzowaniu);
-		lblProcentPoKrzyzowaniu.setBounds(528, 101, 315, 16);
+		lblProcentPoKrzyzowaniu.setBounds(540, 101, 315, 16);
 		panel.add(lblProcentPoKrzyzowaniu);
 		
 		JLabel lblProcentPoMutacji= new JLabel("Mutacji");
 		lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
-		lblProcentPoMutacji.setBounds(528, 131, 315, 16);
+		lblProcentPoMutacji.setBounds(540, 131, 315, 16);
 		panel.add(lblProcentPoMutacji);
 		
 		JSlider sliderSelekcji = new JSlider();
@@ -232,8 +237,19 @@ public class main extends JFrame {
 		sliderMutacji.setBounds(611, 121, 190, 29);
 		panel.add(sliderMutacji);
 		
-		JPanel dataTablePanel = new JPanel();
+		//-------------------DataTable-------------------
+		
+		dataTablePanel = new JPanel();
 		tabbedPane.addTab("Data table", null, dataTablePanel, null);
+		
+		String[] columnNames = {"Date","Value"};
+		Object[][] data = {{"12-12-2013", new Double(1)}};
+		JTable dataTable = new JTable(data, columnNames);
+		
+		JScrollPane tableScrollPane = new JScrollPane(dataTable);
+		dataTable.setFillsViewportHeight(true);
+		
+		dataTablePanel.add(tableScrollPane);
 		
 		//-------------------Charts----------------------
 		
