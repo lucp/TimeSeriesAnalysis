@@ -19,13 +19,22 @@ import javax.swing.JTextField;
 
 import org.jfree.data.time.TimeSeries;
 
+import service.chart.TimeSeriesChart;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.LinkedList;
 
 public class main extends JFrame {
 	
+	//----------------------------Genetic----------------------------
+	
 	TimeSeries timeSeries;
+	
+	//-----------------------------Frame-----------------------------
+	
+	private TimeSeriesChart chartPanel;
 	
 	private JTextField textField;
 	private JTextField textField_1;
@@ -219,15 +228,15 @@ public class main extends JFrame {
 		sliderMutacji.setBounds(611, 121, 190, 29);
 		panel.add(sliderMutacji);
 		
+		//TODO chart-service
+		chartPanel = new TimeSeriesChart();
+		tabbedPane.addTab("Chart", null, chartPanel, null);
+		chartPanel.createChartPanel(new LinkedList<TimeSeries>(), 0);
+		
 		// ============ STATYSTYKI =================
 		JPanel statisticsPanel = new JPanel();
-		tabbedPane.addTab("Statystyki", null, statisticsPanel, null);		
+		tabbedPane.addTab("Statistics", null, statisticsPanel, null);		
 		statisticsPanel.setLayout(null);
-		
-		
-		JLabel parametr12 = new JLabel("Rozmiar populacji:");
-		parametr12.setBounds(28, 81, 134, 16);
-		statisticsPanel.add(parametr12);
 		
 		
 		JPanel logsPanel = new JPanel();
