@@ -18,6 +18,7 @@ import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import org.jfree.data.time.TimeSeries;
 
@@ -38,10 +39,12 @@ public class main extends JFrame {
 	FitnessChart fitnessChart;
 	TimeSeriesChart timeSeriesChart;
 	GAChartObserver gaChartObserver;
+	JTable dataTable;
 	
 	//-----------------------------ImportantFrame---------------------------
 
 	JPanel dataTablePanel;
+	JScrollPane tableScrollPane;
 	
 	//-----------------------------Frme-------------------------------------
 	private JTextField textField;
@@ -243,13 +246,52 @@ public class main extends JFrame {
 		tabbedPane.addTab("Data table", null, dataTablePanel, null);
 		
 		String[] columnNames = {"Date","Value"};
-		Object[][] data = {{"12-12-2013", new Double(1)}};
-		JTable dataTable = new JTable(data, columnNames);
+		//Object[][] data = {{"", new Double(0)}};
+		dataTablePanel.setLayout(null);
+		dataTable = new JTable(new DefaultTableModel(columnNames,1));
 		
-		JScrollPane tableScrollPane = new JScrollPane(dataTable);
+		tableScrollPane = new JScrollPane(dataTable);
+		tableScrollPane.setBounds(198, 5, 452, 427);
 		dataTable.setFillsViewportHeight(true);
 		
 		dataTablePanel.add(tableScrollPane);
+		
+		JButton btnAddDataRow = new JButton("Add data");
+		btnAddDataRow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model=(DefaultTableModel)dataTable.getModel();
+				model.addRow(new Object[]{"", ""});
+			}
+		});
+		btnAddDataRow.setBounds(10, 8, 113, 23);
+		dataTablePanel.add(btnAddDataRow);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO saving current state
+				try{
+					
+				}
+				catch(Exception exc){
+					
+				}
+			}
+		});
+		btnSave.setBounds(10, 76, 113, 23);
+		dataTablePanel.add(btnSave);
+		
+		JButton btnDeleteDataRow = new JButton("Delete data");
+		btnDeleteDataRow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel model=(DefaultTableModel)dataTable.getModel();
+				for (int i : dataTable.getSelectedRows()){
+					model.removeRow(dataTable.getSelectedRow());
+				}
+			}
+		});
+		btnDeleteDataRow.setBounds(10, 42, 113, 23);
+		dataTablePanel.add(btnDeleteDataRow);
 		
 		//-------------------Charts----------------------
 		
