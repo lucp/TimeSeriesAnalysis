@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 
 import org.jfree.data.time.TimeSeries;
 
+import service.action.GAChartObserver;
+import service.chart.FitnessChart;
 import service.chart.TimeSeriesChart;
 
 import java.awt.event.ActionListener;
@@ -31,10 +33,12 @@ public class main extends JFrame {
 	//----------------------------Genetic----------------------------
 	
 	TimeSeries timeSeries;
+	FitnessChart fitnessChart;
+	TimeSeriesChart timeSeriesChart;
+	GAChartObserver gaChartObserver;
 	
 	//-----------------------------Frame-----------------------------
-	
-	private TimeSeriesChart chartPanel;
+
 	
 	private JTextField textField;
 	private JTextField textField_1;
@@ -228,10 +232,18 @@ public class main extends JFrame {
 		sliderMutacji.setBounds(611, 121, 190, 29);
 		panel.add(sliderMutacji);
 		
+		JPanel dataTablePanel = new JPanel();
+		tabbedPane.addTab("Data table", null, dataTablePanel, null);
+		
+		//-------------------Charts----------------------
+		
 		//TODO chart-service
-		chartPanel = new TimeSeriesChart();
-		tabbedPane.addTab("Chart", null, chartPanel, null);
-		chartPanel.createChartPanel(new LinkedList<TimeSeries>(), 0);
+		timeSeriesChart = new TimeSeriesChart();
+		tabbedPane.addTab("Time Series Chart", null, timeSeriesChart, null);
+		timeSeriesChart.createChartPanel(new LinkedList<TimeSeries>(), 0);
+		
+		fitnessChart = new FitnessChart();
+		tabbedPane.addTab("Fitness Chart", null, fitnessChart, null);
 		
 		// ============ STATYSTYKI =================
 		JPanel statisticsPanel = new JPanel();
