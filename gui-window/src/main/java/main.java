@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -31,6 +32,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.LinkedList;
+import javax.swing.JComboBox;
 
 public class main extends JFrame {
 	
@@ -47,6 +49,7 @@ public class main extends JFrame {
 
 	JPanel dataTablePanel;
 	JScrollPane tableScrollPane;
+	JTextField dateFormatTextField;
 	
 	//-----------------------------Frme-------------------------------------
 	private JTextField textField;
@@ -281,8 +284,18 @@ public class main extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//TODO saving current state
 				try{
-					SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable, "yyyy-mm-dd");
-					timeSeries.add(tableAcq.readData_TimeSeries("nowy"));
+					if (currentTimeSeries!=null){
+						String df=dateFormatTextField.getText();
+						currentTimeSeries.clear();
+						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
+						currentTimeSeries=tableAcq.readData_TimeSeries(currentTimeSeries.getDescription());
+					}
+					else{
+						String df=dateFormatTextField.getText();
+						String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
+						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
+						timeSeries.add(tableAcq.readData_TimeSeries(name));
+					}
 				}
 				catch(Exception exc){
 					exc.printStackTrace();
@@ -303,6 +316,41 @@ public class main extends JFrame {
 		});
 		btnDeleteDataRow.setBounds(10, 42, 113, 23);
 		dataTablePanel.add(btnDeleteDataRow);
+		
+		JComboBox dataComboBox = new JComboBox();
+		dataComboBox.setBounds(660, 9, 179, 20);
+		dataTablePanel.add(dataComboBox);
+		
+		JButton btnSaveAs = new JButton("Save as...");
+		btnSaveAs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					String df=dateFormatTextField.getText();
+					String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
+					SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
+					timeSeries.add(tableAcq.readData_TimeSeries(name));
+				}
+				catch(Exception exc){
+					exc.printStackTrace();
+				}
+			}
+		});
+		btnSaveAs.setBounds(10, 110, 113, 23);
+		dataTablePanel.add(btnSaveAs);
+		
+		JButton btnImport = new JButton("Import");
+		btnImport.setBounds(10, 144, 113, 23);
+		dataTablePanel.add(btnImport);
+		
+		dateFormatTextField = new JTextField();
+		dateFormatTextField.setText("yyyy-mm-dd");
+		dateFormatTextField.setBounds(743, 45, 96, 20);
+		dataTablePanel.add(dateFormatTextField);
+		dateFormatTextField.setColumns(10);
+		
+		JLabel dateFormatLabel = new JLabel("Date format:");
+		dateFormatLabel.setBounds(660, 48, 86, 14);
+		dataTablePanel.add(dateFormatLabel);
 		
 		//-------------------Charts----------------------
 		
