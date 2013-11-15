@@ -2,6 +2,7 @@ package demo.gui;
 
 import demo.action.ShowInitialTimeSeriesAction;
 import demo.action.ShowTimeSeriesWithForecastAction;
+import demo.action.ShowTimeSeriesWithForecastConcurrentAction;
 import mock.MockTimeSeries;
 import org.jfree.data.time.TimeSeries;
 
@@ -34,6 +35,10 @@ public class MainWindow extends JFrame{
         JButton showTimeSeriesWithForecast = new JButton("Show time series with forecast");
         showTimeSeriesWithForecast.addActionListener(new ShowTimeSeriesWithForecastAction(this));
         buttonPanel.add(showTimeSeriesWithForecast);
+
+        JButton showTimeSeriesWithForecastConcurrent = new JButton("Show time series with forecast concurrent");
+        showTimeSeriesWithForecastConcurrent.addActionListener(new ShowTimeSeriesWithForecastConcurrentAction(this));
+        buttonPanel.add(showTimeSeriesWithForecastConcurrent);
 
         this.add(buttonPanel, BorderLayout.CENTER);
 

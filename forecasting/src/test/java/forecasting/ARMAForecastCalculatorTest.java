@@ -1,14 +1,15 @@
 package forecasting;
 
-import mock.MockTimeSeries;
 import forecasting.model.Chromosome;
 import forecasting.model.SlidingTimeWindow;
+import mock.MockTimeSeries;
 import org.jfree.data.time.TimeSeries;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-public class LinearCombinationForecastCalculatorTest {
+public class ARMAForecastCalculatorTest {
     @Test
     public void testCalculateForecast() throws Exception {
 
@@ -16,9 +17,9 @@ public class LinearCombinationForecastCalculatorTest {
 
         SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{1, 2, 3});
 
-        AbstractForecastCalculator calculator = new LinearCombinationForecastCalculator();
+        AbstractForecastCalculator calculator = new ARMAForecastCalculator();
 
-        Chromosome chromosome = new Chromosome(new double[]{-0.5, 1, 0.5, 0.2});
+        Chromosome chromosome = new Chromosome(new double[]{-0.5, 1, 0.5, 0.2, -0.5, 1, 0.5, 0.2});
 
         assertEquals(53.5, calculator.calculateForecast(timeSeries,
                 slidingTimeWindow,
@@ -26,7 +27,7 @@ public class LinearCombinationForecastCalculatorTest {
                 3),
                 0.00001);
 
-        assertEquals(42.5, calculator.calculateForecast(timeSeries,
+        assertEquals(59.25, calculator.calculateForecast(timeSeries,
                 slidingTimeWindow,
                 chromosome,
                 4),

@@ -30,11 +30,11 @@ package forecasting;
 import forecasting.model.Chromosome;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Klasa implementuje operacje mutacji jako perturbacje Gaussa
- */
-public class GaussianPerturbation implements AbstractGeneticAlgorithmOperation {
+public class ConcurrentGaussianPerturbation implements AbstractGeneticAlgorithmOperation {
 
     private double probability = 1.0;
 
@@ -56,14 +56,56 @@ public class GaussianPerturbation implements AbstractGeneticAlgorithmOperation {
      */
     public Chromosome[] performGeneticOperation(Chromosome[] population) {
 
-        double roll;
         Random rand = new Random();
         Chromosome[] newPopulation = new Chromosome[population.length];
 
-        for(int i = 0; i < population.length; i++){
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        for (int i = 0; i < population.length; i++) {
+
+            Runnable worker = new MutationOperation(i,
+                    rand,
+                    population,
+                    newPopulation);
+
+            executor.execute(worker);
+        }
+
+        executor.shutdown();
+
+        try {
+            executor.awaitTermination(100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return newPopulation;
+    }
+
+    private class MutationOperation extends Thread{
+
+        private int i;
+        private Random rand;
+        private Chromosome[] population;
+        private Chromosome[] newPopulation;
+
+        private MutationOperation(int i,
+                                   Random rand,
+                                   Chromosome[] population,
+                                   Chromosome[] newPopulation){
+            this.i = i;
+            this.rand = rand;
+            this.population = population;
+            this.newPopulation = newPopulation;
+        }
+
+        @Override
+        public void run() {
 
             Chromosome chromosome = new Chromosome(population[i].getGenes());
             newPopulation[i] = chromosome;
+
+            double roll;
 
             for(int j = 0; j < chromosome.getSize(); j++){
                 roll = rand.nextDouble();
@@ -71,8 +113,7 @@ public class GaussianPerturbation implements AbstractGeneticAlgorithmOperation {
                     chromosome.addToGene(j, rand.nextGaussian());
                 }
             }
-
         }
-        return newPopulation;
     }
 }
+

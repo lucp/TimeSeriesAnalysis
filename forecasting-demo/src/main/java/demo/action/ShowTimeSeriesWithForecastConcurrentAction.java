@@ -17,11 +17,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ShowTimeSeriesWithForecastAction implements ActionListener {
+public class ShowTimeSeriesWithForecastConcurrentAction implements ActionListener {
 
     MainWindow window;
 
-    public ShowTimeSeriesWithForecastAction(MainWindow window){
+    public ShowTimeSeriesWithForecastConcurrentAction(MainWindow window){
         this.window = window;
     }
 
@@ -34,6 +34,8 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
         //GASettings.getInstance().setSelectionMethod(SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION);
         //GASettings.getInstance().setForecastMethod(ForecastMethod.ARMA_FORECAST);
+
+        GASettings.getInstance().setConcurrent(true);
 
         ApplicationContext context = new AnnotationConfigApplicationContext(ForecastConfig.class);
         AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");

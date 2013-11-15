@@ -30,11 +30,11 @@ package forecasting;
 import forecasting.model.Chromosome;
 
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
-/**
- * Klasa implemetuje krzyzowanie arytmetyczne
- */
-public class ArithmeticalCrossover implements AbstractGeneticAlgorithmOperation {
+public class ConcurrentArithmeticalCrossover implements AbstractGeneticAlgorithmOperation {
 
     private double probability = 1.0;
 
@@ -85,11 +85,54 @@ public class ArithmeticalCrossover implements AbstractGeneticAlgorithmOperation 
             matchNo++;
         }
 
-        double lambda;
-        int newPopulationIndex = 0;
         Chromosome[] newPopulation = new Chromosome[population.length];
 
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
         for (int i = 0; i < crossTabSize; i++) {
+
+            Runnable worker = new CrossoverOperation(i,
+                    rand,
+                    crossTab1,
+                    crossTab2,
+                    newPopulation);
+
+            executor.execute(worker);
+        }
+
+        executor.shutdown();
+
+        try {
+            executor.awaitTermination(100, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return newPopulation;
+    }
+
+    private class CrossoverOperation extends Thread{
+
+        private int i;
+        private Random rand;
+        private Chromosome[] crossTab1;
+        private Chromosome[] crossTab2;
+        private Chromosome[] newPopulation;
+
+        private CrossoverOperation(int i,
+                                  Random rand,
+                                  Chromosome[] crossTab1,
+                                  Chromosome[] crossTab2,
+                                  Chromosome[] newPopulation){
+            this.i = i;
+            this.rand = rand;
+            this.crossTab1 = crossTab1;
+            this.crossTab2 = crossTab2;
+            this.newPopulation = newPopulation;
+        }
+
+        @Override
+        public void run() {
 
             Chromosome parent1 = crossTab1[i];
             Chromosome parent2 = crossTab2[i];
@@ -98,7 +141,7 @@ public class ArithmeticalCrossover implements AbstractGeneticAlgorithmOperation 
 
             if(roll <= probability){
 
-                lambda = rand.nextDouble();
+                double lambda = rand.nextDouble();
 
                 double[] offspring1Genes = new double[parent1.getSize()];
                 double[] offspring2Genes = new double[parent2.getSize()];
@@ -111,15 +154,13 @@ public class ArithmeticalCrossover implements AbstractGeneticAlgorithmOperation 
                 Chromosome offspring1 = new Chromosome(offspring1Genes);
                 Chromosome offspring2 = new Chromosome(offspring2Genes);
 
-                newPopulation[newPopulationIndex++] = offspring1;
-                newPopulation[newPopulationIndex++] = offspring2;
+                newPopulation[2 * i] = offspring1;
+                newPopulation[(2 * i) + 1] = offspring2;
 
             }else{
-                newPopulation[newPopulationIndex++] = parent1;
-                newPopulation[newPopulationIndex++] = parent2;
+                newPopulation[2 * i] = parent1;
+                newPopulation[(2 * i) + 1] = parent2;
             }
         }
-
-        return newPopulation;
     }
 }
