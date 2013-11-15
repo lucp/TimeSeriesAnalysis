@@ -29,7 +29,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.LinkedList;
+
 import javax.swing.JComboBox;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
 
@@ -59,6 +62,8 @@ public class main extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	
+	private ChangeListener listener;
 
 	/**
 	 * Launch the application.
@@ -145,15 +150,17 @@ public class main extends JFrame {
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JSlider slider = new JSlider();
+		JSlider slider = new JSlider(0,100);
 		slider.setBounds(28, 165, 190, 29);
+		slider.addChangeListener(listener);
+		
 		panel.add(slider);
 		
 		JLabel lblNewLabel = new JLabel("Prawdopodobie\u0144stwo krzy\u017Cowania:");
 		lblNewLabel.setBounds(28, 205, 266, 16);
 		panel.add(lblNewLabel);
 		
-		JSlider slider_1 = new JSlider();
+		JSlider slider_1 = new JSlider(0,100);
 		slider_1.setBounds(28, 225, 190, 29);
 		panel.add(slider_1);
 		
@@ -204,35 +211,50 @@ public class main extends JFrame {
 		panel.add(textField_4);
 		textField_4.setColumns(10);
 		
-		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Procent osobnik�w pozostwionych po:");
+		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Procent osobnikow pozostwionych po:");
 		lblProcentOsobnikwPozostwionych.setBounds(528, 34, 298, 16);
 		panel.add(lblProcentOsobnikwPozostwionych);
 		
 		JLabel lblProcentPoSelekcji = new JLabel("Selekcji");
 		lblProcentPoSelekcji.setLabelFor(lblProcentPoSelekcji);
-		lblProcentPoSelekcji.setBounds(540, 71, 315, 16);
+		lblProcentPoSelekcji.setBounds(540, 71, 80, 16);
 		panel.add(lblProcentPoSelekcji);
 		
 		JLabel lblProcentPoKrzyzowaniu = new JLabel("Krzy\u017Cowaniu");
 		lblProcentPoKrzyzowaniu.setLabelFor(lblProcentPoKrzyzowaniu);
-		lblProcentPoKrzyzowaniu.setBounds(540, 101, 315, 16);
+		lblProcentPoKrzyzowaniu.setBounds(540, 101, 80, 16);
 		panel.add(lblProcentPoKrzyzowaniu);
 		
 		JLabel lblProcentPoMutacji= new JLabel("Mutacji");
 		lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
-		lblProcentPoMutacji.setBounds(540, 131, 315, 16);
+		lblProcentPoMutacji.setBounds(540, 131, 80, 16);
 		panel.add(lblProcentPoMutacji);
 		
-		JSlider sliderSelekcji = new JSlider();
+		// Listener dla kolejnych sliderow
+		listener = new ChangeListener() {
+			public void stateChanged(ChangeEvent event) 
+			{
+				JSlider source = (JSlider) event.getSource();
+				if (!source.getValueIsAdjusting()) {
+					int value = (int)source.getValue();
+					System.out.println(value);
+				}
+			}
+		};
+	
+		JSlider sliderSelekcji = new JSlider(0,100,0);
 		sliderSelekcji.setBounds(611, 61, 190, 29);
+		sliderSelekcji.addChangeListener(listener);
 		panel.add(sliderSelekcji);
 		
-		JSlider sliderKrzyzowania = new JSlider();
+		JSlider sliderKrzyzowania = new JSlider(0,100,0);
 		sliderKrzyzowania.setBounds(611, 91, 190, 29);
+		sliderKrzyzowania.addChangeListener(listener);
 		panel.add(sliderKrzyzowania);
 		
-		JSlider sliderMutacji = new JSlider();
+		JSlider sliderMutacji = new JSlider(0,100,0);
 		sliderMutacji.setBounds(611, 121, 190, 29);
+		sliderMutacji.addChangeListener(listener);
 		panel.add(sliderMutacji);
 		
 		//-------------------DataTable-------------------
