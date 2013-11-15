@@ -96,26 +96,6 @@ public class main extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JButton Import = new JButton("Import");
-		Import.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Data import...\n");				
-				JFileChooser importFileChooser=new JFileChooser();
-				int returnVal = importFileChooser.showOpenDialog(main.this);
-		        if (returnVal == JFileChooser.APPROVE_OPTION) {
-		        	try{
-			            File file = importFileChooser.getSelectedFile();
-			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),1,12);
-			            main.this.timeSeries.add(csvDataAcquisitor.readData_TimeSeries());
-		        	}
-		        	catch(Exception e){
-		        		e.printStackTrace();
-		        	}
-		        } 
-			}
-		});
-		menuBar.add(Import);
-		
 		JButton btnCustomValues = new JButton("Custom values");
 		btnCustomValues.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
