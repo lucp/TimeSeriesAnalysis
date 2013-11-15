@@ -37,7 +37,7 @@
         </dependency>
 
         <dependency>
-            <groupId>TimeSeriesAnalysis</groupId>
+            <groupId>charts-service</groupId>
             <artifactId>charts-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
