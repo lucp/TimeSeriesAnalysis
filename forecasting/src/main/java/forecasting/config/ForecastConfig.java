@@ -12,23 +12,42 @@ public class ForecastConfig {
 
     @Bean
     public AbstractGeneticAlgorithmOperation selection() {
-        if(GASettings.getInstance().getSelectionMethod() == SelectionMethod.ROULETTE_WHEEL_SELECTION){
-            return new RouletteWheelSelection();
+        GASettings settings = GASettings.getInstance();
+        if(settings.getSelectionMethod() == SelectionMethod.ROULETTE_WHEEL_SELECTION){
+            if(settings.isConcurrent()){
+                return new ConcurrentRouletteWheelSelection();
+            }else{
+                return new RouletteWheelSelection();
+            }
         }
-        if(GASettings.getInstance().getSelectionMethod() == SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION){
-            return new StochasticUniversalSamplingSelection();
+        if(settings.getSelectionMethod() == SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION){
+            if(settings.isConcurrent()){
+                return new ConcurrentStochasticUniversalSamplingSelection();
+            }else{
+                return new StochasticUniversalSamplingSelection();
+            }
         }
         return null;
     }
 
     @Bean
     public AbstractGeneticAlgorithmOperation crossover(){
-        return new ArithmeticalCrossover();
+        GASettings settings = GASettings.getInstance();
+        if(settings.isConcurrent()){
+            return new ConcurrentArithmeticalCrossover();
+        }else{
+            return new ArithmeticalCrossover();
+        }
     }
 
     @Bean
     public AbstractGeneticAlgorithmOperation mutation(){
-        return new GaussianPerturbation();
+        GASettings settings = GASettings.getInstance();
+        if(settings.isConcurrent()){
+            return new ConcurrentGaussianPerturbation();
+        }else{
+            return new GaussianPerturbation();
+        }
     }
 
     @Bean
