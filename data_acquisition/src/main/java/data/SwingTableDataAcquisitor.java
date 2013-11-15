@@ -2,6 +2,7 @@ package data;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -47,5 +48,16 @@ public class SwingTableDataAcquisitor {
 		return timeSeries;
 	}
 	
-	//public 
+	public static void updateJTable(JTable table,TimeSeries series,String dateFormat) throws Exception{
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		while (model.getRowCount()!=0){
+			model.removeRow(0);
+		}
+		if (!series.isEmpty()){
+			SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
+			for (int i=0;i<series.getItemCount();i++){
+				model.addRow(new Object[]{(String)dateFormatter.format(series.getTimePeriod(i).getStart()),Double.toString(series.getValue(i).doubleValue())});
+			}
+		}
+	}
 }

@@ -290,18 +290,20 @@ public class main extends JFrame {
 					if (currentTimeSeries!=null){
 						String df=dateFormatTextField.getText();
 						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
-						currentTimeSeries=tableAcq.readData_TimeSeries(currentTimeSeries.toString());
+						currentTimeSeries=tableAcq.readData_TimeSeries((String)currentTimeSeries.getKey());
 						dataComboBox.firePopupMenuWillBecomeVisible();
 						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 					}
 					else{
 						String df=dateFormatTextField.getText();
 						String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
-						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
-						timeSeries.add(tableAcq.readData_TimeSeries(name));
-						currentTimeSeries=timeSeries.getLast();
-						dataComboBox.firePopupMenuWillBecomeVisible();
-						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+						if (name!=null){
+							SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
+							timeSeries.add(tableAcq.readData_TimeSeries(name));
+							currentTimeSeries=timeSeries.getLast();
+							dataComboBox.firePopupMenuWillBecomeVisible();
+							dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+						}
 					}
 				}
 				catch(Exception exc){
@@ -329,7 +331,15 @@ public class main extends JFrame {
 			public void popupMenuCanceled(PopupMenuEvent e) {
 			}
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-				
+				try{
+					if (!timeSeries.isEmpty()){
+						currentTimeSeries=timeSeries.get(dataComboBox.getSelectedIndex());
+						SwingTableDataAcquisitor.updateJTable(dataTable,currentTimeSeries,dateFormatTextField.getText());
+					}
+				}
+				catch(Exception exc){
+					exc.printStackTrace();
+				}
 			}
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 				dataComboBox.removeAllItems();
@@ -349,11 +359,13 @@ public class main extends JFrame {
 				try{
 					String df=dateFormatTextField.getText();
 					String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
-					SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
-					timeSeries.add(tableAcq.readData_TimeSeries(name));
-					currentTimeSeries=timeSeries.getLast();
-					dataComboBox.firePopupMenuWillBecomeVisible();
-					dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+					if (name!=null){
+						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
+						timeSeries.add(tableAcq.readData_TimeSeries(name));
+						currentTimeSeries=timeSeries.getLast();
+						dataComboBox.firePopupMenuWillBecomeVisible();
+						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+					}
 				}
 				catch(Exception exc){
 					exc.printStackTrace();
@@ -364,6 +376,27 @@ public class main extends JFrame {
 		dataTablePanel.add(btnSaveAs);
 		
 		JButton btnImport = new JButton("Import");
+		btnImport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//TODO import
+				JFileChooser importFileChooser=new JFileChooser();
+				int returnVal = importFileChooser.showOpenDialog(main.this);
+		        if (returnVal == JFileChooser.APPROVE_OPTION) {
+		        	try{
+			            File file = importFileChooser.getSelectedFile();
+			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),1,12);
+			            timeSeries.add(csvDataAcquisitor.readData_TimeSeries());
+			            currentTimeSeries=timeSeries.getLast();
+			            dataComboBox.firePopupMenuWillBecomeVisible();
+						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+						SwingTableDataAcquisitor.updateJTable(dataTable, currentTimeSeries, dateFormatTextField.getText());
+		        	}
+		        	catch(Exception exc){
+		        		exc.printStackTrace();
+		        	}
+		        } 
+			}
+		});
 		btnImport.setBounds(10, 144, 113, 23);
 		dataTablePanel.add(btnImport);
 		
