@@ -80,9 +80,13 @@ public abstract class AbstractForecast extends SwingWorker<Chromosome, Double[]>
      * Oblicz predykcje
      *
      * @param timeSeries Szereg czasowy dla ktorego ma zostac wykonana predykcja
+     * @param slidingTimeWindow Okno czasowe
      * @param numOfDataPoints Liczba punktow czasowych dla ktorych ma zostac wykonana predykcja
      * @param genes Rozwiazanie ktore ma byc uzyte w predykcji
      * @return Szereg czasowy powiekszony o predykcje
      */
-    public abstract TimeSeries doForecast(TimeSeries timeSeries, int numOfDataPoints, double[] genes);
+    public abstract TimeSeries doForecast(TimeSeries timeSeries,
+                                          SlidingTimeWindow slidingTimeWindow,
+                                          int numOfDataPoints,
+                                          double[] genes);
 }

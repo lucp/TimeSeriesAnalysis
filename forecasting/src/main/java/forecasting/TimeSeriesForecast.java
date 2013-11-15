@@ -200,7 +200,10 @@ public class TimeSeriesForecast extends AbstractForecast{
     }
 
     @Override
-    public TimeSeries doForecast(TimeSeries timeSeries, int numOfDataPoints, double[] genes){
+    public TimeSeries doForecast(TimeSeries timeSeries,
+                                 SlidingTimeWindow slidingTimeWindow,
+                                 int numOfDataPoints,
+                                 double[] genes){
 
         Chromosome chromosome = new Chromosome(genes);
 
@@ -224,7 +227,7 @@ public class TimeSeriesForecast extends AbstractForecast{
     protected void done() {
 
         if(doForecast){
-            doForecast(timeSeries, numOfDataPoints, globalBest.getGenes());
+            doForecast(timeSeries, slidingTimeWindow, numOfDataPoints, globalBest.getGenes());
         }
 
         for(GAObserver observer : obs){
