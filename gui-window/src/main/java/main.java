@@ -1,6 +1,3 @@
-// Created by üukasz Szarkowicz
-// 2013
-
 import data.CSVDataAcquisitor;
 import data.SwingTableDataAcquisitor;
 
@@ -53,6 +50,8 @@ public class main extends JFrame {
 	JScrollPane tableScrollPane;
 	JTextField dateFormatTextField;
 	JComboBox<String> dataComboBox;
+	JTextField valueColumnTextField;
+	JTextField timeColumnTextField;
 	
 	//-----------------------------Frme-------------------------------------
 	private JTextField textField;
@@ -205,7 +204,7 @@ public class main extends JFrame {
 		panel.add(textField_4);
 		textField_4.setColumns(10);
 		
-		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Procent osobnik—w pozostwionych po:");
+		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Procent osobnikï¿½w pozostwionych po:");
 		lblProcentOsobnikwPozostwionych.setBounds(528, 34, 298, 16);
 		panel.add(lblProcentOsobnikwPozostwionych);
 		
@@ -288,6 +287,7 @@ public class main extends JFrame {
 				}
 				catch(Exception exc){
 					exc.printStackTrace();
+					JOptionPane.showMessageDialog(dataTablePanel,"Table data parse error","Error",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -349,6 +349,7 @@ public class main extends JFrame {
 				}
 				catch(Exception exc){
 					exc.printStackTrace();
+					JOptionPane.showMessageDialog(dataTablePanel,"Table data parse error","Error",JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -358,13 +359,12 @@ public class main extends JFrame {
 		JButton btnImport = new JButton("Import");
 		btnImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO import
 				JFileChooser importFileChooser=new JFileChooser();
 				int returnVal = importFileChooser.showOpenDialog(main.this);
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		        	try{
 			            File file = importFileChooser.getSelectedFile();
-			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),1,12);
+			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),Integer.parseInt(timeColumnTextField.getText()),Integer.parseInt(valueColumnTextField.getText())); //TODO wybranie column
 			            timeSeries.add(csvDataAcquisitor.readData_TimeSeries());
 			            currentTimeSeries=timeSeries.getLast();
 			            dataComboBox.firePopupMenuWillBecomeVisible();
@@ -373,15 +373,16 @@ public class main extends JFrame {
 		        	}
 		        	catch(Exception exc){
 		        		exc.printStackTrace();
+		        		JOptionPane.showMessageDialog(dataTablePanel,"File parsing error","Error",JOptionPane.ERROR_MESSAGE);
 		        	}
 		        } 
 			}
 		});
-		btnImport.setBounds(10, 144, 113, 23);
+		btnImport.setBounds(10, 175, 113, 23);
 		dataTablePanel.add(btnImport);
 		
 		dateFormatTextField = new JTextField();
-		dateFormatTextField.setText("yyyy-mm-dd");
+		dateFormatTextField.setText("yyyy-MM-dd");
 		dateFormatTextField.setBounds(743, 45, 96, 20);
 		dataTablePanel.add(dateFormatTextField);
 		dateFormatTextField.setColumns(10);
@@ -389,6 +390,22 @@ public class main extends JFrame {
 		JLabel dateFormatLabel = new JLabel("Date format:");
 		dateFormatLabel.setBounds(660, 48, 86, 14);
 		dataTablePanel.add(dateFormatLabel);
+		
+		valueColumnTextField = new JTextField();
+		valueColumnTextField.setText("1");
+		valueColumnTextField.setBounds(62, 231, 42, 20);
+		dataTablePanel.add(valueColumnTextField);
+		valueColumnTextField.setColumns(10);
+		
+		timeColumnTextField = new JTextField();
+		timeColumnTextField.setText("0");
+		timeColumnTextField.setBounds(10, 231, 42, 20);
+		dataTablePanel.add(timeColumnTextField);
+		timeColumnTextField.setColumns(10);
+		
+		JLabel lblImportColumns = new JLabel("Import columns (date-value):");
+		lblImportColumns.setBounds(10, 209, 178, 14);
+		dataTablePanel.add(lblImportColumns);
 		
 		//-------------------Charts----------------------
 		
