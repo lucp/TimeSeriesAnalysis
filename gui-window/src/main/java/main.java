@@ -33,6 +33,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.LinkedList;
 import javax.swing.JComboBox;
+import javax.swing.event.PopupMenuListener;
+import javax.swing.event.PopupMenuEvent;
 
 public class main extends JFrame {
 	
@@ -50,6 +52,7 @@ public class main extends JFrame {
 	JPanel dataTablePanel;
 	JScrollPane tableScrollPane;
 	JTextField dateFormatTextField;
+	JComboBox<String> dataComboBox;
 	
 	//-----------------------------Frme-------------------------------------
 	private JTextField textField;
@@ -286,15 +289,19 @@ public class main extends JFrame {
 				try{
 					if (currentTimeSeries!=null){
 						String df=dateFormatTextField.getText();
-						currentTimeSeries.clear();
 						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
-						currentTimeSeries=tableAcq.readData_TimeSeries(currentTimeSeries.getDescription());
+						currentTimeSeries=tableAcq.readData_TimeSeries(currentTimeSeries.toString());
+						dataComboBox.firePopupMenuWillBecomeVisible();
+						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 					}
 					else{
 						String df=dateFormatTextField.getText();
 						String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
 						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
 						timeSeries.add(tableAcq.readData_TimeSeries(name));
+						currentTimeSeries=timeSeries.getLast();
+						dataComboBox.firePopupMenuWillBecomeVisible();
+						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 					}
 				}
 				catch(Exception exc){
@@ -309,7 +316,7 @@ public class main extends JFrame {
 		btnDeleteDataRow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel model=(DefaultTableModel)dataTable.getModel();
-				for (int i : dataTable.getSelectedRows()){
+				for (@SuppressWarnings("unused") int i : dataTable.getSelectedRows()){
 					model.removeRow(dataTable.getSelectedRow());
 				}
 			}
@@ -317,7 +324,22 @@ public class main extends JFrame {
 		btnDeleteDataRow.setBounds(10, 42, 113, 23);
 		dataTablePanel.add(btnDeleteDataRow);
 		
-		JComboBox dataComboBox = new JComboBox();
+		dataComboBox = new JComboBox<String>();
+		dataComboBox.addPopupMenuListener(new PopupMenuListener() {
+			public void popupMenuCanceled(PopupMenuEvent e) {
+			}
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+				
+			}
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+				dataComboBox.removeAllItems();
+				if (!timeSeries.isEmpty()){
+					for (int i=0;i<timeSeries.size();i++){
+						dataComboBox.addItem((String)timeSeries.get(i).getKey());
+					}
+				}
+			}
+		});
 		dataComboBox.setBounds(660, 9, 179, 20);
 		dataTablePanel.add(dataComboBox);
 		
@@ -329,6 +351,9 @@ public class main extends JFrame {
 					String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
 					SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
 					timeSeries.add(tableAcq.readData_TimeSeries(name));
+					currentTimeSeries=timeSeries.getLast();
+					dataComboBox.firePopupMenuWillBecomeVisible();
+					dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 				}
 				catch(Exception exc){
 					exc.printStackTrace();

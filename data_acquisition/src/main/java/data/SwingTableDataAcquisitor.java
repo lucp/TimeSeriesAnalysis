@@ -46,4 +46,6 @@ public class SwingTableDataAcquisitor {
 		}
 		return timeSeries;
 	}
+	
+	//public 
 }
