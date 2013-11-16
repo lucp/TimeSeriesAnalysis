@@ -17,6 +17,7 @@ import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import org.jfree.data.time.TimeSeries;
@@ -34,7 +35,7 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
 
 public class main extends JFrame {
-	
+		
 	//----------------------------Genetic----------------------------
 	
 	LinkedList<TimeSeries> timeSeries;
@@ -63,9 +64,15 @@ public class main extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				try {			        
+				    UIManager.setLookAndFeel(
+				        UIManager.getSystemLookAndFeelClassName());
+				}catch (Exception e){}
+				
 				try {
 					main frame = new main();
 					frame.setVisible(true);

@@ -2,7 +2,10 @@ package data_tst;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import org.jfree.data.time.TimeSeries;
 import org.junit.Assert;
@@ -47,5 +50,15 @@ public class DataAcqTst {
 		SimpleDataAcquisitor sda=new SimpleDataAcquisitor("res\\simple1.txt");
 		TimeSeries ts=sda.readData_TimeSeries();
 		Assert.assertEquals(ts.getItemCount(),9);
+	}
+	@Test
+	public void linkedListTst() throws Exception{
+		LinkedList<Integer> list=new LinkedList<Integer>();
+		list.add(new Integer(1));
+		list.add(new Integer(2));
+		list.add(new Integer(3));
+		Integer i=list.get(1);
+		i=8;
+		Assert.assertEquals(((Integer)list.get(1)).intValue(),((Integer)8).intValue());
 	}
 }
