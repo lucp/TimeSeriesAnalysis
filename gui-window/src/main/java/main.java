@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+import javax.swing.ButtonGroup;
 
 import org.jfree.data.time.TimeSeries;
 
@@ -193,11 +194,16 @@ public class main extends JFrame {
 		
 		JRadioButton rdbtnMetoda = new JRadioButton("Roulette");
 		rdbtnMetoda.setBounds(317, 70, 141, 23);
+		rdbtnMetoda.setSelected(true);
 		panel.add(rdbtnMetoda);
 		
 		JRadioButton rdbtnMetoda_1 = new JRadioButton("Stochastic Universal Sampling");
 		rdbtnMetoda_1.setBounds(317, 97, 221, 23);
 		panel.add(rdbtnMetoda_1);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnMetoda);
+		group.add(rdbtnMetoda_1);
 		
 		JLabel lblOkresPredykacji = new JLabel("Period of prediction");
 		lblOkresPredykacji.setBounds(297, 149, 170, 16);
