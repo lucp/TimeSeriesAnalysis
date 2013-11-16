@@ -18,6 +18,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 import org.jfree.data.time.TimeSeries;
 
@@ -28,6 +29,7 @@ import service.chart.TimeSeriesChart;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.LinkedList;
 
 import javax.swing.JComboBox;
@@ -35,6 +37,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
+import javax.swing.JFormattedTextField;
 
 public class main extends JFrame {
 	
@@ -57,9 +60,9 @@ public class main extends JFrame {
 	JTextField timeColumnTextField;
 	
 	//-----------------------------Frme-------------------------------------
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JFormattedTextField textField;
+	private JFormattedTextField textField_1;
+	private JFormattedTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	
@@ -140,12 +143,24 @@ public class main extends JFrame {
 		parametr3.setBounds(28, 145, 266, 16);
 		panel.add(parametr3);
 		
-		textField = new JTextField();
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter formatter = new NumberFormatter(format);
+		formatter.setValueClass(Integer.class);
+		formatter.setMinimum(10);
+		formatter.setMaximum(1000);
+		formatter.setCommitsOnValidEdit(true);
+		textField = new JFormattedTextField(formatter);
+		textField.setToolTipText("(10-1000)");
+		textField.setText("100");
 		textField.setBounds(160, 75, 134, 28);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
+		formatter.setMinimum(0);
+		formatter.setMaximum(10000);
+		textField_1 = new JFormattedTextField(formatter);
+		textField_1.setToolTipText("<10000");
+		textField_1.setText("1000");
 		textField_1.setBounds(160, 103, 134, 28);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
@@ -188,7 +203,10 @@ public class main extends JFrame {
 		lblOkresPredykacji.setBounds(321, 209, 170, 16);
 		panel.add(lblOkresPredykacji);
 		
-		textField_2 = new JTextField();
+		formatter.setMinimum(1);
+		formatter.setMaximum(Integer.MAX_VALUE);
+		textField_2 = new JFormattedTextField(formatter);
+		textField_2.setToolTipText(">0");
 		textField_2.setBounds(331, 226, 160, 28);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
