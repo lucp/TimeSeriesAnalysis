@@ -160,7 +160,7 @@ public class main extends JFrame {
 		textField = new JFormattedTextField(formatter);
 		textField.setToolTipText("(10-1000)");
 		textField.setText("100");
-		textField.setBounds(160, 75, 134, 28);
+		textField.setBounds(145, 77, 134, 28);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -169,7 +169,7 @@ public class main extends JFrame {
 		textField_1 = new JFormattedTextField(formatter);
 		textField_1.setToolTipText("<10000");
 		textField_1.setText("1000");
-		textField_1.setBounds(160, 103, 134, 28);
+		textField_1.setBounds(145, 105, 134, 28);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -188,26 +188,26 @@ public class main extends JFrame {
 		panel.add(slider_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("Method of selection");
-		lblNewLabel_1.setBounds(321, 34, 170, 16);
+		lblNewLabel_1.setBounds(297, 34, 170, 16);
 		panel.add(lblNewLabel_1);
 		
 		JRadioButton rdbtnMetoda = new JRadioButton("Roulette");
-		rdbtnMetoda.setBounds(352, 62, 141, 23);
+		rdbtnMetoda.setBounds(317, 70, 141, 23);
 		panel.add(rdbtnMetoda);
 		
 		JRadioButton rdbtnMetoda_1 = new JRadioButton("Stochastic Universal Sampling");
-		rdbtnMetoda_1.setBounds(352, 92, 141, 23);
+		rdbtnMetoda_1.setBounds(317, 97, 221, 23);
 		panel.add(rdbtnMetoda_1);
 		
 		JLabel lblOkresPredykacji = new JLabel("Period of prediction");
-		lblOkresPredykacji.setBounds(321, 149, 170, 16);
+		lblOkresPredykacji.setBounds(297, 149, 170, 16);
 		panel.add(lblOkresPredykacji);
 		
 		formatter.setMinimum(1);
 		formatter.setMaximum(Integer.MAX_VALUE);
 		textField_2 = new JFormattedTextField(formatter);
 		textField_2.setToolTipText(">0");
-		textField_2.setBounds(331, 166, 160, 28);
+		textField_2.setBounds(307, 166, 160, 28);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -216,7 +216,7 @@ public class main extends JFrame {
 		panel.add(lblNewLabel_2);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(160, 47, 134, 28);
+		textField_3.setBounds(145, 49, 134, 28);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
 		
@@ -225,27 +225,27 @@ public class main extends JFrame {
 		panel.add(lblOknoCzasowe);
 		
 		textField_4 = new JTextField();
-		textField_4.setBounds(160, 19, 134, 28);
+		textField_4.setBounds(145, 21, 134, 28);
 		panel.add(textField_4);
 		textField_4.setColumns(10);
 		
 		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Percent of species left after:");
-		lblProcentOsobnikwPozostwionych.setBounds(528, 34, 298, 16);
+		lblProcentOsobnikwPozostwionych.setBounds(562, 34, 281, 16);
 		panel.add(lblProcentOsobnikwPozostwionych);
 		
 		JLabel lblProcentPoSelekcji = new JLabel("Selection");
 		lblProcentPoSelekcji.setLabelFor(lblProcentPoSelekcji);
-		lblProcentPoSelekcji.setBounds(540, 71, 80, 16);
+		lblProcentPoSelekcji.setBounds(583, 71, 80, 16);
 		panel.add(lblProcentPoSelekcji);
 		
 		JLabel lblProcentPoKrzyzowaniu = new JLabel("Crossing");
 		lblProcentPoKrzyzowaniu.setLabelFor(lblProcentPoKrzyzowaniu);
-		lblProcentPoKrzyzowaniu.setBounds(540, 101, 80, 16);
+		lblProcentPoKrzyzowaniu.setBounds(583, 101, 80, 16);
 		panel.add(lblProcentPoKrzyzowaniu);
 		
 		JLabel lblProcentPoMutacji= new JLabel("Mutation");
 		lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
-		lblProcentPoMutacji.setBounds(540, 131, 80, 16);
+		lblProcentPoMutacji.setBounds(583, 131, 80, 16);
 		panel.add(lblProcentPoMutacji);
 		
 		// Listener dla kolejnych sliderow
@@ -261,17 +261,17 @@ public class main extends JFrame {
 		};
 	
 		JSlider sliderSelekcji = new JSlider(0,100,0);
-		sliderSelekcji.setBounds(610, 62, 190, 29);
+		sliderSelekcji.setBounds(653, 62, 190, 29);
 		sliderSelekcji.addChangeListener(listener);
 		panel.add(sliderSelekcji);
 		
 		JSlider sliderKrzyzowania = new JSlider(0,100,0);
-		sliderKrzyzowania.setBounds(610, 92, 190, 29);
+		sliderKrzyzowania.setBounds(653, 92, 190, 29);
 		sliderKrzyzowania.addChangeListener(listener);
 		panel.add(sliderKrzyzowania);
 		
 		JSlider sliderMutacji = new JSlider(0,100,0);
-		sliderMutacji.setBounds(610, 122, 190, 29);
+		sliderMutacji.setBounds(653, 122, 190, 29);
 		sliderMutacji.addChangeListener(listener);
 		panel.add(sliderMutacji);
 		
@@ -464,7 +464,7 @@ public class main extends JFrame {
         tabbedPane.addTab("Statistics", null, statisticsPanel, null);
         statisticsPanel.setLayout(null);
 
-        //TODO: trzeba wprowadziæ zmienne z szeregami do porównania
+        //TODO: trzeba wprowadziï¿½ zmienne z szeregami do porï¿½wnania
 //        Statistics stat = new Statistics(null, null);
 //        double[] results = stat.findBestCoefficient();
 //        JLabel correlationCoefficientLabel = new JLabel("Wsp\\u00f3\\u0142czynnik korelacji: ");
