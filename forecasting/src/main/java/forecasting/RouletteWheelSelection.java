@@ -29,6 +29,7 @@ package forecasting;
 
 import forecasting.model.Chromosome;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -54,15 +55,27 @@ public class RouletteWheelSelection implements AbstractGeneticAlgorithmOperation
      */
     public Chromosome[] performGeneticOperation(Chromosome[] population) {
 
+        Chromosome[] sortedPopulation = new Chromosome[population.length];
+        System.arraycopy(population, 0, sortedPopulation, 0, population.length);
+
+        Arrays.sort(sortedPopulation);
+
+        double[] rankingTab = new double[population.length];
+
+        for(int i = 0; i < population.length; i++){
+            rankingTab[i] = sortedPopulation[population.length - 1].getFitness() -
+                    population[i].getFitness();
+        }
+
         double fitnessSum = 0;
-        for (Chromosome aPopulation : population) {
-            fitnessSum += aPopulation.getFitness();
+        for (double fitness : rankingTab) {
+            fitnessSum += fitness;
         }
 
         double probabilityTab[] = new double[population.length];
 
         for (int i = 0; i < probabilityTab.length; i++) {
-            probabilityTab[i] = population[i].getFitness() / fitnessSum;
+            probabilityTab[i] = rankingTab[i] / fitnessSum;
         }
 
         Chromosome[] tempPopulation = new Chromosome[population.length];

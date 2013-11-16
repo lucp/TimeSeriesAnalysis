@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 
 import org.jfree.data.time.TimeSeries;
 
@@ -29,10 +30,15 @@ import service.chart.TimeSeriesChart;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.LinkedList;
+
 import javax.swing.JComboBox;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
+import javax.swing.JFormattedTextField;
 
 public class main extends JFrame {
 		
@@ -55,11 +61,13 @@ public class main extends JFrame {
 	JTextField timeColumnTextField;
 	
 	//-----------------------------Frme-------------------------------------
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JFormattedTextField textField;
+	private JFormattedTextField textField_1;
+	private JFormattedTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	
+	private ChangeListener listener;
 
 	/**
 	 * Launch the application.
@@ -142,25 +150,39 @@ public class main extends JFrame {
 		parametr3.setBounds(28, 145, 266, 16);
 		panel.add(parametr3);
 		
-		textField = new JTextField();
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter formatter = new NumberFormatter(format);
+		formatter.setValueClass(Integer.class);
+		formatter.setMinimum(10);
+		formatter.setMaximum(1000);
+		formatter.setCommitsOnValidEdit(true);
+		textField = new JFormattedTextField(formatter);
+		textField.setToolTipText("(10-1000)");
+		textField.setText("100");
 		textField.setBounds(160, 75, 134, 28);
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		textField_1 = new JTextField();
+		formatter.setMinimum(0);
+		formatter.setMaximum(10000);
+		textField_1 = new JFormattedTextField(formatter);
+		textField_1.setToolTipText("<10000");
+		textField_1.setText("1000");
 		textField_1.setBounds(160, 103, 134, 28);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
-		JSlider slider = new JSlider();
+		JSlider slider = new JSlider(0,100);
 		slider.setBounds(28, 165, 190, 29);
+		slider.addChangeListener(listener);
+		
 		panel.add(slider);
 		
 		JLabel lblNewLabel = new JLabel("Prawdopodobie\u0144stwo krzy\u017Cowania:");
 		lblNewLabel.setBounds(28, 205, 266, 16);
 		panel.add(lblNewLabel);
 		
-		JSlider slider_1 = new JSlider();
+		JSlider slider_1 = new JSlider(0,100);
 		slider_1.setBounds(28, 225, 190, 29);
 		panel.add(slider_1);
 		
@@ -188,7 +210,10 @@ public class main extends JFrame {
 		lblOkresPredykacji.setBounds(321, 209, 170, 16);
 		panel.add(lblOkresPredykacji);
 		
-		textField_2 = new JTextField();
+		formatter.setMinimum(1);
+		formatter.setMaximum(Integer.MAX_VALUE);
+		textField_2 = new JFormattedTextField(formatter);
+		textField_2.setToolTipText(">0");
 		textField_2.setBounds(331, 226, 160, 28);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
@@ -211,35 +236,50 @@ public class main extends JFrame {
 		panel.add(textField_4);
 		textField_4.setColumns(10);
 		
-		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Procent osobnik�w pozostwionych po:");
+		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Procent osobnikow pozostwionych po:");
 		lblProcentOsobnikwPozostwionych.setBounds(528, 34, 298, 16);
 		panel.add(lblProcentOsobnikwPozostwionych);
 		
 		JLabel lblProcentPoSelekcji = new JLabel("Selekcji");
 		lblProcentPoSelekcji.setLabelFor(lblProcentPoSelekcji);
-		lblProcentPoSelekcji.setBounds(540, 71, 315, 16);
+		lblProcentPoSelekcji.setBounds(540, 71, 80, 16);
 		panel.add(lblProcentPoSelekcji);
 		
 		JLabel lblProcentPoKrzyzowaniu = new JLabel("Krzy\u017Cowaniu");
 		lblProcentPoKrzyzowaniu.setLabelFor(lblProcentPoKrzyzowaniu);
-		lblProcentPoKrzyzowaniu.setBounds(540, 101, 315, 16);
+		lblProcentPoKrzyzowaniu.setBounds(540, 101, 80, 16);
 		panel.add(lblProcentPoKrzyzowaniu);
 		
 		JLabel lblProcentPoMutacji= new JLabel("Mutacji");
 		lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
-		lblProcentPoMutacji.setBounds(540, 131, 315, 16);
+		lblProcentPoMutacji.setBounds(540, 131, 80, 16);
 		panel.add(lblProcentPoMutacji);
 		
-		JSlider sliderSelekcji = new JSlider();
+		// Listener dla kolejnych sliderow
+		listener = new ChangeListener() {
+			public void stateChanged(ChangeEvent event) 
+			{
+				JSlider source = (JSlider) event.getSource();
+				if (!source.getValueIsAdjusting()) {
+					int value = (int)source.getValue();
+					System.out.println(value);
+				}
+			}
+		};
+	
+		JSlider sliderSelekcji = new JSlider(0,100,0);
 		sliderSelekcji.setBounds(611, 61, 190, 29);
+		sliderSelekcji.addChangeListener(listener);
 		panel.add(sliderSelekcji);
 		
-		JSlider sliderKrzyzowania = new JSlider();
+		JSlider sliderKrzyzowania = new JSlider(0,100,0);
 		sliderKrzyzowania.setBounds(611, 91, 190, 29);
+		sliderKrzyzowania.addChangeListener(listener);
 		panel.add(sliderKrzyzowania);
 		
-		JSlider sliderMutacji = new JSlider();
+		JSlider sliderMutacji = new JSlider(0,100,0);
 		sliderMutacji.setBounds(611, 121, 190, 29);
+		sliderMutacji.addChangeListener(listener);
 		panel.add(sliderMutacji);
 		
 		//-------------------DataTable-------------------
