@@ -10,16 +10,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.jfree</groupId>
-            <artifactId>data</artifactId>
-            <version>1.0.14</version>
-        </dependency>
+    		<groupId>org.jfree</groupId>
+    		<artifactId>jfreechart</artifactId>
+    		<version>1.0.15</version>
+	</dependency>
 
-        <dependency>
-            <groupId>org.apache.commons.math3</groupId>
-            <artifactId>stat</artifactId>
-            <version>3.2</version>
-        </dependency>
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-math3</artifactId>
+		<version>3.2</version>
+	</dependency>     
     </dependencies>
 
     <build>
