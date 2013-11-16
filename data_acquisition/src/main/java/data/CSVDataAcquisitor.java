@@ -50,6 +50,14 @@ public class CSVDataAcquisitor
 		this.valueTab=vTab;
 	}
 	
+	public CSVDataAcquisitor(String file,int tTab,int vTab,String dateFormat) throws IOException{
+		this.csvreader=new CSVReader(new FileReader(file), ',', '\"');
+		this.filePath=file;
+		this.dateFormat=dateFormat;
+		this.timeTab=tTab;
+		this.valueTab=vTab;
+	}
+	
 	public CSVDataAcquisitor(String file,int tTab,int vTab) throws IOException{
 		this.csvreader=new CSVReader(new FileReader(file));
 		this.filePath=file;
@@ -69,7 +77,8 @@ public class CSVDataAcquisitor
 	}
 	
 	public TimeSeries readData_TimeSeries() throws IOException{
-		TimeSeries timeSeries=new TimeSeries(this.filePath);
+		String name=this.filePath.substring(this.filePath.lastIndexOf("\\")+1,this.filePath.length());
+		TimeSeries timeSeries=new TimeSeries(name);
 		String[] nextLine;
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(this.dateFormat);
 		while ((nextLine=this.csvreader.readNext())!=null){
@@ -77,6 +86,9 @@ public class CSVDataAcquisitor
 			try{
 				if (nextLine[this.valueTab].contains(",")){
 					nextLine[this.valueTab]=nextLine[this.valueTab].replaceAll(",",".");
+				}
+				if (nextLine[this.timeTab].contains("\"")){
+					nextLine[this.timeTab]=nextLine[this.timeTab].replaceAll("\"", "");
 				}
 				timeSeries.add(new Day(dateFormatter.parse(nextLine[this.timeTab])),Double.valueOf(nextLine[this.valueTab]));
 			}
@@ -102,6 +114,9 @@ public class CSVDataAcquisitor
 			try{
 				if (nextLine[this.valueTab].contains(",")){
 					nextLine[this.valueTab]=nextLine[this.valueTab].replaceAll(",",".");
+				}
+				if (nextLine[this.timeTab].contains("\"")){
+					nextLine[this.timeTab]=nextLine[this.timeTab].replaceAll("\"", "");
 				}
 				list.add(Double.parseDouble(nextLine[this.valueTab]));
 			}

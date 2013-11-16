@@ -414,7 +414,7 @@ public class main extends JFrame {
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		        	try{
 			            File file = importFileChooser.getSelectedFile();
-			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),Integer.parseInt(timeColumnTextField.getText()),Integer.parseInt(valueColumnTextField.getText())); //TODO wybranie column
+			            CSVDataAcquisitor csvDataAcquisitor=new CSVDataAcquisitor(file.getAbsolutePath(),Integer.parseInt(timeColumnTextField.getText()),Integer.parseInt(valueColumnTextField.getText()),dateFormatTextField.getText()); //TODO wybranie column
 			            timeSeries.add(csvDataAcquisitor.readData_TimeSeries());
 			            currentTimeSeries=timeSeries.getLast();
 			            dataComboBox.firePopupMenuWillBecomeVisible();
