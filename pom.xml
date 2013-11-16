@@ -13,6 +13,7 @@
         <module>data_acquisition</module>
     	<module>charts-service</module>
     	<module>gui-window</module>
+    	<module>statistics</module>
         <module>uberjar</module>
     </modules>
 </project>

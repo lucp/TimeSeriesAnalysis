@@ -155,7 +155,7 @@ public class Statistics {
         int length = s.getItemCount();
         double[] d = new double[length];
         for (int i = 0; i < length; i++) {
-            d[i] = (double) s.getValue(i);
+            d[i] = (double) s.getValue(i).doubleValue();
         }
 
         return d;

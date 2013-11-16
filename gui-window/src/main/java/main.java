@@ -27,6 +27,7 @@ import org.jfree.data.time.TimeSeries;
 import service.action.GAChartObserver;
 import service.chart.FitnessChart;
 import service.chart.TimeSeriesChart;
+import statistics.Statistics;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -464,38 +465,38 @@ public class main extends JFrame {
         tabbedPane.addTab("Statistics", null, statisticsPanel, null);
         statisticsPanel.setLayout(null);
 
-        //TODO: trzeba wprowadziæ zmienne z szeregami do porównania
-        Statistics stat = new Statistics(timeSeries1, timeSeries2);
-        double[] results = stat.findBestCoefficient();
-        JLabel correlationCoefficientLabel = new JLabel("Wsp\\u00f3\\u0142czynnik korelacji: ");
-        JLabel correlationCoefficientValue = new JLabel(String.valueOf(results[0]));
-        JLabel lowerLimitLabel = new JLabel("Dolna granica: ");
-        JLabel lowerLimitValue = new JLabel(String.valueOf(results[1]));
-        JLabel upperLimitLabel = new JLabel("G\\u00f3rna granica: ");
-        JLabel upperLimitValue = new JLabel(String.valueOf(results[2]));
-        JLabel mean1Label = new JLabel("\\u015arednia szeregu 1: ");
-        JLabel mean1Value = new JLabel(String.valueOf(stat.getMeanOfSeries1()));
-        JLabel mean2Label = new JLabel("\\u015arednia szeregu 2: ");
-        JLabel mean2Value = new JLabel(String.valueOf(stat.getMeanOfSeries2()));
-        JLabel var1Label = new JLabel("Wariancja szeregu 1: ");
-        JLabel var1Value = new JLabel(String.valueOf(stat.getVarOfSeries1()));
-        JLabel var2Label = new JLabel("Wariancja szeregu 2: ");
-        JLabel var2Value = new JLabel(String.valueOf(stat.getVarOfSeries2()));
-
-        statisticsPanel.add(correlationCoefficientLabel);
-        statisticsPanel.add(correlationCoefficientValue);
-        statisticsPanel.add(lowerLimitLabel);
-        statisticsPanel.add(lowerLimitValue);
-        statisticsPanel.add(upperLimitLabel);
-        statisticsPanel.add(upperLimitValue);
-        statisticsPanel.add(mean1Label);
-        statisticsPanel.add(mean1Value);
-        statisticsPanel.add(mean2Label);
-        statisticsPanel.add(mean2Value);
-        statisticsPanel.add(var1Label);
-        statisticsPanel.add(var1Value);
-        statisticsPanel.add(var2Label);
-        statisticsPanel.add(var2Value);
+        //TODO: trzeba wprowadziÄ‡ zmienne z szeregami do porÃ³wnania
+//        Statistics stat = new Statistics(null, null);
+//        double[] results = stat.findBestCoefficient();
+//        JLabel correlationCoefficientLabel = new JLabel("Wsp\\u00f3\\u0142czynnik korelacji: ");
+//        JLabel correlationCoefficientValue = new JLabel(String.valueOf(results[0]));
+//        JLabel lowerLimitLabel = new JLabel("Dolna granica: ");
+//        JLabel lowerLimitValue = new JLabel(String.valueOf(results[1]));
+//        JLabel upperLimitLabel = new JLabel("G\\u00f3rna granica: ");
+//        JLabel upperLimitValue = new JLabel(String.valueOf(results[2]));
+//        JLabel mean1Label = new JLabel("\\u015arednia szeregu 1: ");
+//        JLabel mean1Value = new JLabel(String.valueOf(stat.getMeanOfSeries1()));
+//        JLabel mean2Label = new JLabel("\\u015arednia szeregu 2: ");
+//        JLabel mean2Value = new JLabel(String.valueOf(stat.getMeanOfSeries2()));
+//        JLabel var1Label = new JLabel("Wariancja szeregu 1: ");
+//        JLabel var1Value = new JLabel(String.valueOf(stat.getVarOfSeries1()));
+//        JLabel var2Label = new JLabel("Wariancja szeregu 2: ");
+//        JLabel var2Value = new JLabel(String.valueOf(stat.getVarOfSeries2()));
+//
+//        statisticsPanel.add(correlationCoefficientLabel);
+//        statisticsPanel.add(correlationCoefficientValue);
+//        statisticsPanel.add(lowerLimitLabel);
+//        statisticsPanel.add(lowerLimitValue);
+//        statisticsPanel.add(upperLimitLabel);
+//        statisticsPanel.add(upperLimitValue);
+//        statisticsPanel.add(mean1Label);
+//        statisticsPanel.add(mean1Value);
+//        statisticsPanel.add(mean2Label);
+//        statisticsPanel.add(mean2Value);
+//        statisticsPanel.add(var1Label);
+//        statisticsPanel.add(var1Value);
+//        statisticsPanel.add(var2Label);
+//        statisticsPanel.add(var2Value);
         //================================
         
         
