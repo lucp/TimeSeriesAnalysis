@@ -316,7 +316,10 @@ public class main extends JFrame {
 					if (currentTimeSeries!=null){
 						String df=dateFormatTextField.getText();
 						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
+						int currentIndex=timeSeries.indexOf(currentTimeSeries);
+						timeSeries.remove(currentIndex);
 						currentTimeSeries=tableAcq.readData_TimeSeries((String)currentTimeSeries.getKey());
+						timeSeries.add(currentIndex, currentTimeSeries);
 						dataComboBox.firePopupMenuWillBecomeVisible();
 						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 					}
