@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package statistics;
+package bleble;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -25,11 +25,16 @@ public class Statistics {
     public Statistics(TimeSeries s1, TimeSeries s2) {
         d1 = timeSeriesToDoubles(s1);
         d2 = timeSeriesToDoubles(s2);
+        if (d1.length < d2.length) {
+            d1 = zeroPadding(d1, d2.length);
+        } else if (d2.length < d1.length) {
+            d2 = zeroPadding(d2, d1.length);
+        }
     }
 
     /**
-     * Wyznacza nalepszy wspolczynnik korelacji, tj. o najwiekszej wartosci r/rho, 
-     * r - wsp korelacji, rho - szerokosc przedzialu ufnosci
+     * Wyznacza nalepszy wspolczynnik korelacji, tj. o najwiekszej wartosci
+     * r/rho, r - wsp korelacji, rho - szerokosc przedzialu ufnosci
      *
      * @return najlepszy wspolczynnik korelacji i jego przedzial 95% ufnosci
      */
@@ -68,7 +73,6 @@ public class Statistics {
                 return Double.compare(t[1], t1[1]);
             }
         });
-                
 
         int i = (int) bestResults[0][0];
 
@@ -99,7 +103,7 @@ public class Statistics {
     /**
      * zwraca limity wspolczynnikow korelacji dla 95% przedzialu ufnosci
      *
-     * @return talbica zawierajaca dolne i gorne limity dla kazdego wsp
+     * @return tablica zawierajaca dolne i gorne limity dla kazdego wsp
      * korelacji wzajemnej
      */
     public double[][] getConfidenceIntervals() {
@@ -113,9 +117,9 @@ public class Statistics {
     public double[] getCorrelationCoefficients() {
         return cc;
     }
-    
+
     /**
-     *
+     * zwraca srednia pierwszego szeregu
      * @return srednia pierwszego szeregu
      */
     public double getMeanOfSeries1() {
@@ -123,7 +127,7 @@ public class Statistics {
     }
 
     /**
-     *
+     * zwraca srednia drugiego szeregu
      * @return srednia drugiego szeregu
      */
     public double getMeanOfSeries2() {
@@ -131,7 +135,7 @@ public class Statistics {
     }
 
     /**
-     *
+     * zwraca wariancje pierwszego szeregu
      * @return wariancja pierwszego szeregu
      */
     public double getVarOfSeries1() {
@@ -139,7 +143,7 @@ public class Statistics {
     }
 
     /**
-     *
+     * zwraca wariancje drugiego szeregu
      * @return wariancja drugiego szeregu
      */
     public double getVarOfSeries2() {
@@ -147,9 +151,9 @@ public class Statistics {
     }
 
     /**
-     *
-     * @param s szereg czasowy wejsciowy
-     * @return tablica doubli wartosci
+     * zwraca tablice doubli zawierajaca wartosci przekazanego szeregu czasowego TimeSeries
+     * @param s szereg czasowy TimeSeries 
+     * @return tablica doubli wartosci szeregu s
      */
     private double[] timeSeriesToDoubles(TimeSeries s) {
         int length = s.getItemCount();
@@ -159,6 +163,19 @@ public class Statistics {
         }
 
         return d;
+    }
+    
+    /**
+     * Uzupelnienie zerami krotszej tablicy do dlugosci drugiej, dluzszej tablicy
+     * @param shorter mniejsza tablica, ktora ma byc uzupelniona zerami
+     * @param size rozmiar, do jakiego ma byc uzupelniona tablica 
+     * @return 
+     */
+    private double [] zeroPadding(double[] shorter, int size) {
+        double[] t = new double[size];
+        System.arraycopy(shorter, 0, t, 0, shorter.length);
+        Arrays.fill(t, shorter.length, t.length, 0);
+        return t;
     }
 
 }
