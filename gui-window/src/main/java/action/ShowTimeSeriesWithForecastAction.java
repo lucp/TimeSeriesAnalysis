@@ -10,6 +10,7 @@ import gui.main;
 import mock.MockTimeSeries;
 
 import org.bouncycastle.crypto.DataLengthException;
+import org.jfree.data.io.CSV;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.ui.RefineryUtilities;
 import org.springframework.context.ApplicationContext;
@@ -87,4 +88,14 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     		JOptionPane.showMessageDialog(window, "Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }
+    
+    public int[] parseToWindowForm(String str){
+    	String[] values=str.split(",");
+    	int[] parsed=new int[values.length];
+    	for (int i=0;i<parsed.length;i++){
+    		parsed[i]=Integer.valueOf(values[i]);
+    	}
+    	return parsed;
+    }
+    
 }
