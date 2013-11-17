@@ -34,11 +34,6 @@ import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.correlation.*;
 import org.jfree.data.time.TimeSeries;
 
-/**
- *
- * @author synu
- *
- */
 public class Statistics {
 
     private double[] d1, d2;
