@@ -1,7 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright (c) 2013, Tomasz Choma, Olgierd Grodzki, £ukasz Potêpa, Monika
+ * Rakoczy, Pawe³ Synowiec, £ukasz Szarkowicz
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 package statistics;
 
@@ -22,7 +45,16 @@ public class Statistics {
     private double[][] confidenceIntervals;
     private double[] cc;
 
-    public Statistics(TimeSeries s1, TimeSeries s2) {
+    public Statistics() {
+    }
+
+    /**
+     * wczytuje szeregi czasowe, ktore maja byc porownywane
+     *
+     * @param s1 szereg czasowy do porownania
+     * @param s2 szereg czasowy do porownania
+     */
+    public void loadTimeSeries(TimeSeries s1, TimeSeries s2) {
         d1 = timeSeriesToDoubles(s1);
         d2 = timeSeriesToDoubles(s2);
         if (d1.length < d2.length) {
@@ -112,6 +144,7 @@ public class Statistics {
 
     /**
      * zwraca wyznaczone wspolczynniki korelacji wzajemnej szeregow
+     *
      * @return tablica wsp. korelacji
      */
     public double[] getCorrelationCoefficients() {
@@ -120,6 +153,7 @@ public class Statistics {
 
     /**
      * zwraca srednia pierwszego szeregu
+     *
      * @return srednia pierwszego szeregu
      */
     public double getMeanOfSeries1() {
@@ -128,6 +162,7 @@ public class Statistics {
 
     /**
      * zwraca srednia drugiego szeregu
+     *
      * @return srednia drugiego szeregu
      */
     public double getMeanOfSeries2() {
@@ -136,6 +171,7 @@ public class Statistics {
 
     /**
      * zwraca wariancje pierwszego szeregu
+     *
      * @return wariancja pierwszego szeregu
      */
     public double getVarOfSeries1() {
@@ -144,6 +180,7 @@ public class Statistics {
 
     /**
      * zwraca wariancje drugiego szeregu
+     *
      * @return wariancja drugiego szeregu
      */
     public double getVarOfSeries2() {
@@ -151,8 +188,10 @@ public class Statistics {
     }
 
     /**
-     * zwraca tablice doubli zawierajaca wartosci przekazanego szeregu czasowego TimeSeries
-     * @param s szereg czasowy TimeSeries 
+     * zwraca tablice doubli zawierajaca wartosci przekazanego szeregu czasowego
+     * TimeSeries
+     *
+     * @param s szereg czasowy TimeSeries
      * @return tablica doubli wartosci szeregu s
      */
     private double[] timeSeriesToDoubles(TimeSeries s) {
@@ -164,14 +203,16 @@ public class Statistics {
 
         return d;
     }
-    
+
     /**
-     * Uzupelnienie zerami krotszej tablicy do dlugosci drugiej, dluzszej tablicy
+     * Uzupelnienie zerami krotszej tablicy do dlugosci drugiej, dluzszej
+     * tablicy
+     *
      * @param shorter mniejsza tablica, ktora ma byc uzupelniona zerami
-     * @param size rozmiar, do jakiego ma byc uzupelniona tablica 
-     * @return 
+     * @param size rozmiar, do jakiego ma byc uzupelniona tablica
+     * @return
      */
-    private double [] zeroPadding(double[] shorter, int size) {
+    private double[] zeroPadding(double[] shorter, int size) {
         double[] t = new double[size];
         System.arraycopy(shorter, 0, t, 0, shorter.length);
         Arrays.fill(t, shorter.length, t.length, 0);
