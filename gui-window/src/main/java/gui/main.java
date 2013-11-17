@@ -464,34 +464,48 @@ public class main extends JFrame {
         //TODO: trzeba wprowadzi� zmienne z szeregami do por�wnania
 //        Statistics stat = new Statistics(null, null);
 //        double[] results = stat.findBestCoefficient();
-//        JLabel correlationCoefficientLabel = new JLabel("Wsp\\u00f3\\u0142czynnik korelacji: ");
+        JButton statisticRun = new JButton("Show statistics");
+        statisticRun.setBounds(25, 10, 134, 16);
+        statisticsPanel.add(statisticRun);
+        statisticRun .addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+        JLabel correlationCoefficientLabel = new JLabel("Correlation of coeffivient: ");
+        correlationCoefficientLabel.setBounds(25, 45, 134, 16);
 //        JLabel correlationCoefficientValue = new JLabel(String.valueOf(results[0]));
-//        JLabel lowerLimitLabel = new JLabel("Dolna granica: ");
+        JLabel lowerLimitLabel = new JLabel("Lower boundary: ");
+        lowerLimitLabel .setBounds(28, 73, 134, 16);
 //        JLabel lowerLimitValue = new JLabel(String.valueOf(results[1]));
-//        JLabel upperLimitLabel = new JLabel("G\\u00f3rna granica: ");
+        JLabel upperLimitLabel = new JLabel("Upper boundary: ");
+        upperLimitLabel.setBounds(28, 101, 134, 16);
 //        JLabel upperLimitValue = new JLabel(String.valueOf(results[2]));
-//        JLabel mean1Label = new JLabel("\\u015arednia szeregu 1: ");
+        JLabel mean1Label = new JLabel("Mean of series 1: ");
+        mean1Label.setBounds(28, 129, 134, 16);
 //        JLabel mean1Value = new JLabel(String.valueOf(stat.getMeanOfSeries1()));
-//        JLabel mean2Label = new JLabel("\\u015arednia szeregu 2: ");
+        JLabel mean2Label = new JLabel("Mean of series 2: ");
+        mean2Label.setBounds(28, 157, 134, 16);
 //        JLabel mean2Value = new JLabel(String.valueOf(stat.getMeanOfSeries2()));
-//        JLabel var1Label = new JLabel("Wariancja szeregu 1: ");
+        JLabel var1Label = new JLabel("Variance of series 1: ");
+        var1Label.setBounds(28, 185, 134, 16);
 //        JLabel var1Value = new JLabel(String.valueOf(stat.getVarOfSeries1()));
-//        JLabel var2Label = new JLabel("Wariancja szeregu 2: ");
+        JLabel var2Label = new JLabel("Variance of series 2: ");
+        var2Label.setBounds(28, 213, 134, 16);
 //        JLabel var2Value = new JLabel(String.valueOf(stat.getVarOfSeries2()));
 //
-//        statisticsPanel.add(correlationCoefficientLabel);
+        statisticsPanel.add(correlationCoefficientLabel);
 //        statisticsPanel.add(correlationCoefficientValue);
-//        statisticsPanel.add(lowerLimitLabel);
+        statisticsPanel.add(lowerLimitLabel);
 //        statisticsPanel.add(lowerLimitValue);
-//        statisticsPanel.add(upperLimitLabel);
+        statisticsPanel.add(upperLimitLabel);
 //        statisticsPanel.add(upperLimitValue);
-//        statisticsPanel.add(mean1Label);
+        statisticsPanel.add(mean1Label);
 //        statisticsPanel.add(mean1Value);
-//        statisticsPanel.add(mean2Label);
+        statisticsPanel.add(mean2Label);
 //        statisticsPanel.add(mean2Value);
-//        statisticsPanel.add(var1Label);
+        statisticsPanel.add(var1Label);
 //        statisticsPanel.add(var1Value);
-//        statisticsPanel.add(var2Label);
+        statisticsPanel.add(var2Label);
 //        statisticsPanel.add(var2Value);
         //================================
         
