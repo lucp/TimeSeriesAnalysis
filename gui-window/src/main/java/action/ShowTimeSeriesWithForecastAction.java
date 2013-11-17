@@ -95,6 +95,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     	int[] parsed=new int[values.length];
     	for (int i=0;i<parsed.length;i++){
     		parsed[i]=Integer.valueOf(values[i]);
+    		if (parsed[i]<=0) throw new NumberFormatException();
     	}
     	return parsed;
     }
