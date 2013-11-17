@@ -24,6 +24,7 @@ import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.Arrays;
 
 public class ShowTimeSeriesWithForecastAction implements ActionListener {
@@ -89,7 +90,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     	}
     }
     
-    public int[] parseToWindowForm(String str){
+    public int[] parseToWindowForm(String str) throws NumberFormatException{
     	String[] values=str.split(",");
     	int[] parsed=new int[values.length];
     	for (int i=0;i<parsed.length;i++){
