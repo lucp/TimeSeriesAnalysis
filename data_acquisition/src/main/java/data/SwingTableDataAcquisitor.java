@@ -63,4 +63,20 @@ public class SwingTableDataAcquisitor {
 			}
 		}
 	}
+	
+	public static TimeSeries[] splitTimeSeriesOnHalf(TimeSeries ts){
+		TimeSeries[] out=new TimeSeries[2];
+		out[0]=new TimeSeries("firstHalf");
+		out[1]=new TimeSeries("secondHalf");
+		for (int i=0;i<ts.getItemCount();i++){
+			if (i<(ts.getItemCount()/2)){
+				out[0].add(ts.getDataItem(i));
+			}
+			else{
+				out[1].add(ts.getDataItem(i));
+			}
+		}
+		return out;
+	}
+	
 }
