@@ -77,8 +77,11 @@ public class main extends JFrame {
 	private JSlider sliderProbOfCross;
 	
 	private ButtonGroup radioBtnGroup;
+	private ButtonGroup radioBtnGroup2;
 	private JRadioButton rdBtnRoulette;
 	private JRadioButton rdBtnStochastic;
+	private JRadioButton rdbtnLinearCombination;
+	private JRadioButton rdbtnArmaForecast;
 	
 	private JTabbedPane tabbedPane;
 	private JLabel selectionValueLabel;
@@ -87,6 +90,9 @@ public class main extends JFrame {
 	private JLabel probabilityMutationValueLabel;
 	private JLabel probabilityCrossingValueLabel;
 
+	
+	private Statistics stat;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -160,6 +166,7 @@ public class main extends JFrame {
 		formatter3.setValueClass(Integer.class);
 		
 		radioBtnGroup = new ButtonGroup();
+		radioBtnGroup2 = new ButtonGroup();
 		
 		//-------------------DataTable-------------------
 		
@@ -350,8 +357,8 @@ public class main extends JFrame {
         tabbedPane.addTab("Statistics", null, statisticsPanel, null);
         statisticsPanel.setLayout(null);
 
-        //TODO: trzeba wprowadzi��� zmienne z szeregami do por���wnania
-//        Statistics stat = new Statistics(null, null);
+        stat = new Statistics();
+        
 //        double[] results = stat.findBestCoefficient();
         JButton statisticRun = new JButton("Show statistics");
         statisticRun.setBounds(25, 10, 134, 16);
@@ -597,10 +604,25 @@ public class main extends JFrame {
         	probabilityCrossingValueLabel.setText("50%");
         	probabilityCrossingValueLabel.setBounds(755, 182, 50, 28);
         	panel.add(probabilityCrossingValueLabel);
+        	
+        	JLabel lblMethodOfCounting = new JLabel("Method of counting prediction:");
+        	lblMethodOfCounting.setBounds(25, 282, 215, 16);
+        	panel.add(lblMethodOfCounting);
+        	
+        	rdbtnLinearCombination = new JRadioButton("Linear combination");
+        	rdbtnLinearCombination.setBounds(50, 304, 170, 23);
+        	rdbtnLinearCombination.setSelected(true);
+        	panel.add(rdbtnLinearCombination);
+        	  
+        	rdbtnArmaForecast = new JRadioButton("Arma forecast");
+        	rdbtnArmaForecast.setBounds(50, 331, 141, 23);
+        	panel.add(rdbtnArmaForecast);
+        	        
+        	radioBtnGroup2.add(rdbtnLinearCombination);
+        	radioBtnGroup2.add(rdbtnArmaForecast);
+        	
 //        statisticsPanel.add(var2Value);
         //================================
-        
-        
         
         JPanel logsPanel = new JPanel();
         tabbedPane.addTab("Logi", null, logsPanel, null);
@@ -685,4 +707,13 @@ public class main extends JFrame {
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
 	}
+
+	public Statistics getStat() {
+		return stat;
+	}
+
+	public JRadioButton getRdbtnArmaForecast() {
+		return rdbtnArmaForecast;
+	}
+
 }

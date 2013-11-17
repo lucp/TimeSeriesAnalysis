@@ -13,8 +13,10 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleInsets;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TimeSeriesChart extends JPanel {
@@ -42,6 +44,7 @@ public class TimeSeriesChart extends JPanel {
     }
     
     public TimeSeriesChart(){
+    	createChartPanel(new ArrayList<TimeSeries>(), 0);
     }
     
     public TimeSeriesChart(List<TimeSeries> timeSeriesList){
@@ -70,6 +73,7 @@ public class TimeSeriesChart extends JPanel {
         panel.setFillZoomRectangle(true);
         panel.setMouseWheelEnabled(true);
 
+        this.removeAll();
         this.add(panel);
     }
 
