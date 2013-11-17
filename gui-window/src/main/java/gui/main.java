@@ -81,6 +81,11 @@ public class main extends JFrame {
 	private JRadioButton rdBtnStochastic;
 	
 	private JTabbedPane tabbedPane;
+	private JTextField selectionValueField;
+	private JTextField crossingValueField;
+	private JTextField mutationValueField;
+	private JTextField probabilityMutationValueField;
+	private JTextField probabilityCrossingValueField;
 
 	/**
 	 * Launch the application.
@@ -144,133 +149,20 @@ public class main extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("Parameters", null, panel, null);
-		panel.setLayout(null);
-		
-		JLabel parametr1 = new JLabel("Population size");
-		parametr1.setBounds(28, 81, 134, 16);
-		panel.add(parametr1);
-		
-		JLabel parametr2 = new JLabel("Iteration number");
-		parametr2.setBounds(28, 109, 134, 16);
-		panel.add(parametr2);
-		
-		JLabel parametr3 = new JLabel("Probability of mutation");
-		parametr3.setBounds(28, 145, 266, 16);
-		panel.add(parametr3);
-		
 		NumberFormat format = NumberFormat.getInstance();
 		NumberFormatter formatter = new NumberFormatter(format);
 		formatter.setValueClass(Integer.class);
 		formatter.setMinimum(10);
 		formatter.setMaximum(1000);
 		formatter.setCommitsOnValidEdit(true);
-		populSizeField = new JFormattedTextField(formatter);
-		populSizeField.setToolTipText("(10-1000)");
-		populSizeField.setText("100");
-		populSizeField.setBounds(145, 77, 134, 28);
-		panel.add(populSizeField);
-		populSizeField.setColumns(10);
 		
 		formatter.setMinimum(0);
 		formatter.setMaximum(10000);
-		iterNumberField = new JFormattedTextField(formatter);
-		iterNumberField.setToolTipText("<10000");
-		iterNumberField.setText("1000");
-		iterNumberField.setBounds(145, 105, 134, 28);
-		panel.add(iterNumberField);
-		iterNumberField.setColumns(10);
-		
-		sliderProbOfMutat = new JSlider(0,100,50);
-		sliderProbOfMutat.setBounds(28, 165, 190, 29);
-		panel.add(sliderProbOfMutat);
-		
-		JLabel lblNewLabel = new JLabel("Probability of crossing");
-		lblNewLabel.setBounds(28, 205, 266, 16);
-		panel.add(lblNewLabel);
-		
-		sliderProbOfCross = new JSlider(0,100,50);
-		sliderProbOfCross.setBounds(28, 225, 190, 29);
-		panel.add(sliderProbOfCross);
-		
-		JLabel lblNewLabel_1 = new JLabel("Method of selection");
-		lblNewLabel_1.setBounds(297, 34, 170, 16);
-		panel.add(lblNewLabel_1);
-		
-		rdBtnRoulette = new JRadioButton("Roulette");
-		rdBtnRoulette.setBounds(317, 70, 141, 23);
-		rdBtnRoulette.setSelected(true);
-		panel.add(rdBtnRoulette);
-		
-		rdBtnStochastic = new JRadioButton("Stochastic Universal Sampling");
-		rdBtnStochastic.setBounds(317, 97, 221, 23);
-		panel.add(rdBtnStochastic);
 		
 		radioBtnGroup = new ButtonGroup();
-		radioBtnGroup.add(rdBtnRoulette);
-		radioBtnGroup.add(rdBtnStochastic);
-		
-		JLabel lblOkresPredykacji = new JLabel("Period of prediction");
-		lblOkresPredykacji.setBounds(297, 149, 170, 16);
-		panel.add(lblOkresPredykacji);
 		
 		formatter.setMinimum(1);
 		formatter.setMaximum(Integer.MAX_VALUE);
-		periodOfPredField = new JFormattedTextField(formatter);
-		periodOfPredField.setToolTipText(">0");
-		periodOfPredField.setBounds(307, 166, 160, 28);
-		panel.add(periodOfPredField);
-		periodOfPredField.setColumns(10);
-		
-		JLabel lblNewLabel_2 = new JLabel("Time series");
-		lblNewLabel_2.setBounds(28, 53, 134, 16);
-		panel.add(lblNewLabel_2);
-		
-		timeWindowField = new JTextField();
-		timeWindowField.setBounds(145, 49, 134, 28);
-		panel.add(timeWindowField);
-		timeWindowField.setColumns(10);
-		
-		JLabel lblOknoCzasowe = new JLabel("Time window");
-		lblOknoCzasowe.setBounds(28, 25, 134, 16);
-		panel.add(lblOknoCzasowe);
-		
-		timeSeriesField = new JTextField();
-		timeSeriesField.setBounds(145, 21, 134, 28);
-		panel.add(timeSeriesField);
-		timeSeriesField.setColumns(10);
-		
-		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Percent of species left after:");
-		lblProcentOsobnikwPozostwionych.setBounds(562, 34, 281, 16);
-		panel.add(lblProcentOsobnikwPozostwionych);
-		
-		JLabel lblProcentPoSelekcji = new JLabel("Selection");
-		lblProcentPoSelekcji.setLabelFor(lblProcentPoSelekcji);
-		lblProcentPoSelekcji.setBounds(583, 71, 80, 16);
-		panel.add(lblProcentPoSelekcji);
-		
-		JLabel lblProcentPoKrzyzowaniu = new JLabel("Crossing");
-		lblProcentPoKrzyzowaniu.setLabelFor(lblProcentPoKrzyzowaniu);
-		lblProcentPoKrzyzowaniu.setBounds(583, 101, 80, 16);
-		panel.add(lblProcentPoKrzyzowaniu);
-		
-		JLabel lblProcentPoMutacji= new JLabel("Mutation");
-		lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
-		lblProcentPoMutacji.setBounds(583, 131, 80, 16);
-		panel.add(lblProcentPoMutacji);
-	
-		sliderSelekcji = new JSlider(0,100,40);
-		sliderSelekcji.setBounds(653, 62, 190, 29);
-		panel.add(sliderSelekcji);
-		
-		sliderKrzyzowania = new JSlider(0,100,40);
-		sliderKrzyzowania.setBounds(653, 92, 190, 29);
-		panel.add(sliderKrzyzowania);
-		
-		sliderMutacji = new JSlider(0,100,20);
-		sliderMutacji.setBounds(653, 122, 190, 29);
-		panel.add(sliderMutacji);
 		
 		//-------------------DataTable-------------------
 		
@@ -461,7 +353,7 @@ public class main extends JFrame {
         tabbedPane.addTab("Statistics", null, statisticsPanel, null);
         statisticsPanel.setLayout(null);
 
-        //TODO: trzeba wprowadzi� zmienne z szeregami do por�wnania
+        //TODO: trzeba wprowadzi��� zmienne z szeregami do por���wnania
 //        Statistics stat = new Statistics(null, null);
 //        double[] results = stat.findBestCoefficient();
         JButton statisticRun = new JButton("Show statistics");
@@ -506,6 +398,144 @@ public class main extends JFrame {
         statisticsPanel.add(var1Label);
 //        statisticsPanel.add(var1Value);
         statisticsPanel.add(var2Label);
+        
+        JPanel panel = new JPanel();
+        tabbedPane.addTab("Parameters", null, panel, null);
+        panel.setLayout(null);
+        
+        JLabel parametr1 = new JLabel("Population size");
+        parametr1.setBounds(25, 81, 134, 16);
+        panel.add(parametr1);
+        
+        JLabel parametr2 = new JLabel("Iteration number");
+        parametr2.setBounds(25, 109, 134, 16);
+        panel.add(parametr2);
+        
+        JLabel parametr3 = new JLabel("Probability of mutation");
+        parametr3.setBounds(415, 156, 170, 16);
+        panel.add(parametr3);
+        populSizeField = new JFormattedTextField(formatter);
+        populSizeField.setToolTipText("(10-1000)");
+        populSizeField.setText("100");
+        populSizeField.setBounds(176, 75, 180, 28);
+        panel.add(populSizeField);
+        populSizeField.setColumns(10);
+        iterNumberField = new JFormattedTextField(formatter);
+        iterNumberField.setToolTipText("<10000");
+        iterNumberField.setText("1000");
+        iterNumberField.setBounds(176, 103, 180, 28);
+        panel.add(iterNumberField);
+        iterNumberField.setColumns(10);
+        
+        sliderProbOfMutat = new JSlider(0,100,50);
+        sliderProbOfMutat.setBounds(566, 150, 190, 29);
+        panel.add(sliderProbOfMutat);
+        
+        JLabel lblNewLabel = new JLabel("Probability of crossing");
+        lblNewLabel.setBounds(415, 188, 154, 16);
+        panel.add(lblNewLabel);
+        
+        sliderProbOfCross = new JSlider(0,100,50);
+        sliderProbOfCross.setBounds(566, 182, 190, 29);
+        panel.add(sliderProbOfCross);
+        
+        JLabel lblNewLabel_1 = new JLabel("Method of selection:");
+        lblNewLabel_1.setBounds(25, 185, 170, 16);
+        panel.add(lblNewLabel_1);
+        
+        rdBtnRoulette = new JRadioButton("Roulette");
+        rdBtnRoulette.setBounds(50, 204, 141, 23);
+        rdBtnRoulette.setSelected(true);
+        panel.add(rdBtnRoulette);
+        
+        rdBtnStochastic = new JRadioButton("Stochastic Universal Sampling");
+        rdBtnStochastic.setBounds(50, 231, 221, 23);
+        panel.add(rdBtnStochastic);
+        radioBtnGroup.add(rdBtnRoulette);
+        radioBtnGroup.add(rdBtnStochastic);
+        
+        JLabel lblOkresPredykacji = new JLabel("Period of prediction");
+        lblOkresPredykacji.setBounds(25, 137, 134, 16);
+        panel.add(lblOkresPredykacji);
+        periodOfPredField = new JFormattedTextField(formatter);
+        periodOfPredField.setToolTipText(">0");
+        periodOfPredField.setBounds(176, 131, 180, 28);
+        panel.add(periodOfPredField);
+        periodOfPredField.setColumns(10);
+        
+        JLabel lblNewLabel_2 = new JLabel("Time series");
+        lblNewLabel_2.setBounds(25, 53, 134, 16);
+        panel.add(lblNewLabel_2);
+        
+        timeWindowField = new JTextField();
+        timeWindowField.setBounds(176, 47, 180, 28);
+        panel.add(timeWindowField);
+        timeWindowField.setColumns(10);
+        
+        JLabel lblOknoCzasowe = new JLabel("Time window");
+        lblOknoCzasowe.setBounds(25, 25, 134, 16);
+        panel.add(lblOknoCzasowe);
+        
+        timeSeriesField = new JTextField();
+        timeSeriesField.setBounds(176, 19, 180, 28);
+        panel.add(timeSeriesField);
+        timeSeriesField.setColumns(10);
+        
+        JLabel lblProcentOsobnikwPozostwionych = new JLabel("Percent of species left after:");
+        lblProcentOsobnikwPozostwionych.setBounds(415, 25, 281, 16);
+        panel.add(lblProcentOsobnikwPozostwionych);
+        
+        JLabel lblProcentPoSelekcji = new JLabel("Selection");
+        lblProcentPoSelekcji.setLabelFor(lblProcentPoSelekcji);
+        lblProcentPoSelekcji.setBounds(503, 53, 66, 16);
+        panel.add(lblProcentPoSelekcji);
+        
+        JLabel lblProcentPoKrzyzowaniu = new JLabel("Crossing");
+        lblProcentPoKrzyzowaniu.setLabelFor(lblProcentPoKrzyzowaniu);
+        lblProcentPoKrzyzowaniu.setBounds(503, 81, 66, 16);
+        panel.add(lblProcentPoKrzyzowaniu);
+        
+        JLabel lblProcentPoMutacji= new JLabel("Mutation");
+        lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
+        lblProcentPoMutacji.setBounds(503, 109, 66, 16);
+        panel.add(lblProcentPoMutacji);
+        
+        	sliderSelekcji = new JSlider(0,100,40);
+        	sliderSelekcji.setBounds(566, 47, 190, 29);
+        	panel.add(sliderSelekcji);
+        	
+        	sliderKrzyzowania = new JSlider(0,100,40);
+        	sliderKrzyzowania.setBounds(566, 74, 190, 29);
+        	panel.add(sliderKrzyzowania);
+        	
+        	sliderMutacji = new JSlider(0,100,20);
+        	sliderMutacji.setBounds(566, 102, 190, 29);
+        	panel.add(sliderMutacji);
+        	
+        	selectionValueField = new JTextField();
+        	selectionValueField.setBounds(755, 47, 50, 28);
+        	panel.add(selectionValueField);
+        	selectionValueField.setColumns(10);
+        	
+        	crossingValueField = new JTextField();
+        	crossingValueField.setBounds(755, 75, 50, 28);
+        	panel.add(crossingValueField);
+        	crossingValueField.setColumns(10);
+        	
+        	mutationValueField = new JTextField();
+        	mutationValueField.setBounds(755, 103, 50, 28);
+        	panel.add(mutationValueField);
+        	mutationValueField.setColumns(10);
+        	
+        	probabilityMutationValueField = new JTextField();
+        	probabilityMutationValueField.setBounds(755, 150, 50, 28);
+        	panel.add(probabilityMutationValueField);
+        	probabilityMutationValueField.setColumns(10);
+        	
+        	probabilityCrossingValueField = new JTextField();
+        	probabilityCrossingValueField.setBounds(755, 182, 50, 28);
+        	panel.add(probabilityCrossingValueField);
+        	probabilityCrossingValueField.setColumns(10);
 //        statisticsPanel.add(var2Value);
         //================================
         
@@ -582,5 +612,4 @@ public class main extends JFrame {
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
 	}
-	
 }
