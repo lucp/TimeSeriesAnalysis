@@ -81,11 +81,11 @@ public class main extends JFrame {
 	private JRadioButton rdBtnStochastic;
 	
 	private JTabbedPane tabbedPane;
-	private JTextField selectionValueField;
-	private JTextField crossingValueField;
-	private JTextField mutationValueField;
-	private JTextField probabilityMutationValueField;
-	private JTextField probabilityCrossingValueField;
+	private JLabel selectionValueLabel;
+	private JLabel crossingValueLabel;
+	private JLabel mutationValueLabel;
+	private JLabel probabilityMutationValueLabel;
+	private JLabel probabilityCrossingValueLabel;
 
 	/**
 	 * Launch the application.
@@ -428,6 +428,12 @@ public class main extends JFrame {
         iterNumberField.setColumns(10);
         
         sliderProbOfMutat = new JSlider(0,100,50);
+        sliderProbOfMutat.addChangeListener(new ChangeListener() {
+        	public void stateChanged(ChangeEvent e) {
+        		int value = sliderProbOfMutat.getValue();
+    			probabilityMutationValueLabel.setText(value + "%");
+        	}
+        });
         sliderProbOfMutat.setBounds(566, 150, 190, 29);
         panel.add(sliderProbOfMutat);
         
@@ -436,6 +442,12 @@ public class main extends JFrame {
         panel.add(lblNewLabel);
         
         sliderProbOfCross = new JSlider(0,100,50);
+        sliderProbOfCross.addChangeListener(new ChangeListener() {
+        	public void stateChanged(ChangeEvent e) {
+        		int value = sliderProbOfCross.getValue();
+    			probabilityCrossingValueLabel.setText(value + "%");
+        	}
+        });
         sliderProbOfCross.setBounds(566, 182, 190, 29);
         panel.add(sliderProbOfCross);
         
@@ -501,41 +513,59 @@ public class main extends JFrame {
         panel.add(lblProcentPoMutacji);
         
         	sliderSelekcji = new JSlider(0,100,40);
+        	sliderSelekcji.addChangeListener(new ChangeListener() {
+        		public void stateChanged(ChangeEvent e) {
+        			int value = sliderSelekcji.getValue();
+        			selectionValueLabel.setText(value + "%");
+        		}
+        	});
         	sliderSelekcji.setBounds(566, 47, 190, 29);
         	panel.add(sliderSelekcji);
         	
         	sliderKrzyzowania = new JSlider(0,100,40);
+        	sliderKrzyzowania.addChangeListener(new ChangeListener() {
+        		public void stateChanged(ChangeEvent e) {
+        			int value = sliderKrzyzowania.getValue();
+        			crossingValueLabel.setText(value + "%");
+        		}
+        	});
         	sliderKrzyzowania.setBounds(566, 74, 190, 29);
         	panel.add(sliderKrzyzowania);
         	
         	sliderMutacji = new JSlider(0,100,20);
+        	sliderMutacji.addChangeListener(new ChangeListener() {		
+				public void stateChanged(ChangeEvent e) {
+					int value = sliderMutacji.getValue();
+        			mutationValueLabel.setText(value + "%");
+				}
+			});
         	sliderMutacji.setBounds(566, 102, 190, 29);
         	panel.add(sliderMutacji);
         	
-        	selectionValueField = new JTextField();
-        	selectionValueField.setBounds(755, 47, 50, 28);
-        	panel.add(selectionValueField);
-        	selectionValueField.setColumns(10);
+        	selectionValueLabel = new JLabel();
+        	selectionValueLabel.setText("40%");
+        	selectionValueLabel.setBounds(755, 47, 50, 28);
+        	panel.add(selectionValueLabel);
         	
-        	crossingValueField = new JTextField();
-        	crossingValueField.setBounds(755, 75, 50, 28);
-        	panel.add(crossingValueField);
-        	crossingValueField.setColumns(10);
+        	crossingValueLabel = new JLabel();
+        	crossingValueLabel.setText("40%");
+        	crossingValueLabel.setBounds(755, 75, 50, 28);
+        	panel.add(crossingValueLabel);
         	
-        	mutationValueField = new JTextField();
-        	mutationValueField.setBounds(755, 103, 50, 28);
-        	panel.add(mutationValueField);
-        	mutationValueField.setColumns(10);
+        	mutationValueLabel = new JLabel();
+        	mutationValueLabel.setText("20%");
+        	mutationValueLabel.setBounds(755, 103, 50, 28);
+        	panel.add(mutationValueLabel);
         	
-        	probabilityMutationValueField = new JTextField();
-        	probabilityMutationValueField.setBounds(755, 150, 50, 28);
-        	panel.add(probabilityMutationValueField);
-        	probabilityMutationValueField.setColumns(10);
+        	probabilityMutationValueLabel = new JLabel();
+        	probabilityMutationValueLabel.setText("50%");
+        	probabilityMutationValueLabel.setBounds(755, 150, 50, 28);
+        	panel.add(probabilityMutationValueLabel);
         	
-        	probabilityCrossingValueField = new JTextField();
-        	probabilityCrossingValueField.setBounds(755, 182, 50, 28);
-        	panel.add(probabilityCrossingValueField);
-        	probabilityCrossingValueField.setColumns(10);
+        	probabilityCrossingValueLabel = new JLabel();
+        	probabilityCrossingValueLabel.setText("50%");
+        	probabilityCrossingValueLabel.setBounds(755, 182, 50, 28);
+        	panel.add(probabilityCrossingValueLabel);
 //        statisticsPanel.add(var2Value);
         //================================
         
