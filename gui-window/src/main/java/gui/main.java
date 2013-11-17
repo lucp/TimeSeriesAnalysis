@@ -1,3 +1,4 @@
+package gui;
 import data.CSVDataAcquisitor;
 import data.SwingTableDataAcquisitor;
 
@@ -24,6 +25,7 @@ import javax.swing.ButtonGroup;
 
 import org.jfree.data.time.TimeSeries;
 
+import action.ShowTimeSeriesWithForecastAction;
 import service.action.GAChartObserver;
 import service.chart.FitnessChart;
 import service.chart.TimeSeriesChart;
@@ -48,9 +50,8 @@ public class main extends JFrame {
 	
 	LinkedList<TimeSeries> timeSeries;
 	TimeSeries currentTimeSeries;
-	FitnessChart fitnessChart;
-	TimeSeriesChart timeSeriesChart;
-	GAChartObserver gaChartObserver;
+	private FitnessChart fitnessChart;
+	private TimeSeriesChart timeSeriesChart;
 	JTable dataTable;
 	
 	//-----------------------------ImportantFrame---------------------------
@@ -63,13 +64,25 @@ public class main extends JFrame {
 	JTextField timeColumnTextField;
 	
 	//-----------------------------Frme-------------------------------------
-	private JFormattedTextField textField;
-	private JFormattedTextField textField_1;
-	private JFormattedTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JFormattedTextField populSizeField;
+	private JFormattedTextField iterNumberField;
+	private JFormattedTextField periodOfPredField;
+	private JTextField timeWindowField;
+	private JTextField timeSeriesField;
+	
+	private JSlider sliderSelekcji;
+	private JSlider sliderKrzyzowania;
+	private JSlider sliderMutacji;
+	private JSlider sliderProbOfMutat;
+	private JSlider sliderProbOfCross;
+	
+	private ButtonGroup radioBtnGroup;
+	private JRadioButton rdBtnRoulette;
+	private JRadioButton rdBtnStochastic;
 	
 	private ChangeListener listener;
+	
+	private JTabbedPane tabbedPane;
 
 	/**
 	 * Launch the application.
@@ -127,13 +140,10 @@ public class main extends JFrame {
 		menuBar.add(btnReset);
 		
 		JButton btnRun = new JButton("Run");
-		btnRun.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnRun.addActionListener(new ShowTimeSeriesWithForecastAction(this));
 		menuBar.add(btnRun);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		JPanel panel = new JPanel();
@@ -158,52 +168,51 @@ public class main extends JFrame {
 		formatter.setMinimum(10);
 		formatter.setMaximum(1000);
 		formatter.setCommitsOnValidEdit(true);
-		textField = new JFormattedTextField(formatter);
-		textField.setToolTipText("(10-1000)");
-		textField.setText("100");
-		textField.setBounds(145, 77, 134, 28);
-		panel.add(textField);
-		textField.setColumns(10);
+		populSizeField = new JFormattedTextField(formatter);
+		populSizeField.setToolTipText("(10-1000)");
+		populSizeField.setText("100");
+		populSizeField.setBounds(145, 77, 134, 28);
+		panel.add(populSizeField);
+		populSizeField.setColumns(10);
 		
 		formatter.setMinimum(0);
 		formatter.setMaximum(10000);
-		textField_1 = new JFormattedTextField(formatter);
-		textField_1.setToolTipText("<10000");
-		textField_1.setText("1000");
-		textField_1.setBounds(145, 105, 134, 28);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		iterNumberField = new JFormattedTextField(formatter);
+		iterNumberField.setToolTipText("<10000");
+		iterNumberField.setText("1000");
+		iterNumberField.setBounds(145, 105, 134, 28);
+		panel.add(iterNumberField);
+		iterNumberField.setColumns(10);
 		
-		JSlider slider = new JSlider(0,100);
-		slider.setBounds(28, 165, 190, 29);
-		slider.addChangeListener(listener);
-		
-		panel.add(slider);
+		sliderProbOfMutat = new JSlider(0,100);
+		sliderProbOfMutat.setBounds(28, 165, 190, 29);
+		sliderProbOfMutat.addChangeListener(listener);
+		panel.add(sliderProbOfMutat);
 		
 		JLabel lblNewLabel = new JLabel("Probability of crossing");
 		lblNewLabel.setBounds(28, 205, 266, 16);
 		panel.add(lblNewLabel);
 		
-		JSlider slider_1 = new JSlider(0,100);
-		slider_1.setBounds(28, 225, 190, 29);
-		panel.add(slider_1);
+		sliderProbOfCross = new JSlider(0,100);
+		sliderProbOfCross.setBounds(28, 225, 190, 29);
+		panel.add(sliderProbOfCross);
 		
 		JLabel lblNewLabel_1 = new JLabel("Method of selection");
 		lblNewLabel_1.setBounds(297, 34, 170, 16);
 		panel.add(lblNewLabel_1);
 		
-		JRadioButton rdbtnMetoda = new JRadioButton("Roulette");
-		rdbtnMetoda.setBounds(317, 70, 141, 23);
-		rdbtnMetoda.setSelected(true);
-		panel.add(rdbtnMetoda);
+		rdBtnRoulette = new JRadioButton("Roulette");
+		rdBtnRoulette.setBounds(317, 70, 141, 23);
+		rdBtnRoulette.setSelected(true);
+		panel.add(rdBtnRoulette);
 		
-		JRadioButton rdbtnMetoda_1 = new JRadioButton("Stochastic Universal Sampling");
-		rdbtnMetoda_1.setBounds(317, 97, 221, 23);
-		panel.add(rdbtnMetoda_1);
+		rdBtnStochastic = new JRadioButton("Stochastic Universal Sampling");
+		rdBtnStochastic.setBounds(317, 97, 221, 23);
+		panel.add(rdBtnStochastic);
 		
-		ButtonGroup group = new ButtonGroup();
-		group.add(rdbtnMetoda);
-		group.add(rdbtnMetoda_1);
+		radioBtnGroup = new ButtonGroup();
+		radioBtnGroup.add(rdBtnRoulette);
+		radioBtnGroup.add(rdBtnStochastic);
 		
 		JLabel lblOkresPredykacji = new JLabel("Period of prediction");
 		lblOkresPredykacji.setBounds(297, 149, 170, 16);
@@ -211,29 +220,29 @@ public class main extends JFrame {
 		
 		formatter.setMinimum(1);
 		formatter.setMaximum(Integer.MAX_VALUE);
-		textField_2 = new JFormattedTextField(formatter);
-		textField_2.setToolTipText(">0");
-		textField_2.setBounds(307, 166, 160, 28);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		periodOfPredField = new JFormattedTextField(formatter);
+		periodOfPredField.setToolTipText(">0");
+		periodOfPredField.setBounds(307, 166, 160, 28);
+		panel.add(periodOfPredField);
+		periodOfPredField.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Time series");
 		lblNewLabel_2.setBounds(28, 53, 134, 16);
 		panel.add(lblNewLabel_2);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(145, 49, 134, 28);
-		panel.add(textField_3);
-		textField_3.setColumns(10);
+		timeWindowField = new JTextField();
+		timeWindowField.setBounds(145, 49, 134, 28);
+		panel.add(timeWindowField);
+		timeWindowField.setColumns(10);
 		
 		JLabel lblOknoCzasowe = new JLabel("Time window");
 		lblOknoCzasowe.setBounds(28, 25, 134, 16);
 		panel.add(lblOknoCzasowe);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(145, 21, 134, 28);
-		panel.add(textField_4);
-		textField_4.setColumns(10);
+		timeSeriesField = new JTextField();
+		timeSeriesField.setBounds(145, 21, 134, 28);
+		panel.add(timeSeriesField);
+		timeSeriesField.setColumns(10);
 		
 		JLabel lblProcentOsobnikwPozostwionych = new JLabel("Percent of species left after:");
 		lblProcentOsobnikwPozostwionych.setBounds(562, 34, 281, 16);
@@ -255,6 +264,7 @@ public class main extends JFrame {
 		panel.add(lblProcentPoMutacji);
 		
 		// Listener dla kolejnych sliderow
+		//PO CO??
 		listener = new ChangeListener() {
 			public void stateChanged(ChangeEvent event) 
 			{
@@ -266,17 +276,17 @@ public class main extends JFrame {
 			}
 		};
 	
-		JSlider sliderSelekcji = new JSlider(0,100,0);
+		sliderSelekcji = new JSlider(0,100,0);
 		sliderSelekcji.setBounds(653, 62, 190, 29);
 		sliderSelekcji.addChangeListener(listener);
 		panel.add(sliderSelekcji);
 		
-		JSlider sliderKrzyzowania = new JSlider(0,100,0);
+		sliderKrzyzowania = new JSlider(0,100,0);
 		sliderKrzyzowania.setBounds(653, 92, 190, 29);
 		sliderKrzyzowania.addChangeListener(listener);
 		panel.add(sliderKrzyzowania);
 		
-		JSlider sliderMutacji = new JSlider(0,100,0);
+		sliderMutacji = new JSlider(0,100,0);
 		sliderMutacji.setBounds(653, 122, 190, 29);
 		sliderMutacji.addChangeListener(listener);
 		panel.add(sliderMutacji);
@@ -460,7 +470,7 @@ public class main extends JFrame {
         //TODO chart-service
         timeSeriesChart = new TimeSeriesChart();
         tabbedPane.addTab("Time Series Chart", null, timeSeriesChart, null);
-        timeSeriesChart.createChartPanel(new LinkedList<TimeSeries>(), 0);
+        //timeSeriesChart.createChartPanel(new LinkedList<TimeSeries>(), 0);
 
         fitnessChart = new FitnessChart();
         tabbedPane.addTab("Fitness Chart", null, fitnessChart, null);
@@ -508,6 +518,74 @@ public class main extends JFrame {
         
         JPanel logsPanel = new JPanel();
         tabbedPane.addTab("Logi", null, logsPanel, null);
-
     }
+	
+	public TimeSeries getCurrentTimeSeries() {
+		return currentTimeSeries;
+	}
+
+	public JFormattedTextField getPopulSizeField() {
+		return populSizeField;
+	}
+
+	public JFormattedTextField getIterNumberField() {
+		return iterNumberField;
+	}
+
+	public JFormattedTextField getPeriodOfPredField() {
+		return periodOfPredField;
+	}
+
+	public JTextField getTimeWindowField() {
+		return timeWindowField;
+	}
+
+	public JTextField getTimeSeriesField() {
+		return timeSeriesField;
+	}
+
+	public JSlider getSliderSelekcji() {
+		return sliderSelekcji;
+	}
+
+	public JSlider getSliderKrzyzowania() {
+		return sliderKrzyzowania;
+	}
+
+	public JSlider getSliderMutacji() {
+		return sliderMutacji;
+	}
+
+	public JSlider getSliderProbOfMutat() {
+		return sliderProbOfMutat;
+	}
+
+	public JSlider getSliderProbOfCross() {
+		return sliderProbOfCross;
+	}
+
+	public ButtonGroup getRadioBtnGroup() {
+		return radioBtnGroup;
+	}
+
+	public JRadioButton getRdBtnRoulette() {
+		return rdBtnRoulette;
+	}
+
+	public JRadioButton getRdBtnStochastic() {
+		return rdBtnStochastic;
+	}
+
+	public FitnessChart getFitnessChart() {
+		return fitnessChart;
+	}
+
+	public TimeSeriesChart getTimeSeriesChart() {
+		return timeSeriesChart;
+	}
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+	
 }
