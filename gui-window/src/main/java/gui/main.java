@@ -151,18 +151,15 @@ public class main extends JFrame {
 		
 		NumberFormat format = NumberFormat.getInstance();
 		NumberFormatter formatter = new NumberFormatter(format);
+		NumberFormat format2 = NumberFormat.getInstance();
+		NumberFormatter formatter2 = new NumberFormatter(format2);
+		NumberFormat format3 = NumberFormat.getInstance();
+		NumberFormatter formatter3 = new NumberFormatter(format3);
 		formatter.setValueClass(Integer.class);
-		formatter.setMinimum(10);
-		formatter.setMaximum(1000);
-		formatter.setCommitsOnValidEdit(true);
-		
-		formatter.setMinimum(0);
-		formatter.setMaximum(10000);
+		formatter2.setValueClass(Integer.class);
+		formatter3.setValueClass(Integer.class);
 		
 		radioBtnGroup = new ButtonGroup();
-		
-		formatter.setMinimum(1);
-		formatter.setMaximum(Integer.MAX_VALUE);
 		
 		//-------------------DataTable-------------------
 		
@@ -414,13 +411,23 @@ public class main extends JFrame {
         JLabel parametr3 = new JLabel("Probability of mutation");
         parametr3.setBounds(415, 156, 170, 16);
         panel.add(parametr3);
+        
+        //formatowanie ograniczen dla populSizeField
+        formatter.setMinimum(10);
+		formatter.setMaximum(1000);
+		formatter.setCommitsOnValidEdit(true);
         populSizeField = new JFormattedTextField(formatter);
         populSizeField.setToolTipText("(10-1000)");
         populSizeField.setText("100");
         populSizeField.setBounds(176, 75, 180, 28);
         panel.add(populSizeField);
         populSizeField.setColumns(10);
-        iterNumberField = new JFormattedTextField(formatter);
+        
+        //formatowanie ograniczen dla iterNumberField
+		formatter2.setMinimum(0);
+		formatter2.setMaximum(10000);
+		formatter2.setCommitsOnValidEdit(true);
+        iterNumberField = new JFormattedTextField(formatter2);
         iterNumberField.setToolTipText("<10000");
         iterNumberField.setText("1000");
         iterNumberField.setBounds(176, 103, 180, 28);
@@ -469,7 +476,12 @@ public class main extends JFrame {
         JLabel lblOkresPredykacji = new JLabel("Period of prediction");
         lblOkresPredykacji.setBounds(25, 137, 134, 16);
         panel.add(lblOkresPredykacji);
-        periodOfPredField = new JFormattedTextField(formatter);
+        
+        //formatowanie ograniczen dla periodOfPredField
+		formatter3.setMinimum(1);
+		formatter3.setMaximum(Integer.MAX_VALUE);
+		formatter3.setCommitsOnValidEdit(true);
+        periodOfPredField = new JFormattedTextField(formatter3);
         periodOfPredField.setToolTipText(">0");
         periodOfPredField.setBounds(176, 131, 180, 28);
         panel.add(periodOfPredField);
