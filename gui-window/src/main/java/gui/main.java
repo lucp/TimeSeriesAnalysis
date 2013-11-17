@@ -80,8 +80,6 @@ public class main extends JFrame {
 	private JRadioButton rdBtnRoulette;
 	private JRadioButton rdBtnStochastic;
 	
-	private ChangeListener listener;
-	
 	private JTabbedPane tabbedPane;
 
 	/**
@@ -184,16 +182,15 @@ public class main extends JFrame {
 		panel.add(iterNumberField);
 		iterNumberField.setColumns(10);
 		
-		sliderProbOfMutat = new JSlider(0,100);
+		sliderProbOfMutat = new JSlider(0,100,50);
 		sliderProbOfMutat.setBounds(28, 165, 190, 29);
-		sliderProbOfMutat.addChangeListener(listener);
 		panel.add(sliderProbOfMutat);
 		
 		JLabel lblNewLabel = new JLabel("Probability of crossing");
 		lblNewLabel.setBounds(28, 205, 266, 16);
 		panel.add(lblNewLabel);
 		
-		sliderProbOfCross = new JSlider(0,100);
+		sliderProbOfCross = new JSlider(0,100,50);
 		sliderProbOfCross.setBounds(28, 225, 190, 29);
 		panel.add(sliderProbOfCross);
 		
@@ -262,33 +259,17 @@ public class main extends JFrame {
 		lblProcentPoMutacji.setLabelFor(lblProcentPoMutacji);
 		lblProcentPoMutacji.setBounds(583, 131, 80, 16);
 		panel.add(lblProcentPoMutacji);
-		
-		// Listener dla kolejnych sliderow
-		//PO CO??
-		listener = new ChangeListener() {
-			public void stateChanged(ChangeEvent event) 
-			{
-				JSlider source = (JSlider) event.getSource();
-				if (!source.getValueIsAdjusting()) {
-					int value = (int)source.getValue();
-					System.out.println(value);
-				}
-			}
-		};
 	
-		sliderSelekcji = new JSlider(0,100,0);
+		sliderSelekcji = new JSlider(0,100,40);
 		sliderSelekcji.setBounds(653, 62, 190, 29);
-		sliderSelekcji.addChangeListener(listener);
 		panel.add(sliderSelekcji);
 		
-		sliderKrzyzowania = new JSlider(0,100,0);
+		sliderKrzyzowania = new JSlider(0,100,40);
 		sliderKrzyzowania.setBounds(653, 92, 190, 29);
-		sliderKrzyzowania.addChangeListener(listener);
 		panel.add(sliderKrzyzowania);
 		
-		sliderMutacji = new JSlider(0,100,0);
+		sliderMutacji = new JSlider(0,100,20);
 		sliderMutacji.setBounds(653, 122, 190, 29);
-		sliderMutacji.addChangeListener(listener);
 		panel.add(sliderMutacji);
 		
 		//-------------------DataTable-------------------
@@ -326,8 +307,8 @@ public class main extends JFrame {
 						String df=dateFormatTextField.getText();
 						SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
 						int currentIndex=timeSeries.indexOf(currentTimeSeries);
-						timeSeries.remove(currentIndex);
 						currentTimeSeries=tableAcq.readData_TimeSeries((String)currentTimeSeries.getKey());
+						timeSeries.remove(currentIndex);
 						timeSeries.add(currentIndex, currentTimeSeries);
 						dataComboBox.firePopupMenuWillBecomeVisible();
 						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));

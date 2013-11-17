@@ -32,6 +32,9 @@ public class SwingTableDataAcquisitor {
 				if (value.contains(",")){
 					value=value.replaceAll(",",".");
 				}
+				if (time.contains("\"")){
+					time=time.replaceAll("\"", "");
+				}
 				timeSeries.add(new Day(dateFormatter.parse(time)),Double.valueOf(value));
 			}
 			catch (Exception e){

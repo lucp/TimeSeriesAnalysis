@@ -8,6 +8,7 @@ import forecasting.model.SlidingTimeWindow;
 import gui.main;
 import mock.MockTimeSeries;
 
+import org.bouncycastle.crypto.DataLengthException;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.ui.RefineryUtilities;
 import org.springframework.context.ApplicationContext;
@@ -31,44 +32,53 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
         this.window = window;
     }
     
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
     	
-    	//przyk³adowy szereg czasowy, nale¿y wywaliæ
-    	TimeSeries timeSeries = new MockTimeSeries().getMySeries();
-        
-    	//TO DO
-    	//jak zostanie ogarniete wpisywanie do pola 'Time window' nale¿y to zmodyfikowaæ
-    	SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{2});
-
-        if(window.getRdBtnStochastic().isSelected())
-        	GASettings.getInstance().setSelectionMethod(SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION);
-        
-        //TO DO   if...
-        //GASettings.getInstance().setForecastMethod(ForecastMethod.ARMA_FORECAST);
-
-        GASettings.getInstance().setConcurrent(true);
-
-        ApplicationContext context = new AnnotationConfigApplicationContext(ForecastConfig.class);
-        AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");
-
-        try {
-            forecast.initializeGeneticAlgorithm(
-            		(TimeSeries) timeSeries.clone(),				//TO DO
-                    (Integer) window.getPopulSizeField().getValue(),
-                    slidingTimeWindow,				                //TO DO
-                    (Integer) window.getIterNumberField().getValue(),
-                    window.getSliderProbOfCross().getValue(),
-                    window.getSliderProbOfMutat().getValue(),
-                    window.getSliderSelekcji().getValue(),
-                    window.getSliderKrzyzowania().getValue(),
-                    window.getSliderMutacji().getValue());
-            forecast.initializeForecast((Integer) window.getPeriodOfPredField().getValue());
-        } catch (CloneNotSupportedException e1) {
+    	try{
+    		
+	    	TimeSeries timeSeries = window.getCurrentTimeSeries();
+	    	if (timeSeries==null || timeSeries.isEmpty()) throw new DataLengthException();
+	        
+	    	//TO DO
+	    	//jak zostanie ogarniete wpisywanie do pola 'Time window' naleï¿½y to zmodyfikowaï¿½
+	    	SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{2});
+	
+	        if(window.getRdBtnStochastic().isSelected())
+	        	GASettings.getInstance().setSelectionMethod(SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION);
+	        
+	        //TO DO   if...
+	        //GASettings.getInstance().setForecastMethod(ForecastMethod.ARMA_FORECAST);
+	
+	        GASettings.getInstance().setConcurrent(true);
+	
+	        ApplicationContext context = new AnnotationConfigApplicationContext(ForecastConfig.class);
+	        AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");
+	
+	        forecast.initializeGeneticAlgorithm(
+	    		(TimeSeries) timeSeries.clone(),				//TO DO
+	            (Integer) window.getPopulSizeField().getValue(),
+	            slidingTimeWindow,				                //TO DO
+	            (Integer) window.getIterNumberField().getValue(),
+	            (double)window.getSliderProbOfCross().getValue()/100,
+	            (double)window.getSliderProbOfMutat().getValue()/100,
+	            (double)window.getSliderSelekcji().getValue()/100,
+	            (double)window.getSliderKrzyzowania().getValue()/100,
+	            (double)window.getSliderMutacji().getValue()/100);
+	        forecast.initializeForecast((Integer) window.getPeriodOfPredField().getValue());
+	                
+	        forecast.addObserver(new GAChartObserver(window.getFitnessChart(), window.getTimeSeriesChart(), (Integer) window.getPeriodOfPredField().getValue()));
+	        forecast.execute();
+	        window.getTabbedPane().setSelectedIndex(3);
+	        
+        } 
+    	catch (CloneNotSupportedException e1) {
             e1.printStackTrace();
         }
-        
-        forecast.addObserver(new GAChartObserver(window.getFitnessChart(), window.getTimeSeriesChart(), (Integer) window.getPeriodOfPredField().getValue()));
-        forecast.execute();
-        window.getTabbedPane().setSelectedIndex(3);
+    	catch (DataLengthException de){
+    		JOptionPane.showMessageDialog(window, "Current data is not set or empty", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    	catch(Exception exc){
+    		JOptionPane.showMessageDialog(window, "Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
     }
 }
