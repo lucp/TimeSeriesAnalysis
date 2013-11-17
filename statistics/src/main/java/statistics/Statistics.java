@@ -1,6 +1,6 @@
 /**
- * Copyright (c) 2013, Tomasz Choma, Olgierd Grodzki, £ukasz PotÍpa, Monika
- * Rakoczy, Pawe≥ Synowiec, £ukasz Szarkowicz
+ * Copyright (c) 2013, Tomasz Choma, Olgierd Grodzki, ≈Åukasz Potƒôpa, Monika
+ * Rakoczy, Pawe≈Ç Synowiec, ≈Åukasz Szarkowicz
  *
  * All rights reserved.
  *
