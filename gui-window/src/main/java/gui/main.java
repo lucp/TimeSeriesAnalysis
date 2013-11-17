@@ -517,6 +517,13 @@ public class main extends JFrame {
         		public void stateChanged(ChangeEvent e) {
         			int value = sliderSelekcji.getValue();
         			selectionValueLabel.setText(value + "%");
+        			
+        			int difference = sliderSelekcji.getValue() + sliderKrzyzowania.getValue() + sliderMutacji.getValue() - 100;
+        			if (difference > 0) {
+						sliderKrzyzowania.setValue(sliderKrzyzowania.getValue() - difference + difference / 2);
+						sliderMutacji.setValue(sliderMutacji.getValue() - difference + difference / 2);
+					}
+        			
         		}
         	});
         	sliderSelekcji.setBounds(566, 47, 190, 29);
@@ -527,6 +534,12 @@ public class main extends JFrame {
         		public void stateChanged(ChangeEvent e) {
         			int value = sliderKrzyzowania.getValue();
         			crossingValueLabel.setText(value + "%");
+        			
+        			int difference = sliderSelekcji.getValue() + sliderKrzyzowania.getValue() + sliderMutacji.getValue() - 100;
+        			if (difference > 0) {
+						sliderSelekcji.setValue(sliderSelekcji.getValue() - difference + difference / 2);
+						sliderMutacji.setValue(sliderMutacji.getValue() - difference + difference / 2);
+					}
         		}
         	});
         	sliderKrzyzowania.setBounds(566, 74, 190, 29);
@@ -537,6 +550,12 @@ public class main extends JFrame {
 				public void stateChanged(ChangeEvent e) {
 					int value = sliderMutacji.getValue();
         			mutationValueLabel.setText(value + "%");
+        			
+        			int difference = sliderSelekcji.getValue() + sliderKrzyzowania.getValue() + sliderMutacji.getValue() - 100;
+        			if (difference > 0) {
+						sliderKrzyzowania.setValue(sliderKrzyzowania.getValue() - difference + difference / 2);
+						sliderSelekcji.setValue(sliderSelekcji.getValue() - difference + difference / 2);
+					}
 				}
 			});
         	sliderMutacji.setBounds(566, 102, 190, 29);
@@ -575,6 +594,18 @@ public class main extends JFrame {
         tabbedPane.addTab("Logi", null, logsPanel, null);
     }
 	
+	public JLabel getSelectionValueLabel() {
+		return selectionValueLabel;
+	}
+
+	public JLabel getCrossingValueLabel() {
+		return crossingValueLabel;
+	}
+
+	public JLabel getMutationValueLabel() {
+		return mutationValueLabel;
+	}
+
 	public TimeSeries getCurrentTimeSeries() {
 		return currentTimeSeries;
 	}
