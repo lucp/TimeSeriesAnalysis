@@ -1,3 +1,4 @@
+
 package action;
 
 import forecasting.AbstractForecast;
@@ -34,6 +35,11 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     
     public void actionPerformed(ActionEvent e){
     	
+    	if (window.getSliderSelekcji().getValue() + window.getSliderKrzyzowania().getValue() + window.getSliderMutacji().getValue() != 100)
+    	{
+    			JOptionPane.showMessageDialog(null, "Prosze wprowadzic poprawne dane procentowe dla Selection, Crossing, oraz Mutation");
+    			return;
+    	}
     	try{
     		
 	    	TimeSeries timeSeries = window.getCurrentTimeSeries();
