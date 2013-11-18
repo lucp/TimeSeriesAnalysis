@@ -8,7 +8,6 @@ import forecasting.config.GASettings;
 import forecasting.config.SelectionMethod;
 import forecasting.model.SlidingTimeWindow;
 import gui.main;
-import mock.MockTimeSeries;
 
 import org.bouncycastle.crypto.DataLengthException;
 import org.jfree.data.io.CSV;

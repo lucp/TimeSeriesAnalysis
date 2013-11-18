@@ -1,3 +1,22 @@
+/**
+ * Copyright (c) 2013
+ * Tomasz Choma, Olgierd Grodzki, Łukasz Potępa, Monika Rakoczy, Paweł Synowiec, Łukasz Szarkowicz
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package service.chart;
 
 import org.jfree.chart.ChartFactory;
@@ -19,6 +38,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Panel zawierajacy komponenty biblioteki JFreeChart odpowiedzialne za rysowanie wykresu szeregu czasowego
+ */
 public class TimeSeriesChart extends JPanel {
 
     private static final Color centroidColor = Color.blue;
@@ -27,12 +49,21 @@ public class TimeSeriesChart extends JPanel {
 
     private XYLineAndShapeRenderer renderer;
 
+    /**
+     * Wlasna klasa renderujaca wykres dziedziczaca po XYLineAndShapeRenderer 
+     */
     private class MyRenderer extends XYLineAndShapeRenderer {
-
+    	
         public MyRenderer(boolean lines, boolean shapes) {
             super(lines, shapes);
         }
-
+        
+        /**
+         * Sprawdz, czy dany element z serii pochodzi z predykcji i ustaw odpowiedni kolor
+         * 
+         * @param row rzad elementu
+         * @param col numer elementu
+         */
         @Override
         public Paint getItemPaint(int row, int col) {
             if (col >= firstColumnID && col <= lastColumnID) {
@@ -54,14 +85,20 @@ public class TimeSeriesChart extends JPanel {
     public TimeSeriesChart(List<TimeSeries> timeSeriesList, int numOfDataPoints){
     	createChartPanel(timeSeriesList, numOfDataPoints);
     }
-    	
+    
+    /**
+     * Utworz nowa przestrzen z wykresem szeregu czasowego (z wyroznionymi punktami dla danych pochodzacych 
+     * z predykcji) i dodaj ja do glownego panelu
+     * 
+     * @param timeSeriesList Lista szeregow czasowych
+     * @param numOfDataPoints Liczba punktow czasowych dla ktorych zostala wykonana predykcja
+     */
     public void createChartPanel(List<TimeSeries> timeSeriesList, int numOfDataPoints){
         XYDataset dataset = createDataset(timeSeriesList);
 
         if(numOfDataPoints > 0){
         	firstColumnID = dataset.getItemCount(0) - numOfDataPoints;
         	lastColumnID = dataset.getItemCount(0) - 1;
-            System.out.print(firstColumnID + " " + lastColumnID);
             renderer = new MyRenderer(true, true);
         }else{
             renderer = new XYLineAndShapeRenderer(true, true);
@@ -76,13 +113,19 @@ public class TimeSeriesChart extends JPanel {
         this.removeAll();
         this.add(panel);
     }
-
+    
+    /**
+     * Utworz wykres szeregu czasowego na podstawie zestawu danych
+     * 
+     * @param dataset Zestaw danych
+     * @return Wykres szeregu czasowego
+     */
     private JFreeChart createChart(XYDataset dataset) {
 
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                "Legal & General Unit Trust Prices",  // title
+                "Time series", 		 // title
                 "Date",             // x-axis label
-                "Price Per Unit",   // y-axis label
+                "Value",   			// y-axis label
                 dataset,            // data
                 true,               // create legend?
                 true,               // generate tooltips?
@@ -112,7 +155,13 @@ public class TimeSeriesChart extends JPanel {
 
         return chart;
     }
-
+    
+    /**
+     * Utworz jeden zestaw danych na podstawie listy szeregow czasowych
+     * 
+     * @param timeSeriesList Lista szeregow czasowych
+     * @return Zestaw danych
+     */
     private XYDataset createDataset(List<TimeSeries> timeSeriesList) {
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();

@@ -1,3 +1,22 @@
+/**
+ * Copyright (c) 2013
+ * Tomasz Choma, Olgierd Grodzki, Łukasz Potępa, Monika Rakoczy, Paweł Synowiec, Łukasz Szarkowicz
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package service.action;
 
 import forecasting.GAObserver;
@@ -8,6 +27,9 @@ import service.chart.TimeSeriesChart;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasa implementuje obserwatora algorytmu genetycznego w celu nanoszenia zmian na wykresach
+ */
 public class GAChartObserver implements GAObserver {
 
     private FitnessChart fitChart;
@@ -19,7 +41,14 @@ public class GAChartObserver implements GAObserver {
         this.tmChart = tmChart;
         this.numOfDataPoints = numOfDataPoints;
     }
-
+    
+    /**
+     * Algorytm co iterację "pushuje" te dane do observerow.
+     *
+     * @param fitness Wartosc funkcji fitness najlepszego osobnika w tej iteracji
+     * @param best Geny najlepszego osobnika w tej iteracji
+     * @param i Numer iteracji
+     */
     @Override
     public void update(double fitness, double[] best, int i) {
 
@@ -40,6 +69,12 @@ public class GAChartObserver implements GAObserver {
         }
     }
     
+    /**
+     * Metoda wywoływana po zakonczeniu dzialania algorytmu genetycznego, przekazuje szereg czasowy zawierajacy
+     * predykcje lub nie, w zaleznosci od inicjalizacji/wywolania metody.
+     *
+     * @param timeSeries Szereg czasowy
+     */
     @Override
     public void done(TimeSeries timeSeriesWithForecast){
 
@@ -49,7 +84,13 @@ public class GAChartObserver implements GAObserver {
         tmChart.createChartPanel(timeSeriesWithForecastList, this.numOfDataPoints);
         tmChart.validate();
     }
-
+    
+    /**
+     * Metoda nie posiada implementacji, gdyz nie interesuje nas chromosom osobnika, a szereg czasowy 
+     * zawierajacy (badz tez nie) predykcje
+     *
+     * @param best Chromosom najlepszego osobnika jako tablica doubli
+     */
     @Override
     public void done(double[] best) {
     }
