@@ -36,7 +36,7 @@ import java.util.*;
 
 public class TimeSeriesForecast extends AbstractForecast{
 
-    private static final int RANGE_MIN = -1;
+    private static final int RANGE_MIN = 0;
     private static final int RANGE_MAX = 1;
     private double percentOfKeptFromSelection = 0.4;
     private double percentOfKeptFromCrossover = 0.4;

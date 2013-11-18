@@ -373,19 +373,19 @@ public class main extends JFrame {
 			}
 		});
         JLabel correlationCoefficientLabel = new JLabel("Correlation of coeffivient: ");
-        correlationCoefficientLabel.setBounds(25, 45, 134, 16);
+        correlationCoefficientLabel.setBounds(25, 45, 174, 16);
 //        JLabel correlationCoefficientValue = new JLabel(String.valueOf(results[0]));
         JLabel lowerLimitLabel = new JLabel("Lower boundary: ");
-        lowerLimitLabel .setBounds(28, 73, 134, 16);
+        lowerLimitLabel .setBounds(28, 73, 114, 16);
 //        JLabel lowerLimitValue = new JLabel(String.valueOf(results[1]));
         JLabel upperLimitLabel = new JLabel("Upper boundary: ");
-        upperLimitLabel.setBounds(28, 101, 134, 16);
+        upperLimitLabel.setBounds(28, 101, 114, 16);
 //        JLabel upperLimitValue = new JLabel(String.valueOf(results[2]));
         JLabel mean1Label = new JLabel("Mean of series 1: ");
-        mean1Label.setBounds(28, 129, 134, 16);
+        mean1Label.setBounds(28, 129, 114, 16);
 //        JLabel mean1Value = new JLabel(String.valueOf(stat.getMeanOfSeries1()));
         JLabel mean2Label = new JLabel("Mean of series 2: ");
-        mean2Label.setBounds(28, 157, 134, 16);
+        mean2Label.setBounds(28, 157, 114, 16);
 //        JLabel mean2Value = new JLabel(String.valueOf(stat.getMeanOfSeries2()));
         JLabel var1Label = new JLabel("Variance of series 1: ");
         var1Label.setBounds(28, 185, 134, 16);
@@ -407,6 +407,30 @@ public class main extends JFrame {
         statisticsPanel.add(var1Label);
 //        statisticsPanel.add(var1Value);
         statisticsPanel.add(var2Label);
+        
+        JLabel lblLowerBound = new JLabel("0");
+        lblLowerBound.setBounds(154, 73, 61, 16);
+        statisticsPanel.add(lblLowerBound);
+        
+        JLabel lblUpperBound = new JLabel("0");
+        lblUpperBound.setBounds(154, 101, 61, 16);
+        statisticsPanel.add(lblUpperBound);
+        
+        JLabel lblMeanSeries1 = new JLabel("0");
+        lblMeanSeries1.setBounds(154, 129, 61, 16);
+        statisticsPanel.add(lblMeanSeries1);
+        
+        JLabel lblMeanSeries2 = new JLabel("0");
+        lblMeanSeries2.setBounds(154, 157, 61, 16);
+        statisticsPanel.add(lblMeanSeries2);
+        
+        JLabel lblVarianceSeries1 = new JLabel("0");
+        lblVarianceSeries1.setBounds(174, 185, 61, 16);
+        statisticsPanel.add(lblVarianceSeries1);
+        
+        JLabel lblVarianceSeries2 = new JLabel("0");
+        lblVarianceSeries2.setBounds(174, 213, 61, 16);
+        statisticsPanel.add(lblVarianceSeries2);
         
         JPanel panel = new JPanel();
         tabbedPane.addTab("Parameters", null, panel, null);
@@ -720,5 +744,4 @@ public class main extends JFrame {
 	public JRadioButton getRdbtnArmaForecast() {
 		return rdbtnArmaForecast;
 	}
-
 }

@@ -68,7 +68,11 @@ public class GaussianPerturbation implements AbstractGeneticAlgorithmOperation {
             for(int j = 0; j < chromosome.getSize(); j++){
                 roll = rand.nextDouble();
                 if(roll <= probability){
-                    chromosome.addToGene(j, rand.nextGaussian());
+                    double gauss =  rand.nextGaussian();
+
+                    if(!(chromosome.getGene(j) + gauss < 0)){
+                        chromosome.addToGene(j, gauss);
+                    }
                 }
             }
 
