@@ -124,6 +124,7 @@ public class main extends JFrame {
 		
 		this.timeSeries=new LinkedList<TimeSeries>();
 		this.currentTimeSeries=null;
+		this.stat = new Statistics();
 		
 		//-----------------------------------------------------------------------
 		
@@ -361,8 +362,6 @@ public class main extends JFrame {
         JPanel statisticsPanel = new JPanel();
         tabbedPane.addTab("Statistics", null, statisticsPanel, null);
         statisticsPanel.setLayout(null);
-
-        stat = new Statistics();
         
 //        double[] results = stat.findBestCoefficient();
         JButton statisticRun = new JButton("Show statistics");
