@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesDataItem;
 
 public class SwingTableDataAcquisitor {
 	

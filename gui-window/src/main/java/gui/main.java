@@ -215,8 +215,8 @@ public class main extends JFrame {
 						String name=JOptionPane.showInputDialog(dataTablePanel,"Choose name for data");
 						if (name!=null){
 							SwingTableDataAcquisitor tableAcq=new SwingTableDataAcquisitor(dataTable,df);
-							timeSeries.add(tableAcq.readData_TimeSeries(name));
-							currentTimeSeries=timeSeries.getLast();
+							currentTimeSeries=tableAcq.readData_TimeSeries(name);
+							timeSeries.add(currentTimeSeries);
 							dataComboBox.firePopupMenuWillBecomeVisible();
 							dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 							timeSeriesField.setText((String)currentTimeSeries.getKey());
