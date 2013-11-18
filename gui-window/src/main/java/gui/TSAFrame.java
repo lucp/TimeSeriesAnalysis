@@ -399,63 +399,67 @@ public class TSAFrame extends JFrame {
 		});
         JLabel correlationCoefficientLabel = new JLabel("Correlation of coeffivient: ");
         correlationCoefficientLabel.setBounds(25, 45, 174, 16);
-//        JLabel correlationCoefficientValue = new JLabel(String.valueOf(results[0]));
         JLabel lowerLimitLabel = new JLabel("Lower boundary: ");
         lowerLimitLabel .setBounds(28, 73, 114, 16);
-//        JLabel lowerLimitValue = new JLabel(String.valueOf(results[1]));
         JLabel upperLimitLabel = new JLabel("Upper boundary: ");
         upperLimitLabel.setBounds(28, 101, 114, 16);
-//        JLabel upperLimitValue = new JLabel(String.valueOf(results[2]));
         JLabel mean1Label = new JLabel("Mean of series 1: ");
         mean1Label.setBounds(28, 129, 114, 16);
-//        JLabel mean1Value = new JLabel(String.valueOf(stat.getMeanOfSeries1()));
         JLabel mean2Label = new JLabel("Mean of series 2: ");
         mean2Label.setBounds(28, 157, 114, 16);
-//        JLabel mean2Value = new JLabel(String.valueOf(stat.getMeanOfSeries2()));
         JLabel var1Label = new JLabel("Variance of series 1: ");
         var1Label.setBounds(28, 185, 134, 16);
-//        JLabel var1Value = new JLabel(String.valueOf(stat.getVarOfSeries1()));
         JLabel var2Label = new JLabel("Variance of series 2: ");
         var2Label.setBounds(28, 213, 134, 16);
-//        JLabel var2Value = new JLabel(String.valueOf(stat.getVarOfSeries2()));
 //
         statisticsPanel.add(correlationCoefficientLabel);
-//        statisticsPanel.add(correlationCoefficientValue);
         statisticsPanel.add(lowerLimitLabel);
-//        statisticsPanel.add(lowerLimitValue);
         statisticsPanel.add(upperLimitLabel);
-//        statisticsPanel.add(upperLimitValue);
         statisticsPanel.add(mean1Label);
-//        statisticsPanel.add(mean1Value);
         statisticsPanel.add(mean2Label);
-//        statisticsPanel.add(mean2Value);
         statisticsPanel.add(var1Label);
-//        statisticsPanel.add(var1Value);
         statisticsPanel.add(var2Label);
         
+        lblCorrelationCoefficient = new JLabel("0");
+        lblCorrelationCoefficient.setBounds(154, 45, 61, 16);
+        statisticsPanel.add(lblCorrelationCoefficient);
+
         lblLowerBound = new JLabel("0");
         lblLowerBound.setBounds(154, 73, 61, 16);
         statisticsPanel.add(lblLowerBound);
-        
+
         lblUpperBound = new JLabel("0");
         lblUpperBound.setBounds(154, 101, 61, 16);
         statisticsPanel.add(lblUpperBound);
-        
+
         lblMeanSeries1 = new JLabel("0");
         lblMeanSeries1.setBounds(154, 129, 61, 16);
         statisticsPanel.add(lblMeanSeries1);
-        
+
         lblMeanSeries2 = new JLabel("0");
         lblMeanSeries2.setBounds(154, 157, 61, 16);
         statisticsPanel.add(lblMeanSeries2);
-        
+
         lblVarianceSeries1 = new JLabel("0");
         lblVarianceSeries1.setBounds(174, 185, 61, 16);
         statisticsPanel.add(lblVarianceSeries1);
-        
+
         lblVarianceSeries2 = new JLabel("0");
         lblVarianceSeries2.setBounds(174, 213, 61, 16);
         statisticsPanel.add(lblVarianceSeries2);
+        
+        statisticRun.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                double[] results = stat.findBestCoefficient();
+                lblCorrelationCoefficient.setText(String.valueOf(results[0]));
+                lblLowerBound.setText(String.valueOf(results[1]));
+                lblUpperBound.setText(String.valueOf(results[2]));
+                lblMeanSeries1.setText(String.valueOf(stat.getMeanOfSeries1()));
+                lblMeanSeries2.setText(String.valueOf(stat.getMeanOfSeries2()));
+                lblVarianceSeries1.setText(String.valueOf(stat.getVarOfSeries1()));
+                lblVarianceSeries2.setText(String.valueOf(stat.getVarOfSeries2()));
+            }
+        });
         
         JPanel panel = new JPanel();
         tabbedPane.addTab("Parameters", null, panel, null);
