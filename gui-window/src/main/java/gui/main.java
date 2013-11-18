@@ -92,6 +92,12 @@ public class main extends JFrame {
 
 	
 	private Statistics stat;
+	private JLabel lblLowerBound;
+	private JLabel lblUpperBound;
+	private JLabel lblMeanSeries1;
+	private JLabel lblMeanSeries2;
+	private JLabel lblVarianceSeries1;
+	private JLabel lblVarianceSeries2;
 	
 	/**
 	 * Launch the application.
@@ -407,27 +413,27 @@ public class main extends JFrame {
 //        statisticsPanel.add(var1Value);
         statisticsPanel.add(var2Label);
         
-        JLabel lblLowerBound = new JLabel("0");
+        lblLowerBound = new JLabel("0");
         lblLowerBound.setBounds(154, 73, 61, 16);
         statisticsPanel.add(lblLowerBound);
         
-        JLabel lblUpperBound = new JLabel("0");
+        lblUpperBound = new JLabel("0");
         lblUpperBound.setBounds(154, 101, 61, 16);
         statisticsPanel.add(lblUpperBound);
         
-        JLabel lblMeanSeries1 = new JLabel("0");
+        lblMeanSeries1 = new JLabel("0");
         lblMeanSeries1.setBounds(154, 129, 61, 16);
         statisticsPanel.add(lblMeanSeries1);
         
-        JLabel lblMeanSeries2 = new JLabel("0");
+        lblMeanSeries2 = new JLabel("0");
         lblMeanSeries2.setBounds(154, 157, 61, 16);
         statisticsPanel.add(lblMeanSeries2);
         
-        JLabel lblVarianceSeries1 = new JLabel("0");
+        lblVarianceSeries1 = new JLabel("0");
         lblVarianceSeries1.setBounds(174, 185, 61, 16);
         statisticsPanel.add(lblVarianceSeries1);
         
-        JLabel lblVarianceSeries2 = new JLabel("0");
+        lblVarianceSeries2 = new JLabel("0");
         lblVarianceSeries2.setBounds(174, 213, 61, 16);
         statisticsPanel.add(lblVarianceSeries2);
         
@@ -656,6 +662,30 @@ public class main extends JFrame {
         tabbedPane.addTab("Logi", null, logsPanel, null);
     }
 	
+	public JLabel getLblLowerBound() {
+		return lblLowerBound;
+	}
+
+	public JLabel getLblUpperBound() {
+		return lblUpperBound;
+	}
+
+	public JLabel getLblMeanSeries1() {
+		return lblMeanSeries1;
+	}
+
+	public JLabel getLblMeanSeries2() {
+		return lblMeanSeries2;
+	}
+
+	public JLabel getLblVarianceSeries1() {
+		return lblVarianceSeries1;
+	}
+
+	public JLabel getLblVarianceSeries2() {
+		return lblVarianceSeries2;
+	}
+
 	public JLabel getSelectionValueLabel() {
 		return selectionValueLabel;
 	}
