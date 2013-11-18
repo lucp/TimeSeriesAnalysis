@@ -68,22 +68,22 @@ public class TSAFrame extends JFrame {
 		
 	//----------------------------Genetic----------------------------
 	
-	LinkedList<TimeSeries> timeSeries;
-	TimeSeries currentTimeSeries;
-	private FitnessChart fitnessChart;
-	private TimeSeriesChart timeSeriesChart;
+	LinkedList<TimeSeries> timeSeries; // lista szeregów czasowych
+	TimeSeries currentTimeSeries; // bieżący szereg czasowy
+	private FitnessChart fitnessChart; // wykres dopasowania
+	private TimeSeriesChart timeSeriesChart; // wykres przedstawiający szereg czasowy
 	JTable dataTable;
 	
 	//-----------------------------ImportantFrame---------------------------
 
-	JPanel dataTablePanel;
+	JPanel dataTablePanel; // panel zakladki Data Table
 	JScrollPane tableScrollPane;
 	JTextField dateFormatTextField;
 	JComboBox<String> dataComboBox;
 	JTextField valueColumnTextField;
 	JTextField timeColumnTextField;
 	
-	//-----------------------------Frme-------------------------------------
+	//-----------------------------Frame-------------------------------------
 	private JFormattedTextField populSizeField;
 	private JFormattedTextField iterNumberField;
 	private JFormattedTextField periodOfPredField;
