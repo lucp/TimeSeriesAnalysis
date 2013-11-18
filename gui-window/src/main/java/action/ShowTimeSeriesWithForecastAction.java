@@ -53,7 +53,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 	    	
 	    	//TO DO
 	    	//jak zostanie ogarniete wpisywanie do pola 'Time window' nale�y to zmodyfikowa�
-	    	SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(new int[]{2});
+	    	SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(this.parseToWindowForm(window.getTimeWindowField().getText()));
 	
 	        if(window.getRdBtnStochastic().isSelected())
 	        	GASettings.getInstance().setSelectionMethod(SelectionMethod.STOCHASTIC_UNIVERSAL_SAMPLING_SELECTION);

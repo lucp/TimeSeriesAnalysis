@@ -499,7 +499,7 @@ public class main extends JFrame {
         panel.add(lblNewLabel_2);
         
         timeWindowField = new JTextField();
-        timeWindowField.setBounds(176, 47, 180, 28);
+        timeWindowField.setBounds(176, 19, 180, 28);
         panel.add(timeWindowField);
         timeWindowField.setColumns(10);
         
@@ -508,7 +508,7 @@ public class main extends JFrame {
         panel.add(lblOknoCzasowe);
         
         timeSeriesField = new JTextField();
-        timeSeriesField.setBounds(176, 19, 180, 28);
+        timeSeriesField.setBounds(176, 47, 180, 28);
         panel.add(timeSeriesField);
         timeSeriesField.setColumns(10);
         
