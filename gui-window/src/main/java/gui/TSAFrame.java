@@ -112,6 +112,7 @@ public class TSAFrame extends JFrame {
 
 	
 	private Statistics stat;
+	private JLabel lblCorrelationCoefficient;
 	private JLabel lblLowerBound;
 	private JLabel lblUpperBound;
 	private JLabel lblMeanSeries1;
