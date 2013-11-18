@@ -68,7 +68,7 @@ public class main extends JFrame {
 	private JFormattedTextField iterNumberField;
 	private JFormattedTextField periodOfPredField;
 	private JTextField timeWindowField;
-	private JTextField timeSeriesField;
+	private JLabel timeSeriesField;
 	
 	private JSlider sliderSelekcji;
 	private JSlider sliderKrzyzowania;
@@ -208,6 +208,7 @@ public class main extends JFrame {
 						timeSeries.add(currentIndex, currentTimeSeries);
 						dataComboBox.firePopupMenuWillBecomeVisible();
 						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+						timeSeriesField.setText((String)currentTimeSeries.getKey());
 					}
 					else{
 						String df=dateFormatTextField.getText();
@@ -218,6 +219,7 @@ public class main extends JFrame {
 							currentTimeSeries=timeSeries.getLast();
 							dataComboBox.firePopupMenuWillBecomeVisible();
 							dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+							timeSeriesField.setText((String)currentTimeSeries.getKey());
 						}
 					}
 				}
@@ -251,6 +253,7 @@ public class main extends JFrame {
 					if (!timeSeries.isEmpty()){
 						currentTimeSeries=timeSeries.get(dataComboBox.getSelectedIndex());
 						SwingTableDataAcquisitor.updateJTable(dataTable,currentTimeSeries,dateFormatTextField.getText());
+						timeSeriesField.setText((String)currentTimeSeries.getKey());
 					}
 				}
 				catch(Exception exc){
@@ -281,6 +284,7 @@ public class main extends JFrame {
 						currentTimeSeries=timeSeries.getLast();
 						dataComboBox.firePopupMenuWillBecomeVisible();
 						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
+						timeSeriesField.setText((String)currentTimeSeries.getKey());
 					}
 				}
 				catch(Exception exc){
@@ -306,6 +310,7 @@ public class main extends JFrame {
 			            dataComboBox.firePopupMenuWillBecomeVisible();
 						dataComboBox.setSelectedIndex(timeSeries.indexOf(currentTimeSeries));
 						SwingTableDataAcquisitor.updateJTable(dataTable, currentTimeSeries, dateFormatTextField.getText());
+						timeSeriesField.setText((String)currentTimeSeries.getKey());
 		        	}
 		        	catch(Exception exc){
 		        		exc.printStackTrace();
@@ -507,10 +512,10 @@ public class main extends JFrame {
         lblOknoCzasowe.setBounds(25, 25, 134, 16);
         panel.add(lblOknoCzasowe);
         
-        timeSeriesField = new JTextField();
+        timeSeriesField = new JLabel();
         timeSeriesField.setBounds(176, 47, 180, 28);
+        timeSeriesField.setText("---");
         panel.add(timeSeriesField);
-        timeSeriesField.setColumns(10);
         
         JLabel lblProcentOsobnikwPozostwionych = new JLabel("Percent of species left after:");
         lblProcentOsobnikwPozostwionych.setBounds(415, 25, 281, 16);
@@ -660,7 +665,7 @@ public class main extends JFrame {
 		return timeWindowField;
 	}
 
-	public JTextField getTimeSeriesField() {
+	public JLabel getTimeSeriesField() {
 		return timeSeriesField;
 	}
 
