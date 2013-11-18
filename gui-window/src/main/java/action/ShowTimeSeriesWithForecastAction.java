@@ -7,7 +7,7 @@ import forecasting.config.ForecastMethod;
 import forecasting.config.GASettings;
 import forecasting.config.SelectionMethod;
 import forecasting.model.SlidingTimeWindow;
-import gui.main;
+import gui.TSAFrame;
 
 import org.bouncycastle.crypto.DataLengthException;
 import org.jfree.data.io.CSV;
@@ -31,10 +31,10 @@ import java.util.Arrays;
 
 public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
-    main window;
+    TSAFrame window;
     Statistics stat;
 
-    public ShowTimeSeriesWithForecastAction(main window){
+    public ShowTimeSeriesWithForecastAction(TSAFrame window){
         this.window = window;
         this.stat = window.getStat();
     }

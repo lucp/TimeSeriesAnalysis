@@ -1,4 +1,5 @@
 package gui;
+
 import data.CSVDataAcquisitor;
 import data.SwingTableDataAcquisitor;
 
@@ -44,7 +45,7 @@ import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.JFormattedTextField;
 
-public class main extends JFrame {
+public class TSAFrame extends JFrame {
 		
 	//----------------------------Genetic----------------------------
 	
@@ -112,7 +113,7 @@ public class main extends JFrame {
 				}catch (Exception e){}
 				
 				try {
-					main frame = new main();
+					TSAFrame frame = new TSAFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -124,7 +125,7 @@ public class main extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public main() {
+	public TSAFrame() {
 		
 		//--------------------------------MainFieldsInit-------------------------
 		
@@ -307,7 +308,7 @@ public class main extends JFrame {
 		btnImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser importFileChooser=new JFileChooser();
-				int returnVal = importFileChooser.showOpenDialog(main.this);
+				int returnVal = importFileChooser.showOpenDialog(TSAFrame.this);
 		        if (returnVal == JFileChooser.APPROVE_OPTION) {
 		        	try{
 			            File file = importFileChooser.getSelectedFile();
