@@ -99,6 +99,9 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     }
     
     public int[] parseToWindowForm(String str) throws NumberFormatException{
+    	str=str.replaceAll(" ", "");
+    	str=str.replaceAll("\t", "");
+    	str=str.replaceAll("\n", "");
     	String[] values=str.split(",");
     	int[] parsed=new int[values.length];
     	for (int i=0;i<parsed.length;i++){
