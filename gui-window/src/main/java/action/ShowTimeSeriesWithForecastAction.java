@@ -72,10 +72,10 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 	            (double)window.getSliderMutacji().getValue()/100);
 	        forecast.initializeForecast((Integer) window.getPeriodOfPredField().getValue());
 	                
-	        forecast.addObserver(new GAChartObserver(window.getFitnessChart(), window.getTimeSeriesChart(), (Integer) window.getPeriodOfPredField().getValue()));
+	        forecast.addObserver(new GAChartObserver(window.getFitnessChart(), window.getTimeSeriesChartWithForecast(), (Integer) window.getPeriodOfPredField().getValue()));
 	        forecast.addObserver(new GAStatisticObserver(window.getForecast(), (Integer) window.getPeriodOfPredField().getValue()));
 	        forecast.execute();
-	        window.getTabbedPane().setSelectedIndex(2);
+	        window.getTabbedPane().setSelectedIndex(3);
 	        
         } 
     	catch (CloneNotSupportedException e1) {

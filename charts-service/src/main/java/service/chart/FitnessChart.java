@@ -114,4 +114,12 @@ public class FitnessChart extends JPanel {
     	chartPanel.setRefreshBuffer(true);
     	chartPanel.repaint();
     }
+    
+    /**
+     * Wyczysc panel
+     */
+    public void clear(){
+    	dataset.clear();
+    	this.ripejnt();
+    }
 }

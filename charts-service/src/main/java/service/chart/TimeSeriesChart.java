@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2013
- * Tomasz Choma, Olgierd Grodzki, Łukasz Potępa, Monika Rakoczy, Paweł Synowiec, Łukasz Szarkowicz
+ * Tomasz Choma, Olgierd Grodzki, Ĺ�ukasz PotÄ™pa, Monika Rakoczy, PaweĹ‚ Synowiec, Ĺ�ukasz Szarkowicz
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -171,5 +171,12 @@ public class TimeSeriesChart extends JPanel {
         }
 
         return dataset;
+    }
+    
+    /**
+     * Wyczysc panel
+     */
+    public void clear(){
+    	createChartPanel(new ArrayList<TimeSeries>(), 0);
     }
 }

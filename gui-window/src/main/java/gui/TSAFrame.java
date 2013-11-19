@@ -45,6 +45,8 @@ import javax.swing.ButtonGroup;
 
 import org.jfree.data.time.TimeSeries;
 
+import action.ResetChartsAndParameters;
+import action.ShowTimeSeriesDataInAction;
 import action.ShowTimeSeriesWithForecastAction;
 import service.action.GAChartObserver;
 import service.chart.FitnessChart;
@@ -79,14 +81,19 @@ public class TSAFrame extends JFrame {
 	TimeSeries currentTimeSeries; 
 	
 	/**
-	 * wykres dopasowania
+	 * wykres przedstawiający szereg czasowy z predykcją
 	 */
 	private FitnessChart fitnessChart; 
 	
 	/**
 	 * wykres przedstawiający szereg czasowy
 	 */
-	private TimeSeriesChart timeSeriesChart;
+	private TimeSeriesChart timeSeriesChartWithForecast;
+	
+	/**
+	 * wykres przedstawiający wejściowy szereg czasowy
+	 */
+	private TimeSeriesChart timeSeriesChartDataIn;
 	
 	/**
 	 * Tabela zawierająca dane szeregów czasowych
@@ -240,21 +247,18 @@ public class TSAFrame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JButton btnCustomValues = new JButton("Custom values");
-		btnCustomValues.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		/**
+		 * Przycisk wyświetlający wykres aktualnie wybranego szeregu czasowego
+		 */
+		JButton btnCustomValues = new JButton("Data-in chart");
+		btnCustomValues.addActionListener(new ShowTimeSeriesDataInAction(this));
 		menuBar.add(btnCustomValues);
 		
 		/**
 		 * Przycisk służący resetowaniu parametrów
 		 */
 		JButton btnReset = new JButton("Reset");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnReset.addActionListener(new ResetChartsAndParameters(this));
 		menuBar.add(btnReset);
 		
 		/**
@@ -465,11 +469,12 @@ public class TSAFrame extends JFrame {
 		dataTablePanel.add(lblImportColumns);
 		
 		//-------------------Charts----------------------
-        //TODO chart-service
-        timeSeriesChart = new TimeSeriesChart();
-        tabbedPane.addTab("Time Series Chart", null, timeSeriesChart, null);
-        //timeSeriesChart.createChartPanel(new LinkedList<TimeSeries>(), 0);
-
+		timeSeriesChartDataIn = new TimeSeriesChart();
+		tabbedPane.addTab("Time Series Chart - Data-in", null, timeSeriesChartDataIn, null);
+        
+		timeSeriesChartWithForecast = new TimeSeriesChart();
+        tabbedPane.addTab("Time Series Chart with Forecast", null, timeSeriesChartWithForecast, null);
+        
         fitnessChart = new FitnessChart();
         tabbedPane.addTab("Fitness Chart", null, fitnessChart, null);
 
@@ -795,8 +800,6 @@ public class TSAFrame extends JFrame {
 //        statisticsPanel.add(var2Value);
         //================================
         
-        JPanel dataInChart = new JPanel();
-        tabbedPane.addTab("Data-in chart", null, dataInChart, null);
     }
 	
 	public JLabel getLblLowerBound() {
@@ -886,7 +889,11 @@ public class TSAFrame extends JFrame {
 	public JRadioButton getRdBtnRoulette() {
 		return rdBtnRoulette;
 	}
-
+	
+	public JRadioButton getRdbtnLinearCombination() {
+		return rdbtnLinearCombination;
+	}
+	
 	public JRadioButton getRdBtnStochastic() {
 		return rdBtnStochastic;
 	}
@@ -895,8 +902,12 @@ public class TSAFrame extends JFrame {
 		return fitnessChart;
 	}
 
-	public TimeSeriesChart getTimeSeriesChart() {
-		return timeSeriesChart;
+	public TimeSeriesChart getTimeSeriesChartDataIn() {
+		return timeSeriesChartDataIn;
+	}
+	
+	public TimeSeriesChart getTimeSeriesChartWithForecast() {
+		return timeSeriesChartWithForecast;
 	}
 
 	public JTabbedPane getTabbedPane() {
