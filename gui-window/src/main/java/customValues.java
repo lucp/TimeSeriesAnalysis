@@ -1,4 +1,4 @@
-// Created by üukasz Szarkowicz
+// Created by Åukasz Szarkowicz
 // 2013
 
 import java.awt.BorderLayout;
