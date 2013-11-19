@@ -556,14 +556,6 @@ public class TSAFrame extends JFrame {
         lblChooseDataTo.setBounds(239, 46, 134, 14);
         statisticsPanel.add(lblChooseDataTo);
         
-        JLabel predictedDataNameLabel = new JLabel("---");
-        predictedDataNameLabel.setBounds(387, 74, 121, 14);
-        statisticsPanel.add(predictedDataNameLabel);
-        
-        JLabel prDataDescLbl = new JLabel("Predicted data:");
-        prDataDescLbl.setBounds(239, 74, 114, 14);
-        statisticsPanel.add(prDataDescLbl);
-        
         statisticRun.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             	int index=statDataChooserCB.getSelectedIndex();
