@@ -512,7 +512,7 @@ public class TSAFrame extends JFrame {
         statisticsPanel.add(var2Label);
         
         lblCorrelationCoefficient = new JLabel("0");
-        lblCorrelationCoefficient.setBounds(154, 45, 61, 16);
+        lblCorrelationCoefficient.setBounds(195, 45, 61, 16);
         statisticsPanel.add(lblCorrelationCoefficient);
 
         lblLowerBound = new JLabel("0");
@@ -554,11 +554,11 @@ public class TSAFrame extends JFrame {
 				}
         	}
         });
-        statDataChooserCB.setBounds(387, 43, 157, 20);
+        statDataChooserCB.setBounds(532, 44, 157, 20);
         statisticsPanel.add(statDataChooserCB);
         
         JLabel lblChooseDataTo = new JLabel("Data chosen to compare:");
-        lblChooseDataTo.setBounds(239, 46, 134, 14);
+        lblChooseDataTo.setBounds(364, 46, 174, 14);
         statisticsPanel.add(lblChooseDataTo);
         
         statisticRun.addActionListener(new ActionListener() {
