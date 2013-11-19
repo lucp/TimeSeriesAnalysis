@@ -1,3 +1,21 @@
+/**
+ * Copyright (c) 2013
+ * Tomasz Choma, Olgierd Grodzki, Łukasz Potępa, Monika Rakoczy, Paweł Synowiec, Łukasz Szarkowicz
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 
 package action;
 
@@ -10,25 +28,21 @@ import forecasting.model.SlidingTimeWindow;
 import gui.TSAFrame;
 
 import org.bouncycastle.crypto.DataLengthException;
-import org.jfree.data.io.CSV;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.ui.RefineryUtilities;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import data.SwingTableDataAcquisitor;
 import service.action.GAChartObserver;
-import service.chart.FitnessChart;
-import service.chart.TimeSeriesChart;
-import statistics.Statistics;
 
 import javax.swing.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.util.Arrays;
 
+/**
+ * Klasa implementuje interfejs ActionListener
+ */
 public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
     TSAFrame window;
@@ -37,6 +51,9 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
         this.window = window;
     }
     
+    /**
+	 * Metoda obslugujaca zdarzenie, odpowiedzialna za inicjalizacje algorytmu genetycznego
+	 */
     public void actionPerformed(ActionEvent e){
     	
     	try{
@@ -92,6 +109,13 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     	}
     }
     
+    /**
+     * Utworz tablice liczb calkowitych (wiekszych od 0) sposrod liczb wpisanych jako ciag znakow, oddzielonych separatorem
+     * 
+     * @param str Ciag znakow
+     * @return Tablica liczb calkowitych wiekszych od 0
+     * @throws NumberFormatException 
+     */
     public int[] parseToWindowForm(String str) throws NumberFormatException{
     	str=str.replaceAll(" ", "");
     	str=str.replaceAll("\t", "");
