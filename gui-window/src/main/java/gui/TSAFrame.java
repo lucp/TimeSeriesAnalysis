@@ -795,8 +795,8 @@ public class TSAFrame extends JFrame {
 //        statisticsPanel.add(var2Value);
         //================================
         
-        JPanel logsPanel = new JPanel();
-        tabbedPane.addTab("Logi", null, logsPanel, null);
+        JPanel dataInChart = new JPanel();
+        tabbedPane.addTab("Data-in chart", null, dataInChart, null);
     }
 	
 	public JLabel getLblLowerBound() {
