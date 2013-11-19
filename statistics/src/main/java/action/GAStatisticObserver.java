@@ -69,7 +69,11 @@ public class GAStatisticObserver implements GAObserver {
     public void done(TimeSeries timeSeriesWithForecast){
     	int number = timeSeriesWithForecast.getItemCount() - 1;
 		try {
-			forecast = timeSeriesWithForecast.createCopy(number - numOfDataPoints, number);
+			forecast.clear();
+			TimeSeries tmp=timeSeriesWithForecast.createCopy(number - numOfDataPoints, number);
+			for (int i=0;i<tmp.getItemCount();i++){
+				forecast.add(tmp.getDataItem(i));
+			}
 			
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
