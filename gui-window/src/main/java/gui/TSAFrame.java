@@ -251,7 +251,7 @@ public class TSAFrame extends JFrame {
 		/**
 		 * Przycisk wyświetlający wykres aktualnie wybranego szeregu czasowego
 		 */
-		JButton btnCustomValues = new JButton("Data-in chart");
+		JButton btnCustomValues = new JButton("Load data-in chart");
 		btnCustomValues.addActionListener(new ShowTimeSeriesDataInAction(this));
 		menuBar.add(btnCustomValues);
 		
