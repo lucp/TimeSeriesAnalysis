@@ -90,7 +90,7 @@ public class Statistics {
         double[][] bestResults = new double[confidenceIntervals.length][2];
         for (int i = 0; i < confidenceIntervals.length; i++) {
             bestResults[i][0] = i;
-            bestResults[i][1] = Math.abs(cc[i]) / (confidenceIntervals[i][1] - confidenceIntervals[i][1]);
+            bestResults[i][1] = Math.abs(cc[i]) / (confidenceIntervals[i][1] - confidenceIntervals[i][0] + Double.MIN_VALUE);
         }
 
         Arrays.sort(bestResults, new Comparator<double[]>() {
