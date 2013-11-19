@@ -229,6 +229,7 @@ public class TSAFrame extends JFrame {
 		this.timeSeries=new LinkedList<TimeSeries>();
 		this.currentTimeSeries=null;
 		this.stat = new Statistics();
+		this.forecast=new TimeSeries("Forecast");
 		
 		//-----------------------------------------------------------------------
 		
