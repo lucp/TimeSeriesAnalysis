@@ -120,6 +120,7 @@ public class TSAFrame extends JFrame {
 	 */
 	JTextField timeColumnTextField;
 	
+	JComboBox<String> statDataChooserCB;
 	//-----------------------------Frame-------------------------------------
 	private JFormattedTextField populSizeField;
 	private JFormattedTextField iterNumberField;
@@ -478,12 +479,9 @@ public class TSAFrame extends JFrame {
         
 //        double[] results = stat.findBestCoefficient();
         JButton statisticRun = new JButton("Show statistics");
-        statisticRun.setBounds(25, 10, 134, 16);
+        statisticRun.setBounds(25, 10, 137, 24);
         statisticsPanel.add(statisticRun);
-        statisticRun .addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+
         JLabel correlationCoefficientLabel = new JLabel("Correlation of coeffivient: ");
         correlationCoefficientLabel.setBounds(25, 45, 174, 16);
         JLabel lowerLimitLabel = new JLabel("Lower boundary: ");
@@ -535,8 +533,41 @@ public class TSAFrame extends JFrame {
         lblVarianceSeries2.setBounds(174, 213, 61, 16);
         statisticsPanel.add(lblVarianceSeries2);
         
+        statDataChooserCB = new JComboBox<String>();
+        statDataChooserCB.addPopupMenuListener(new PopupMenuListener() {
+        	public void popupMenuCanceled(PopupMenuEvent e) {
+        	}
+        	public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+        	}
+        	public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+        		statDataChooserCB.removeAllItems();
+				if (!timeSeries.isEmpty()){
+					for (int i=0;i<timeSeries.size();i++){
+						statDataChooserCB.addItem((String)timeSeries.get(i).getKey());
+					}
+				}
+        	}
+        });
+        statDataChooserCB.setBounds(387, 43, 157, 20);
+        statisticsPanel.add(statDataChooserCB);
+        
+        JLabel lblChooseDataTo = new JLabel("Data chosen to compare:");
+        lblChooseDataTo.setBounds(239, 46, 134, 14);
+        statisticsPanel.add(lblChooseDataTo);
+        
+        JLabel predictedDataNameLabel = new JLabel("---");
+        predictedDataNameLabel.setBounds(387, 74, 121, 14);
+        statisticsPanel.add(predictedDataNameLabel);
+        
+        JLabel prDataDescLbl = new JLabel("Predicted data:");
+        prDataDescLbl.setBounds(239, 74, 114, 14);
+        statisticsPanel.add(prDataDescLbl);
+        
         statisticRun.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
+            	int index=statDataChooserCB.getSelectedIndex();
+            	TimeSeries compare=timeSeries.get(index);
+            	stat.loadTimeSeries(forecast,compare);
                 double[] results = stat.findBestCoefficient();
                 lblCorrelationCoefficient.setText(String.valueOf(results[0]));
                 lblLowerBound.setText(String.valueOf(results[1]));
