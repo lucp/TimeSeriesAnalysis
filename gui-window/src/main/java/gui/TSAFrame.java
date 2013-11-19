@@ -128,6 +128,7 @@ public class TSAFrame extends JFrame {
 	JTextField timeColumnTextField;
 	
 	JComboBox<String> statDataChooserCB;
+	JPanel statisticsPanel;
 	//-----------------------------Frame-------------------------------------
 	private JFormattedTextField populSizeField;
 	private JFormattedTextField iterNumberField;
@@ -479,7 +480,7 @@ public class TSAFrame extends JFrame {
         tabbedPane.addTab("Fitness Chart", null, fitnessChart, null);
 
         // ============ STATYSTYKI =================
-        JPanel statisticsPanel = new JPanel();
+        statisticsPanel = new JPanel();
         tabbedPane.addTab("Statistics", null, statisticsPanel, null);
         statisticsPanel.setLayout(null);
         
@@ -563,17 +564,23 @@ public class TSAFrame extends JFrame {
         
         statisticRun.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-            	int index=statDataChooserCB.getSelectedIndex();
-            	TimeSeries compare=timeSeries.get(index);
-            	stat.loadTimeSeries(forecast,compare);
-                double[] results = stat.findBestCoefficient();
-                lblCorrelationCoefficient.setText(String.valueOf(results[0]));
-                lblLowerBound.setText(String.valueOf(results[1]));
-                lblUpperBound.setText(String.valueOf(results[2]));
-                lblMeanSeries1.setText(String.valueOf(stat.getMeanOfSeries1()));
-                lblMeanSeries2.setText(String.valueOf(stat.getMeanOfSeries2()));
-                lblVarianceSeries1.setText(String.valueOf(stat.getVarOfSeries1()));
-                lblVarianceSeries2.setText(String.valueOf(stat.getVarOfSeries2()));
+            	try{
+	            	int index=statDataChooserCB.getSelectedIndex();
+	            	TimeSeries compare=timeSeries.get(index);
+	            	if (forecast.getItemCount() <8 || compare.getItemCount()<8) throw new Exception();
+	            	stat.loadTimeSeries(forecast,compare);
+	                double[] results = stat.findBestCoefficient();
+	                lblCorrelationCoefficient.setText(String.valueOf(results[0]));
+	                lblLowerBound.setText(String.valueOf(results[1]));
+	                lblUpperBound.setText(String.valueOf(results[2]));
+	                lblMeanSeries1.setText(String.valueOf(stat.getMeanOfSeries1()));
+	                lblMeanSeries2.setText(String.valueOf(stat.getMeanOfSeries2()));
+	                lblVarianceSeries1.setText(String.valueOf(stat.getVarOfSeries1()));
+	                lblVarianceSeries2.setText(String.valueOf(stat.getVarOfSeries2()));
+            	}
+            	catch (Exception exc){
+            		JOptionPane.showMessageDialog(statisticsPanel, "Too little data", "Error", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         

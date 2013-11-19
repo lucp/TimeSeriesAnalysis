@@ -59,7 +59,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     	try{
     		
     		if (window.getSliderSelekcji().getValue() + window.getSliderKrzyzowania().getValue() + window.getSliderMutacji().getValue() != 100)
-    			throw new ParseException("Please insert correct data for Selection, Crossing, oraz Mutation. The sum of the three has to equal 100%", 0);
+    			throw new ParseException("Please insert correct data for Selection, Crossing and Mutation. The sum of the three has to equal 100%", 0);
     		
 	    	TimeSeries timeSeries = window.getCurrentTimeSeries();
 	    	if (timeSeries==null || timeSeries.isEmpty()) throw new DataLengthException();
@@ -105,7 +105,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
     		JOptionPane.showMessageDialog(window, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     	}
     	catch(Exception exc){
-    		JOptionPane.showMessageDialog(window, "Unknown error", "Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(window, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }
     
