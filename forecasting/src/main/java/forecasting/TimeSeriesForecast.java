@@ -149,6 +149,9 @@ public class TimeSeriesForecast extends AbstractForecast{
         calculateFitnessForPopulation(population, timeSeries, slidingTimeWindow);
 
         for(int i = 0; i < numOfIterations; i++){
+
+            calculateFitnessForPopulation(population, timeSeries, slidingTimeWindow);
+
             Chromosome[] selectionPopulation = selection.performGeneticOperation(population);
             calculateFitnessForPopulation(selectionPopulation, timeSeries, slidingTimeWindow);
             Arrays.sort(selectionPopulation);
