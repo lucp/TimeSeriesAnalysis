@@ -24,7 +24,7 @@ public class ShowTimeSeriesDataInAction implements ActionListener {
     public void actionPerformed(ActionEvent e){
     	
     	try{
-    		List<TimeSeries> timeSeriesWithForecastList = new ArrayList<>();
+    		List<TimeSeries> timeSeriesWithForecastList = new ArrayList<TimeSeries>();
     	
 	        timeSeriesWithForecastList.add(window.getCurrentTimeSeries());
 	        

@@ -43,7 +43,8 @@ public class GAChartObserver implements GAObserver {
     }
     
     /**
-     * Algorytm co iterację "pushuje" te dane do observerow.
+     * Algorytm co iterację "pushuje" te dane do observerow. Nastepnie dodawany jest element 
+     * do zestawu danych, po czym odswiezany i przerysowywany jest panel z wykresem.
      *
      * @param fitness Wartosc funkcji fitness najlepszego osobnika w tej iteracji
      * @param best Geny najlepszego osobnika w tej iteracji
@@ -70,8 +71,9 @@ public class GAChartObserver implements GAObserver {
     }
     
     /**
-     * Metoda wywoływana po zakonczeniu dzialania algorytmu genetycznego, przekazuje szereg czasowy zawierajacy
-     * predykcje lub nie, w zaleznosci od inicjalizacji/wywolania metody.
+     * Metoda wywolywana po zakonczeniu dzialania algorytmu genetycznego, przekazuje szereg czasowy zawierajacy
+     * predykcje lub nie, w zaleznosci od inicjalizacji/wywolania metody. Nastepnie tworzony jest wykres 
+     * na podstawie otrzymanego szeregu czasowego.
      *
      * @param timeSeries Szereg czasowy
      */
@@ -86,8 +88,7 @@ public class GAChartObserver implements GAObserver {
     }
     
     /**
-     * Metoda nie posiada implementacji, gdyz nie interesuje nas chromosom osobnika, a szereg czasowy 
-     * zawierajacy (badz tez nie) predykcje
+     * Metoda nie posiada implementacji
      *
      * @param best Chromosom najlepszego osobnika jako tablica doubli
      */

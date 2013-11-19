@@ -99,9 +99,9 @@ public class TimeSeriesChart extends JPanel {
         if(numOfDataPoints > 0){
         	firstColumnID = dataset.getItemCount(0) - numOfDataPoints;
         	lastColumnID = dataset.getItemCount(0) - 1;
-            renderer = new MyRenderer(true, true);
+            renderer = new MyRenderer(true, false); 
         }else{
-            renderer = new XYLineAndShapeRenderer(true, true);
+            renderer = new XYLineAndShapeRenderer(true, false);
         }
 
         JFreeChart chart = createChart(dataset);
@@ -146,8 +146,8 @@ public class TimeSeriesChart extends JPanel {
         XYItemRenderer r = plot.getRenderer();
         if (r instanceof XYLineAndShapeRenderer) {
             XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
-            renderer.setBaseShapesVisible(true);
-            renderer.setBaseShapesFilled(true);
+            renderer.setBaseShapesVisible(false);
+            renderer.setBaseShapesFilled(false);
         }
 
         DateAxis axis = (DateAxis) plot.getDomainAxis();
