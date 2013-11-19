@@ -187,6 +187,7 @@ public class TSAFrame extends JFrame {
 
 	
 	private Statistics stat;
+	private TimeSeries forecast;
 	private JLabel lblCorrelationCoefficient;
     private JLabel lblLowerBound;
 	private JLabel lblUpperBound;
@@ -884,5 +885,9 @@ public class TSAFrame extends JFrame {
 
 	public JRadioButton getRdbtnArmaForecast() {
 		return rdbtnArmaForecast;
+	}
+
+	public TimeSeries getForecast() {
+		return forecast;
 	}
 }

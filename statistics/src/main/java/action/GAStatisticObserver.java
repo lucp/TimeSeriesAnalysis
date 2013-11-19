@@ -11,13 +11,11 @@ import java.util.List;
 
 public class GAStatisticObserver implements GAObserver {
 
-	private Statistics stat;
-	private TimeSeries timeSeries;
+	private TimeSeries forecast;
 	private int numOfDataPoints;
     
-    public GAStatisticObserver(Statistics stat, TimeSeries timeSeries, int numOfDataPoints){
-    	this.stat = stat;
-    	this.timeSeries = timeSeries;
+    public GAStatisticObserver(TimeSeries forecast, int numOfDataPoints){
+    	this.forecast = forecast;
         this.numOfDataPoints = numOfDataPoints;
     }
 
@@ -28,10 +26,9 @@ public class GAStatisticObserver implements GAObserver {
     @Override
     public void done(TimeSeries timeSeriesWithForecast){
     	int number = timeSeriesWithForecast.getItemCount() - 1;
-    	TimeSeries Forecast;
 		try {
-			Forecast = timeSeriesWithForecast.createCopy(number - numOfDataPoints, number);
-			stat.loadTimeSeries(timeSeries, Forecast);
+			forecast = timeSeriesWithForecast.createCopy(number - numOfDataPoints, number);
+			
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

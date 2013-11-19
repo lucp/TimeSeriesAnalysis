@@ -32,11 +32,9 @@ import java.util.Arrays;
 public class ShowTimeSeriesWithForecastAction implements ActionListener {
 
     TSAFrame window;
-    Statistics stat;
 
     public ShowTimeSeriesWithForecastAction(TSAFrame window){
         this.window = window;
-        this.stat = window.getStat();
     }
     
     public void actionPerformed(ActionEvent e){
@@ -49,10 +47,6 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 	    	TimeSeries timeSeries = window.getCurrentTimeSeries();
 	    	if (timeSeries==null || timeSeries.isEmpty()) throw new DataLengthException();
 	        
-	    	TimeSeries[] timeSeriesArray = SwingTableDataAcquisitor.splitTimeSeriesOnHalf(timeSeries);
-	    	
-	    	//TO DO
-	    	//jak zostanie ogarniete wpisywanie do pola 'Time window' nale�y to zmodyfikowa�
 	    	SlidingTimeWindow slidingTimeWindow = new SlidingTimeWindow(this.parseToWindowForm(window.getTimeWindowField().getText()));
 	
 	        if(window.getRdBtnStochastic().isSelected())
@@ -67,9 +61,9 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 	        AbstractForecast forecast = (AbstractForecast) context.getBean("forecast");
 	
 	        forecast.initializeGeneticAlgorithm(
-	    		(TimeSeries) timeSeriesArray[0].clone(),				
+	    		(TimeSeries) timeSeries.clone(),				
 	            (Integer) window.getPopulSizeField().getValue(),
-	            slidingTimeWindow,				                //TO DO
+	            slidingTimeWindow,				               
 	            (Integer) window.getIterNumberField().getValue(),
 	            (double)window.getSliderProbOfCross().getValue()/100,
 	            (double)window.getSliderProbOfMutat().getValue()/100,
@@ -79,7 +73,7 @@ public class ShowTimeSeriesWithForecastAction implements ActionListener {
 	        forecast.initializeForecast((Integer) window.getPeriodOfPredField().getValue());
 	                
 	        forecast.addObserver(new GAChartObserver(window.getFitnessChart(), window.getTimeSeriesChart(), (Integer) window.getPeriodOfPredField().getValue()));
-	        forecast.addObserver(new GAStatisticObserver(stat, timeSeriesArray[1], (Integer) window.getPeriodOfPredField().getValue()));
+	        forecast.addObserver(new GAStatisticObserver(window.getForecast(), (Integer) window.getPeriodOfPredField().getValue()));
 	        forecast.execute();
 	        window.getTabbedPane().setSelectedIndex(2);
 	        
